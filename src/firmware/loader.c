@@ -10,7 +10,7 @@ thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* fi
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] firmware_load: variant=%d (%s)\n", variant, processor_variant_to_string(variant));
+    DEBUG_PRINT("firmware_load: variant=%d (%s)\n", variant, processor_variant_to_string(variant));
     
     // Initialize firmware structure
     firmware->config = NULL;
@@ -22,22 +22,22 @@ thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* fi
     
     switch (variant) {
         case VARIANT_T31X:
-            printf("[DEBUG] firmware_load: matched VARIANT_T31X (%d)\n", VARIANT_T31X);
-            printf("[DEBUG] firmware_load: calling firmware_load_t31x\n");
+            DEBUG_PRINT("firmware_load: matched VARIANT_T31X (%d)\n", VARIANT_T31X);
+            DEBUG_PRINT("firmware_load: calling firmware_load_t31x\n");
             return firmware_load_t31x(firmware);
         case VARIANT_T31ZX:
-            printf("[DEBUG] firmware_load: matched VARIANT_T31ZX (%d)\n", VARIANT_T31ZX);
-            printf("[DEBUG] firmware_load: calling firmware_load_t31x\n");
+            DEBUG_PRINT("firmware_load: matched VARIANT_T31ZX (%d)\n", VARIANT_T31ZX);
+            DEBUG_PRINT("firmware_load: calling firmware_load_t31x\n");
             return firmware_load_t31x(firmware);
             
         default:
-            printf("[DEBUG] firmware_load: unsupported variant %d\n", variant);
+            DEBUG_PRINT("firmware_load: unsupported variant %d\n", variant);
             return THINGINO_ERROR_INVALID_PARAMETER;
     }
 }
 
 thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
-    printf("[DEBUG] Loading T31X firmware from official cloner...\n");
+    DEBUG_PRINT("Loading T31X firmware from official cloner...\n");
     
     // Paths to DDR configuration (pre-processed binary)
     // TODO: Implement DDR config processing to generate this dynamically
@@ -62,10 +62,10 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
     // Load DDR config
     thingino_error_t result = THINGINO_ERROR_FILE_IO;
     for (int i = 0; config_paths[i]; i++) {
-        printf("[DEBUG] Trying to load DDR config from: %s\n", config_paths[i]);
+        DEBUG_PRINT("Trying to load DDR config from: %s\n", config_paths[i]);
         result = load_file(config_paths[i], &firmware->config, &firmware->config_size);
         if (result == THINGINO_SUCCESS) {
-            printf("[DEBUG] Loaded DDR config: %zu bytes\n", firmware->config_size);
+            DEBUG_PRINT("Loaded DDR config: %zu bytes\n", firmware->config_size);
             break;
         }
     }
@@ -80,10 +80,10 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
     // Load SPL binary
     result = THINGINO_ERROR_FILE_IO;
     for (int i = 0; spl_paths[i]; i++) {
-        printf("[DEBUG] Trying to load SPL from: %s\n", spl_paths[i]);
+        DEBUG_PRINT("Trying to load SPL from: %s\n", spl_paths[i]);
         result = load_file(spl_paths[i], &firmware->spl, &firmware->spl_size);
         if (result == THINGINO_SUCCESS) {
-            printf("[DEBUG] Loaded SPL: %zu bytes\n", firmware->spl_size);
+            DEBUG_PRINT("Loaded SPL: %zu bytes\n", firmware->spl_size);
             break;
         }
     }
@@ -98,10 +98,10 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
     // Load U-Boot binary (separate from SPL)
     result = THINGINO_ERROR_FILE_IO;
     for (int i = 0; uboot_paths[i]; i++) {
-        printf("[DEBUG] Trying to load U-Boot from: %s\n", uboot_paths[i]);
+        DEBUG_PRINT("Trying to load U-Boot from: %s\n", uboot_paths[i]);
         result = load_file(uboot_paths[i], &firmware->uboot, &firmware->uboot_size);
         if (result == THINGINO_SUCCESS) {
-            printf("[DEBUG] Loaded U-Boot: %zu bytes\n", firmware->uboot_size);
+            DEBUG_PRINT("Loaded U-Boot: %zu bytes\n", firmware->uboot_size);
             break;
         }
     }
@@ -113,8 +113,8 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
         return result;
     }
     
-    printf("[DEBUG] T31X firmware loaded successfully (official cloner files)\n");
-    printf("[DEBUG] DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n", 
+    DEBUG_PRINT("T31X firmware loaded successfully (official cloner files)\n");
+    DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n", 
            firmware->config_size, firmware->spl_size, firmware->uboot_size);
     
     return THINGINO_SUCCESS;

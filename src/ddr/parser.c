@@ -56,7 +56,7 @@ thingino_error_t load_extracted_binary(void) {
             if (bytes_read == (size_t)file_size) {
                 extracted_ddr_size = bytes_read;
                 init_once = true;
-                printf("Loaded DDR binary from: %s (%zu bytes)\n", paths[i], bytes_read);
+                DEBUG_PRINT("Loaded DDR binary from: %s (%zu bytes)\n", paths[i], bytes_read);
                 return THINGINO_SUCCESS;
             }
             
@@ -164,8 +164,8 @@ thingino_error_t ddr_parse_text_to_binary(const char* config_text, uint8_t** bin
     // The current extracted binary has a complex structure that needs reverse engineering
     // Our current simple algorithm doesn't match the vendor's format
     
-    printf("TODO: Implement proper DDR config text to binary conversion\n");
-    printf("Using extracted binary for now\n");
+    DEBUG_PRINT("TODO: Implement proper DDR config text to binary conversion\n");
+    DEBUG_PRINT("Using extracted binary for now\n");
     
     return ddr_parse_config(NULL, binary, size);
 }
@@ -182,23 +182,23 @@ void ddr_cleanup(void) {
 // Helper function to print DDR binary info for debugging
 void ddr_print_info(const uint8_t* data, size_t size) {
     if (!data || size < 4) {
-        printf("Invalid DDR binary data\n");
+        DEBUG_PRINT("Invalid DDR binary data\n");
         return;
     }
     
-    printf("DDR Binary Info:\n");
-    printf("  Size: %zu bytes\n", size);
-    printf("  Signature: %.4s\n", data);
+    DEBUG_PRINT("DDR Binary Info:\n");
+    DEBUG_PRINT("  Size: %zu bytes\n", size);
+    DEBUG_PRINT("  Signature: %.4s\n", data);
     
     if (size >= 8) {
-        printf("  Version: %d.%d\n", data[4], data[5]);
+        DEBUG_PRINT("  Version: %d.%d\n", data[4], data[5]);
     }
     
     if (size >= 16) {
-        printf("  Header: ");
+        DEBUG_PRINT("  Header: ");
         for (int i = 0; i < 16 && i < (int)size; i++) {
-            printf("%02x ", data[i]);
+            DEBUG_PRINT("%02x ", data[i]);
         }
-        printf("\n");
+        DEBUG_PRINT("\n");
     }
 }

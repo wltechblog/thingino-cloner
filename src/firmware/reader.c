@@ -44,7 +44,7 @@ static thingino_error_t firmware_read_chunk_with_handshake(usb_device_t* device,
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
-    printf("[DEBUG] firmware_read_chunk_with_handshake: index=%u, offset=0x%08X, size=%u\n",
+    DEBUG_PRINT("firmware_read_chunk_with_handshake: index=%u, offset=0x%08X, size=%u\n",
            chunk_index, chunk_offset, chunk_size);
 
     // Use the handshake protocol from handshake.c
@@ -56,11 +56,11 @@ static thingino_error_t firmware_read_chunk_with_handshake(usb_device_t* device,
                                                             &data_buffer, &transferred);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Handshake read failed: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Handshake read failed: %s\n", thingino_error_to_string(result));
         return result;
     }
 
-    printf("[DEBUG] Handshake read successful: %d/%u bytes\n", transferred, chunk_size);
+    DEBUG_PRINT("Handshake read successful: %d/%u bytes\n", transferred, chunk_size);
 
     *out_data = data_buffer;
     *out_len = transferred;
@@ -76,7 +76,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] firmware_read_bank: offset=0x%08X, size=%u bytes\n", offset, size);
+    DEBUG_PRINT("firmware_read_bank: offset=0x%08X, size=%u bytes\n", offset, size);
 
     // Allocate buffer for full bank
     uint8_t* bank_buffer = (uint8_t*)malloc(size);
@@ -117,7 +117,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
                offset, size, chunk_len);
     }
     
-    printf("[DEBUG] Bank read complete: %u bytes\n", total_read);
+    DEBUG_PRINT("Bank read complete: %u bytes\n", total_read);
     *data = bank_buffer;
     return THINGINO_SUCCESS;
 }
@@ -130,22 +130,22 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] firmware_read_full: Reading full firmware from device\n");
+    DEBUG_PRINT("firmware_read_full: Reading full firmware from device\n");
 
     // PHASE 0: Device stabilization
-    printf("[DEBUG] firmware_read_full: PHASE 0 - Stabilizing device after bootstrap\n");
+    DEBUG_PRINT("firmware_read_full: PHASE 0 - Stabilizing device after bootstrap\n");
 
     // Extended delay to let device stabilize after bootstrap
-    printf("[DEBUG] Waiting for device to stabilize after bootstrap...\n");
+    DEBUG_PRINT("Waiting for device to stabilize after bootstrap...\n");
     usleep(2000000); // 2 second delay for device to fully settle
 
-    printf("[DEBUG] Device should now be ready for firmware read\n");
+    DEBUG_PRINT("Device should now be ready for firmware read\n");
 
     thingino_error_t result = THINGINO_SUCCESS;
 
     // CRITICAL: Send flash descriptor BEFORE any read operations
     // This tells the device what flash chip is installed and how to read it
-    printf("[DEBUG] firmware_read_full: PHASE 1 - Sending flash descriptor...\n");
+    DEBUG_PRINT("firmware_read_full: PHASE 1 - Sending flash descriptor...\n");
 
     uint8_t flash_descriptor[FLASH_DESCRIPTOR_SIZE];
     if (flash_descriptor_create_win25q128(flash_descriptor) != 0) {
@@ -158,23 +158,23 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
         printf("[ERROR] Failed to send flash descriptor: %s\n", thingino_error_to_string(result));
         return result;
     }
-    printf("[DEBUG] Flash descriptor sent successfully\n");
+    DEBUG_PRINT("Flash descriptor sent successfully\n");
 
     // Wait for device to process the descriptor
-    printf("[DEBUG] Waiting for device to process flash descriptor...\n");
+    DEBUG_PRINT("Waiting for device to process flash descriptor...\n");
     usleep(500000); // 500ms delay
 
     // Initialize firmware handshake protocol (VR_FW_HANDSHAKE 0x11)
-    printf("[DEBUG] firmware_read_full: PHASE 2 - Initializing handshake protocol...\n");
+    DEBUG_PRINT("firmware_read_full: PHASE 2 - Initializing handshake protocol...\n");
     result = firmware_handshake_init(device);
     if (result != THINGINO_SUCCESS) {
         printf("[ERROR] Failed to initialize handshake protocol: %s\n", thingino_error_to_string(result));
         return result;
     }
-    printf("[DEBUG] Handshake protocol initialized successfully\n");
+    DEBUG_PRINT("Handshake protocol initialized successfully\n");
 
     // Initialize read configuration for main firmware
-    printf("[DEBUG] firmware_read_full: Reading main firmware (16MB in 1MB banks)\n");
+    DEBUG_PRINT("firmware_read_full: Reading main firmware (16MB in 1MB banks)\n");
     firmware_read_config_t config;
     result = firmware_read_init(device, &config);
     if (result != THINGINO_SUCCESS) {
@@ -194,11 +194,11 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
     for (int i = 0; i < config.bank_count; i++) {
         flash_bank_t* bank = &config.banks[i];
         if (!bank->enabled) {
-            printf("[DEBUG] Skipping disabled bank %d\n", i);
+            DEBUG_PRINT("Skipping disabled bank %d\n", i);
             continue;
         }
         
-        printf("[DEBUG] Reading bank %d/%d (%s) at offset=0x%08X using handshake protocol...\n", 
+        DEBUG_PRINT("Reading bank %d/%d (%s) at offset=0x%08X using handshake protocol...\n", 
                i + 1, config.bank_count, bank->label, bank->offset);
         
         uint8_t* bank_data = NULL;
@@ -219,14 +219,14 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
             free(bank_data);
         }
         
-        printf("[DEBUG] Bank %d read successfully (total: %u/%u bytes, %d%%)\n",
+        DEBUG_PRINT("Bank %d read successfully (total: %u/%u bytes, %d%%)\n",
             i, total_read, config.total_size, (total_read * 100) / config.total_size);
         
         // Small delay between banks to let device stabilize
         usleep(50000); // 50ms between banks
     }
     
-    printf("[DEBUG] firmware_read_full: Completed reading %u bytes\n", total_read);
+    DEBUG_PRINT("firmware_read_full: Completed reading %u bytes\n", total_read);
     
     *data = firmware_buffer;
     *size = total_read;
@@ -243,13 +243,13 @@ thingino_error_t firmware_read_detect_size(usb_device_t* device, uint32_t* size)
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] firmware_read_detect_size: Detecting firmware flash size\n");
+    DEBUG_PRINT("firmware_read_detect_size: Detecting firmware flash size\n");
     
     // For T31X devices, the flash is 16MB (WIN25Q128JVSQ)
     // In a full implementation, this would query the device for actual flash size
     *size = 16 * 1024 * 1024; // 16MB
     
-    printf("[DEBUG] Detected flash size: %u bytes (%.2f MB)\n", *size, (float)*size / (1024 * 1024));
+    DEBUG_PRINT("Detected flash size: %u bytes (%.2f MB)\n", *size, (float)*size / (1024 * 1024));
     
     return THINGINO_SUCCESS;
 }
@@ -282,7 +282,7 @@ thingino_error_t firmware_read_init(usb_device_t* device, firmware_read_config_t
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] firmware_read_init: Initializing firmware read configuration\n");
+    DEBUG_PRINT("firmware_read_init: Initializing firmware read configuration\n");
     
     // Detect flash size
     thingino_error_t result = firmware_read_detect_size(device, &config->total_size);
@@ -308,11 +308,11 @@ thingino_error_t firmware_read_init(usb_device_t* device, firmware_read_config_t
         snprintf(bank->label, sizeof(bank->label), "FW%d", i);
         bank->enabled = true;
         
-        printf("[DEBUG] Bank %d: offset=0x%08X, size=%u bytes, label=%s\n", 
+        DEBUG_PRINT("Bank %d: offset=0x%08X, size=%u bytes, label=%s\n", 
             i, bank->offset, bank->size, bank->label);
     }
     
-    printf("[DEBUG] firmware_read_init: Configuration ready (%d banks, %u bytes total)\n",
+    DEBUG_PRINT("firmware_read_init: Configuration ready (%d banks, %u bytes total)\n",
            config->bank_count, config->total_size);
     
     return THINGINO_SUCCESS;

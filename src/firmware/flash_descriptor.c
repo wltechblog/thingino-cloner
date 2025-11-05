@@ -159,10 +159,10 @@ thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *desc
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
-    printf("[DEBUG] Sending flash descriptor (972 bytes)...\n");
+    DEBUG_PRINT("Sending flash descriptor (972 bytes)...\n");
 
     // Step 1: Send control transfer with 40-byte header (bRequest=0x14)
-    printf("[DEBUG] Step 1: Sending control transfer (bRequest=0x14, 40 bytes)...\n");
+    DEBUG_PRINT("Step 1: Sending control transfer (bRequest=0x14, 40 bytes)...\n");
     int result = libusb_control_transfer(
         device->handle,
         0x40,           // bmRequestType: Host-to-device, Vendor, Device
@@ -179,13 +179,13 @@ thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *desc
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
 
-    printf("[DEBUG] Control transfer successful\n");
+    DEBUG_PRINT("Control transfer successful\n");
 
     // Step 2: Wait 100ms for device to process
     usleep(100000);
 
     // Step 3: Send full 972-byte structure via bulk OUT to endpoint 0x01
-    printf("[DEBUG] Step 2: Sending bulk OUT transfer (972 bytes to endpoint 0x01)...\n");
+    DEBUG_PRINT("Step 2: Sending bulk OUT transfer (972 bytes to endpoint 0x01)...\n");
     int transferred = 0;
     result = libusb_bulk_transfer(
         device->handle,
@@ -206,12 +206,12 @@ thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *desc
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
 
-    printf("[DEBUG] Bulk transfer successful: %d bytes\n", transferred);
+    DEBUG_PRINT("Bulk transfer successful: %d bytes\n", transferred);
 
     // Step 4: Wait for device to process the descriptor
     usleep(100000);
 
-    printf("[DEBUG] Flash descriptor sent successfully\n");
+    DEBUG_PRINT("Flash descriptor sent successfully\n");
 
     return THINGINO_SUCCESS;
 }

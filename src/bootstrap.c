@@ -28,10 +28,10 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     
     // NOTE: Do NOT reset device - pcap analysis shows vendor tool does not reset
     // Resetting causes device to disconnect and re-enumerate, breaking bootstrap flow
-    printf("[DEBUG] Skipping device reset (vendor tool doesn't reset)\n");
+    DEBUG_PRINT("Skipping device reset (vendor tool doesn't reset)\n");
 
     // Get CPU info to understand current device state
-    printf("[DEBUG] Getting CPU info...\n");
+    DEBUG_PRINT("Getting CPU info...\n");
     cpu_info_t cpu_info;
     thingino_error_t result = usb_device_get_cpu_info(device, &cpu_info);
     if (result != THINGINO_SUCCESS) {
@@ -50,11 +50,11 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     }
     
     // Load firmware files
-    printf("[DEBUG] Loading firmware files...\n");
+    DEBUG_PRINT("Loading firmware files...\n");
     firmware_files_t fw;
     result = firmware_load(device->info.variant, &fw);
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Firmware load failed: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Firmware load failed: %s\n", thingino_error_to_string(result));
         return result;
     }
     
@@ -84,14 +84,14 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     printf("SPL loaded\n");
     
     // Step 3: Set execution size and execute SPL
-    printf("Setting execution size to 0x7000\n");
+    DEBUG_PRINT("Setting execution size to 0x7000\n");
     result = protocol_set_data_length(device, 0x7000);
     if (result != THINGINO_SUCCESS) {
         firmware_cleanup(&fw);
         return result;
     }
     
-    printf("Executing SPL from entry point 0x80001800\n");
+    DEBUG_PRINT("Executing SPL from entry point 0x80001800\n");
     result = protocol_prog_stage1(device, 0x80001800);
     if (result != THINGINO_SUCCESS) {
         firmware_cleanup(&fw);
@@ -101,13 +101,13 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     
     // Device re-enumerates after SPL execution
     // We must close the current device handle before it becomes invalid
-    printf("Closing device handle before re-enumeration...\n");
+    DEBUG_PRINT("Closing device handle before re-enumeration...\n");
     usb_device_close(device);
-    printf("Device handle closed\n");
+    DEBUG_PRINT("Device handle closed\n");
     
     // Wait for SPL to complete execution and device to re-enumerate
-    printf("Waiting for SPL to complete execution and device to re-enumerate...\n");
-    printf("(Waiting 3 seconds for device re-enumeration)...\n");
+    DEBUG_PRINT("Waiting for SPL to complete execution and device to re-enumerate...\n");
+    DEBUG_PRINT("(Waiting 3 seconds for device re-enumeration)...\n");
 #ifdef _WIN32
     Sleep(1000);
 #else
@@ -115,7 +115,7 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
 #endif
     
     // Re-detect and re-open the device after re-enumeration
-    printf("Re-detecting device after re-enumeration...\n");
+    DEBUG_PRINT("Re-detecting device after re-enumeration...\n");
     usb_manager_t manager;
     result = usb_manager_init(&manager);
     if (result != THINGINO_SUCCESS) {
@@ -139,7 +139,7 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     
     // Use the first device (in practice there should be only one)
     device_info_t new_device_info = found_devices[0];
-    printf("Using re-enumerated device at USB address: Bus %d, Address %d\n",
+    DEBUG_PRINT("Using re-enumerated device at USB address: Bus %d, Address %d\n",
         new_device_info.bus, new_device_info.address);
     
     // Open the newly enumerated device
@@ -153,7 +153,7 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
         return result;
     }
     
-    printf("Successfully re-opened device, updating device pointer\n");
+    DEBUG_PRINT("Successfully re-opened device, updating device pointer\n");
     
     // Update device pointer to the newly opened device
     // Copy the new device info and handle to the original device structure
@@ -162,16 +162,16 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     device->closed = false;
     free(new_device);
     
-    printf("Device re-enumeration complete, waiting additional time for device to stabilize...\n");
+    DEBUG_PRINT("Device re-enumeration complete, waiting additional time for device to stabilize...\n");
     // Give the device more time to fully initialize after re-enumeration
-    printf("(Waiting 3 more seconds for device to be ready)...\n");
+    DEBUG_PRINT("(Waiting 3 more seconds for device to be ready)...\n");
 #ifdef _WIN32
     Sleep(1000);
 #else
     sleep(1);
 #endif
     
-    printf("Device should now be ready, resuming bootstrap\n");
+    DEBUG_PRINT("Device should now be ready, resuming bootstrap\n");
     
     // Step 4: Load and program U-Boot (Stage 2 bootloader)
     printf("Loading U-Boot (Stage 2 bootloader)\n");
@@ -193,8 +193,8 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     // NOTE: After ProgStage2, the device will re-enumerate with a new USB address.
     // We cannot verify the transition here because the device handle is now invalid.
     // The caller must re-scan for devices and verify the transition.
-    printf("Bootstrap sequence completed - device will re-enumerate\n");
-    printf("Note: Device handle is now invalid and must be re-opened after re-enumeration\n");
+    DEBUG_PRINT("Bootstrap sequence completed - device will re-enumerate\n");
+    DEBUG_PRINT("Note: Device handle is now invalid and must be re-opened after re-enumeration\n");
     
     printf("Bootstrap sequence completed successfully\n");
     
@@ -224,21 +224,21 @@ thingino_error_t bootstrap_load_data_to_memory(usb_device_t* device,
     }
     
     // Step 1: Set target address
-    printf("Setting data address to 0x%08x\n", address);
+    DEBUG_PRINT("Setting data address to 0x%08x\n", address);
     thingino_error_t result = protocol_set_data_address(device, address);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // Step 2: Set data length
-    printf("Setting data length to %zu bytes\n", size);
+    DEBUG_PRINT("Setting data length to %zu bytes\n", size);
     result = protocol_set_data_length(device, (uint32_t)size);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // Step 3: Transfer data
-    printf("Transferring data (%zu bytes)...\n", size);
+    DEBUG_PRINT("Transferring data (%zu bytes)...\n", size);
     result = bootstrap_transfer_data(device, data, size);
     if (result != THINGINO_SUCCESS) {
         return result;
@@ -256,28 +256,28 @@ thingino_error_t bootstrap_program_stage2(usb_device_t* device,
     
     // Step 1: Set target address for U-Boot (PCAP shows 0x80100000)
     uint32_t uboot_address = 0x80100000;
-    printf("Setting U-Boot data address to 0x%08x\n", uboot_address);
+    DEBUG_PRINT("Setting U-Boot data address to 0x%08x\n", uboot_address);
     thingino_error_t result = protocol_set_data_address(device, uboot_address);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // Step 2: Set data length
-    printf("Setting U-Boot data length to %zu bytes\n", size);
+    DEBUG_PRINT("Setting U-Boot data length to %zu bytes\n", size);
     result = protocol_set_data_length(device, (uint32_t)size);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // Step 3: Transfer data
-    printf("Transferring U-Boot data (%zu bytes)...\n", size);
+    DEBUG_PRINT("Transferring U-Boot data (%zu bytes)...\n", size);
     result = bootstrap_transfer_data(device, data, size);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // After large U-Boot transfer, give device time to process
-    printf("Waiting for device to process U-Boot transfer...\n");
+    DEBUG_PRINT("Waiting for device to process U-Boot transfer...\n");
     
     // Platform-specific sleep
 #ifdef _WIN32
@@ -291,27 +291,27 @@ thingino_error_t bootstrap_program_stage2(usb_device_t* device,
 #endif
     
     // Step 4: Flush cache before executing U-Boot
-    printf("Flushing cache before U-Boot execution\n");
+    DEBUG_PRINT("Flushing cache before U-Boot execution\n");
     result = protocol_flush_cache(device);
     if (result != THINGINO_SUCCESS) {
         return result;
     }
     
     // Step 5: Execute U-Boot using ProgStage2
-    printf("Executing U-Boot using ProgStage2\n");
+    DEBUG_PRINT("Executing U-Boot using ProgStage2\n");
     
     // Split execution address into MSB and LSB
     uint16_t wValue = (uint16_t)(uboot_address >> 16);    // MSB of 0x80100000 = 0x8010
     uint16_t wIndex = (uint16_t)(uboot_address & 0xFFFF); // LSB of 0x80100000 = 0x0000
     
-    printf("ProgStage2: wValue=0x%04x (MSB), wIndex=0x%04x (LSB), addr=0x%08x\n", 
+    DEBUG_PRINT("ProgStage2: wValue=0x%04x (MSB), wIndex=0x%04x (LSB), addr=0x%08x\n", 
         wValue, wIndex, uboot_address);
     
     result = protocol_prog_stage2(device, uboot_address);
     
     // PCAP analysis shows device does NOT re-enumerate after ProgStage2
     // Instead, it transitions internally from bootrom to firmware stage
-    printf("ProgStage2 completed - device should now be in firmware stage\n");
+    DEBUG_PRINT("ProgStage2 completed - device should now be in firmware stage\n");
     
     // Platform-specific sleep
 #ifdef _WIN32
@@ -330,7 +330,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("TransferData starting: %zu bytes total\n", size);
+    DEBUG_PRINT("TransferData starting: %zu bytes total\n", size);
     
     // For small transfers (< 64KB), try single transfer first
     // For large transfers (like U-Boot ~390KB), use chunked approach
@@ -353,7 +353,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
             current_chunk_size = remaining;
         }
         
-        printf("TransferData chunk: offset=%zu, size=%zu, remaining=%zu\n",
+        DEBUG_PRINT("TransferData chunk: offset=%zu, size=%zu, remaining=%zu\n",
             offset, current_chunk_size, remaining);
         
         // Try to write this chunk with retries
@@ -370,7 +370,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
             
             if (result == THINGINO_SUCCESS && transferred > 0) {
                 // Success - at least some bytes written
-                printf("TransferData chunk written: %d bytes (attempt %d)\n", transferred, retry + 1);
+                DEBUG_PRINT("TransferData chunk written: %d bytes (attempt %d)\n", transferred, retry + 1);
                 total_written += transferred;
                 offset += transferred;
                 
@@ -381,19 +381,19 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
                 } else if (transferred < (int)current_chunk_size) {
                     // Partial write - adjust chunk size and retry
                     current_chunk_size -= transferred;
-                    printf("Partial write, retrying remaining %zu bytes\n", current_chunk_size);
+                    DEBUG_PRINT("Partial write, retrying remaining %zu bytes\n", current_chunk_size);
                     continue;
                 }
             }
             
             // Handle write error
             if (result != THINGINO_SUCCESS) {
-                printf("TransferData error on attempt %d: %s\n", retry + 1, 
+                DEBUG_PRINT("TransferData error on attempt %d: %s\n", retry + 1, 
                     thingino_error_to_string(result));
                 
                 // For other errors or if retry limit reached
                 if (retry < max_retries - 1) {
-                    printf("Retrying write after brief delay (attempt %d/%d)\n",
+                    DEBUG_PRINT("Retrying write after brief delay (attempt %d/%d)\n",
                         retry + 2, max_retries);
                     
                     // Platform-specific sleep
@@ -411,7 +411,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
             
             // No error but no bytes written - shouldn't happen
             if (retry == max_retries - 1) {
-                printf("Bulk write returned 0 bytes and no error at offset %zu\n", offset);
+                DEBUG_PRINT("Bulk write returned 0 bytes and no error at offset %zu\n", offset);
                 return THINGINO_ERROR_TRANSFER_FAILED;
             }
         }
@@ -427,6 +427,6 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
         }
     }
     
-    printf("TransferData complete: %zu bytes written successfully\n", total_written);
+    DEBUG_PRINT("TransferData complete: %zu bytes written successfully\n", total_written);
     return THINGINO_SUCCESS;
 }

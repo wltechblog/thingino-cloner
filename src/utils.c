@@ -75,7 +75,7 @@ processor_variant_t detect_variant_from_magic(const char* magic) {
         return VARIANT_T31X;
     }
     
-    printf("[DEBUG] detect_variant_from_magic: input='%s' (length=%zu)\n", magic, magic ? strlen(magic) : 0);
+    DEBUG_PRINT("detect_variant_from_magic: input='%s' (length=%zu)\n", magic, magic ? strlen(magic) : 0);
     
     // Check for X-series processors first (more specific)
     if (strstr(magic, "x1000")) return VARIANT_X1000;
@@ -92,7 +92,7 @@ processor_variant_t detect_variant_from_magic(const char* magic) {
     // Format is typically "BOOT47XX" where XX indicates processor variant
     // But we're getting "T 3 1 V " format (with spaces), so handle that too
     if (strlen(magic) >= 4) {
-        printf("[DEBUG] detect_variant_from_magic: checking pattern match\n");
+        DEBUG_PRINT("detect_variant_from_magic: checking pattern match\n");
         
         // Create a compact version without spaces for comparison
         char compact_magic[9] = {0};
@@ -105,11 +105,11 @@ processor_variant_t detect_variant_from_magic(const char* magic) {
         
         // Check for T31 pattern at the beginning
         if (strncmp(compact_magic, "T31V", 4) == 0) {
-            printf("[DEBUG] detect_variant_from_magic: matched T31V -> T31ZX\n");
+            DEBUG_PRINT("detect_variant_from_magic: matched T31V -> T31ZX\n");
             return VARIANT_T31ZX;  // T31V indicates T31ZX
         }
         if (strncmp(compact_magic, "T31", 3) == 0) {
-            printf("[DEBUG] detect_variant_from_magic: matched T31 -> T31\n");
+            DEBUG_PRINT("detect_variant_from_magic: matched T31 -> T31\n");
             return VARIANT_T31;
         }
         if (strncmp(compact_magic, "T20", 3) == 0) return VARIANT_T20;
@@ -133,6 +133,6 @@ processor_variant_t detect_variant_from_magic(const char* magic) {
         if (strncmp(suffix, "41", 2) == 0) return VARIANT_T41;
     }
     
-    printf("[DEBUG] detect_variant_from_magic: defaulting to T31X\n");
+    DEBUG_PRINT("detect_variant_from_magic: defaulting to T31X\n");
     return VARIANT_T31X; // Default to T31X
 }

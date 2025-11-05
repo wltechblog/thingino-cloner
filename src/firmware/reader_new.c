@@ -21,12 +21,12 @@ static thingino_error_t firmware_read_direct_bulk_in(usb_device_t* device,
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] Direct BULK IN read: size=%u bytes, timeout=30s\n", size);
+    DEBUG_PRINT("Direct BULK IN read: size=%u bytes, timeout=30s\n", size);
     
     // Ensure interface is claimed
     thingino_error_t claim_result = usb_device_claim_interface(device);
     if (claim_result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Failed to claim interface for BULK IN: %s\n", thingino_error_to_string(claim_result));
+        DEBUG_PRINT("Failed to claim interface for BULK IN: %s\n", thingino_error_to_string(claim_result));
         return claim_result;
     }
     
@@ -39,11 +39,11 @@ static thingino_error_t firmware_read_direct_bulk_in(usb_device_t* device,
     usb_device_release_interface(device);
     
     if (result == LIBUSB_SUCCESS) {
-        printf("[DEBUG] BULK IN transfer successful: %d/%u bytes\n", *transferred, size);
+        DEBUG_PRINT("BULK IN transfer successful: %d/%u bytes\n", *transferred, size);
         return THINGINO_SUCCESS;
     }
     
-    printf("[DEBUG] BULK IN transfer failed: %s\n", libusb_error_name(result));
+    DEBUG_PRINT("BULK IN transfer failed: %s\n", libusb_error_name(result));
     
     if (result == LIBUSB_ERROR_TIMEOUT) {
         return THINGINO_ERROR_TRANSFER_TIMEOUT;
@@ -58,14 +58,14 @@ static thingino_error_t firmware_read_direct_bulk_in(usb_device_t* device,
 // Read firmware components as streamed by device (172B, 324B, 972B, 10KB, 390KB)
 // Based on protocol analysis - these are sent first before main firmware
 static thingino_error_t firmware_read_components(usb_device_t* device) {
-    printf("[DEBUG] Reading firmware components from device...\n");
+    DEBUG_PRINT("Reading firmware components from device...\n");
     
     // Component sizes from protocol analysis
     uint32_t component_sizes[] = {172, 324, 972, 10092, 390532};
     const char* component_names[] = {"Init", "DDR Config", "SPL", "U-Boot Stage 1", "U-Boot Main"};
     
     for (int i = 0; i < 5; i++) {
-        printf("[DEBUG] Reading component %d: %s (%u bytes)\n", i, component_names[i], component_sizes[i]);
+        DEBUG_PRINT("Reading component %d: %s (%u bytes)\n", i, component_names[i], component_sizes[i]);
         
         uint8_t* component_buffer = (uint8_t*)malloc(component_sizes[i]);
         if (!component_buffer) {
@@ -91,13 +91,13 @@ static thingino_error_t firmware_read_components(usb_device_t* device) {
         // We don't need to save the components, just read them to advance the protocol
         free(component_buffer);
         
-        printf("[DEBUG] Component %d read successfully (%d bytes)\n", i, transferred);
+        DEBUG_PRINT("Component %d read successfully (%d bytes)\n", i, transferred);
         
         // Small delay between components to let device prepare
         usleep(100000); // 100ms
     }
     
-    printf("[DEBUG] All firmware components read successfully\n");
+    DEBUG_PRINT("All firmware components read successfully\n");
     return THINGINO_SUCCESS;
 }
 
@@ -106,13 +106,13 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] [Session 19] Reading firmware bank: offset=0x%08X, size=%u bytes\n", offset, size);
-    printf("[DEBUG] Using vendor tool protocol: Components first, then main firmware\n");
+    DEBUG_PRINT("[Session 19] Reading firmware bank: offset=0x%08X, size=%u bytes\n", offset, size);
+    DEBUG_PRINT("Using vendor tool protocol: Components first, then main firmware\n");
 
     // CRITICAL: First bank - read firmware components as per protocol analysis
     // The device streams these first before main firmware
     if (offset == 0) {
-        printf("[DEBUG] First bank - reading firmware components first (172B, 324B, 972B, 10KB, 390KB)\n");
+        DEBUG_PRINT("First bank - reading firmware components first (172B, 324B, 972B, 10KB, 390KB)\n");
         
         thingino_error_t component_result = firmware_read_components(device);
         if (component_result != THINGINO_SUCCESS) {
@@ -120,9 +120,9 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
             return component_result;
         }
         
-        printf("[DEBUG] Components read successfully, now reading main firmware...\n");
+        DEBUG_PRINT("Components read successfully, now reading main firmware...\n");
     } else {
-        printf("[DEBUG] Non-first bank, giving device 100ms to stabilize...\n");
+        DEBUG_PRINT("Non-first bank, giving device 100ms to stabilize...\n");
         usleep(100000);  // 100ms for subsequent banks
     }
 
@@ -138,7 +138,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
     uint32_t CHUNK_SIZE = 1024 * 1024; // 1MB per chunk
     uint32_t chunks_count = (size + CHUNK_SIZE - 1) / CHUNK_SIZE;
     
-    printf("[DEBUG] Main firmware: Reading %u bytes in %u chunks of 1MB each\n", size, chunks_count);
+    DEBUG_PRINT("Main firmware: Reading %u bytes in %u chunks of 1MB each\n", size, chunks_count);
 
     uint32_t total_read = 0;
 
@@ -161,7 +161,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         }
         
         if (show_progress) {
-            printf("[DEBUG] [Session 19] Progress: %u%% - Chunk %u/%u (reading %u bytes via BULK IN)\n",
+            DEBUG_PRINT("[Session 19] Progress: %u%% - Chunk %u/%u (reading %u bytes via BULK IN)\n",
                    progress_percent, chunk_idx + 1, chunks_count, current_chunk_size);
         }
         
@@ -192,7 +192,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         usleep(100000);  // 100ms between chunks
     }
     
-    printf("[DEBUG] Bank read complete: %u bytes total\n", total_read);
+    DEBUG_PRINT("Bank read complete: %u bytes total\n", total_read);
     *data = bank_buffer;
     return THINGINO_SUCCESS;
 }
@@ -202,15 +202,15 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] Reading full firmware from device...\n");
-    printf("[DEBUG] Using protocol: Vendor tool style (automatic streaming)\n");
-    printf("[DEBUG] Based on READ_FIRMWARE_PROTOCOL_ANALYSIS.md\n");
+    DEBUG_PRINT("Reading full firmware from device...\n");
+    DEBUG_PRINT("Using protocol: Vendor tool style (automatic streaming)\n");
+    DEBUG_PRINT("Based on READ_FIRMWARE_PROTOCOL_ANALYSIS.md\n");
     
     // CRITICAL: According to protocol analysis, the device should stream firmware components automatically
     // when in firmware stage. NO commands should be sent before BULK IN reads.
     // The SetDataAddress/SetDataLength commands are causing the device to reboot.
-    printf("[DEBUG] Skipping ALL initialization commands - device should stream data automatically\n");
-    printf("[DEBUG] This matches vendor tool protocol from READ_FIRMWARE_PROTOCOL_ANALYSIS.md\n");
+    DEBUG_PRINT("Skipping ALL initialization commands - device should stream data automatically\n");
+    DEBUG_PRINT("This matches vendor tool protocol from READ_FIRMWARE_PROTOCOL_ANALYSIS.md\n");
     
     // Give device time to stabilize after bootstrap
     usleep(1000000); // 1 second delay
@@ -235,11 +235,11 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
     for (int i = 0; i < config.bank_count; i++) {
         flash_bank_t* bank = &config.banks[i];
         if (!bank->enabled) {
-            printf("[DEBUG] Skipping disabled bank %d\n", i);
+            DEBUG_PRINT("Skipping disabled bank %d\n", i);
             continue;
         }
         
-        printf("[DEBUG] Reading bank %d/%d (%s) using automatic streaming protocol...\n", 
+        DEBUG_PRINT("Reading bank %d/%d (%s) using automatic streaming protocol...\n", 
                i + 1, config.bank_count, bank->label);
         
         uint8_t* bank_data = NULL;
@@ -263,11 +263,11 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
         
         free(bank_data);
         
-        printf("[DEBUG] Bank %d read successfully (%u bytes, total: %u/%u bytes)\n",
+        DEBUG_PRINT("Bank %d read successfully (%u bytes, total: %u/%u bytes)\n",
             i, bank_size, total_read, config.total_size);
     }
     
-    printf("[DEBUG] Full firmware read completed: %u bytes total\n", total_read);
+    DEBUG_PRINT("Full firmware read completed: %u bytes total\n", total_read);
     
     *data = firmware_buffer;
     *size = total_read;
@@ -281,14 +281,14 @@ thingino_error_t firmware_read_detect_size(usb_device_t* device, uint32_t* size)
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] Detecting firmware flash size...\n");
+    DEBUG_PRINT("Detecting firmware flash size...\n");
     
     // Try to read flash info using firmware stage protocol
     // For now, we'll default to 16MB as mentioned in task
     // In a full implementation, this would query the device for actual flash size
     *size = 16 * 1024 * 1024; // 16MB
     
-    printf("[DEBUG] Detected flash size: %u bytes (%.2f MB)\n", *size, (float)*size / (1024 * 1024));
+    DEBUG_PRINT("Detected flash size: %u bytes (%.2f MB)\n", *size, (float)*size / (1024 * 1024));
     
     return THINGINO_SUCCESS;
 }
@@ -298,7 +298,7 @@ thingino_error_t firmware_read_init(usb_device_t* device, firmware_read_config_t
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] Initializing firmware read configuration...\n");
+    DEBUG_PRINT("Initializing firmware read configuration...\n");
     
     // Detect flash size
     thingino_error_t result = firmware_read_detect_size(device, &config->total_size);
@@ -324,16 +324,16 @@ thingino_error_t firmware_read_init(usb_device_t* device, firmware_read_config_t
         snprintf(bank->label, sizeof(bank->label), "FW%d", i);
         bank->enabled = true;
         
-        printf("[DEBUG] Bank %d: offset=0x%08X, size=%u bytes, label=%s\n", 
+        DEBUG_PRINT("Bank %d: offset=0x%08X, size=%u bytes, label=%s\n", 
             i, bank->offset, bank->size, bank->label);
     }
     
     // NOTE: Do NOT call protocol_fw_handshake() here!
     // The device should use VR_READ (0x13) directly without handshake initialization
     // Handshake initialization can interfere with 40-byte command parameter validation
-    printf("[DEBUG] Skipping handshake initialization - using direct streaming\n");
+    DEBUG_PRINT("Skipping handshake initialization - using direct streaming\n");
     
-    printf("[DEBUG] Firmware read configuration initialized successfully\n");
+    DEBUG_PRINT("Firmware read configuration initialized successfully\n");
     return THINGINO_SUCCESS;
 }
 

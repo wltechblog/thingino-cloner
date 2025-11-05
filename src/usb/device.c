@@ -11,29 +11,29 @@
 
 thingino_error_t usb_device_get_cpu_info(usb_device_t* device, cpu_info_t* info) {
     if (!device || !info || device->closed) {
-        printf("[DEBUG] GetCPUInfo: Invalid parameters or device closed\n");
+        DEBUG_PRINT("GetCPUInfo: Invalid parameters or device closed\n");
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
     
-    printf("[DEBUG] GetCPUInfo: Starting CPU info request (VID:0x%04X, PID:0x%04X)\n",
+    DEBUG_PRINT("GetCPUInfo: Starting CPU info request (VID:0x%04X, PID:0x%04X)\n",
         device->info.vendor, device->info.product);
     
     uint8_t data[8] = {0};
     int transferred;
-    printf("[DEBUG] GetCPUInfo: Sending vendor request VR_GET_CPU_INFO (0x%02X)\n", VR_GET_CPU_INFO);
+    DEBUG_PRINT("GetCPUInfo: Sending vendor request VR_GET_CPU_INFO (0x%02X)\n", VR_GET_CPU_INFO);
     
     // Direct control transfer without claiming interface first (like Go version)
     int result = libusb_control_transfer(device->handle, REQUEST_TYPE_VENDOR,
         VR_GET_CPU_INFO, 0, 0, data, 8, 5000);
     
     if (result < 0) {
-        printf("[DEBUG] GetCPUInfo: Direct control transfer failed: %d (%s), trying with interface claim\n", 
+        DEBUG_PRINT("GetCPUInfo: Direct control transfer failed: %d (%s), trying with interface claim\n", 
             result, libusb_error_name(result));
         
         // Fall back to interface claiming approach
         thingino_error_t claim_result = usb_device_claim_interface(device);
         if (claim_result != THINGINO_SUCCESS) {
-            printf("[DEBUG] GetCPUInfo: Failed to claim interface: %s\n", thingino_error_to_string(claim_result));
+            DEBUG_PRINT("GetCPUInfo: Failed to claim interface: %s\n", thingino_error_to_string(claim_result));
             return claim_result;
         }
         
@@ -44,20 +44,20 @@ thingino_error_t usb_device_get_cpu_info(usb_device_t* device, cpu_info_t* info)
         usb_device_release_interface(device);
         
         if (result != THINGINO_SUCCESS) {
-            printf("[DEBUG] GetCPUInfo: Vendor request failed: %s\n", thingino_error_to_string(result));
+            DEBUG_PRINT("GetCPUInfo: Vendor request failed: %s\n", thingino_error_to_string(result));
             return result;
         }
     } else {
         transferred = result;
-        printf("[DEBUG] GetCPUInfo: Direct control transfer succeeded: %d bytes\n", transferred);
+        DEBUG_PRINT("GetCPUInfo: Direct control transfer succeeded: %d bytes\n", transferred);
     }
     
     if (transferred < 8) {
-        printf("[DEBUG] GetCPUInfo: Invalid response length: %d (expected 8)\n", transferred);
+        DEBUG_PRINT("GetCPUInfo: Invalid response length: %d (expected 8)\n", transferred);
         return THINGINO_ERROR_PROTOCOL;
     }
     
-    printf("[DEBUG] GetCPUInfo: Got %d bytes of response data\n", transferred);
+    DEBUG_PRINT("GetCPUInfo: Got %d bytes of response data\n", transferred);
     
     // Copy magic bytes
     memcpy(info->magic, data, 8);
@@ -86,11 +86,11 @@ thingino_error_t usb_device_get_cpu_info(usb_device_t* device, cpu_info_t* info)
     }
     clean_cpu_str[write_pos] = '\0';
     
-    printf("[DEBUG] GetCPUInfo: CPU magic bytes: ");
+    DEBUG_PRINT("GetCPUInfo: CPU magic bytes: ");
     for (int i = 0; i < 8; i++) {
-        printf("0x%02X ", data[i]);
+        DEBUG_PRINT("0x%02X ", data[i]);
     }
-    printf("-> string = '%s' -> clean = '%s'\n", cpu_str, clean_cpu_str);
+    DEBUG_PRINT("-> string = '%s' -> clean = '%s'\n", cpu_str, clean_cpu_str);
     
     // Store clean string in cpu_info for variant detection
     strcpy(info->clean_magic, clean_cpu_str);
@@ -100,12 +100,12 @@ thingino_error_t usb_device_get_cpu_info(usb_device_t* device, cpu_info_t* info)
     if (strncmp(cpu_str, "Boot", 4) == 0 || strncmp(cpu_str, "BOOT", 4) == 0) {
         info->stage = STAGE_FIRMWARE;
         if (device->info.stage == STAGE_BOOTROM) {
-            printf("[DEBUG] GetCPUInfo: Device is in firmware stage\n");
+            DEBUG_PRINT("GetCPUInfo: Device is in firmware stage\n");
         }
     } else {
         info->stage = STAGE_BOOTROM;
         if (device->info.stage == STAGE_BOOTROM) {
-            printf("[DEBUG] GetCPUInfo: Device is in bootrom stage\n");
+            DEBUG_PRINT("GetCPUInfo: Device is in bootrom stage\n");
         }
     }
     
@@ -161,7 +161,7 @@ thingino_error_t usb_device_init(usb_device_t* device, uint8_t bus, uint8_t addr
     device->device = found_device;
     // Preserve context if already set by manager, otherwise set to NULL
     // (context is set before usb_device_init is called by the manager)
-    // printf("[DEBUG] usb_device_init: context before init = %p\n", device->context);
+    // DEBUG_PRINT("usb_device_init: context before init = %p\n", device->context);
     device->closed = false;
     device->info.bus = bus;
     device->info.address = address;
@@ -169,11 +169,11 @@ thingino_error_t usb_device_init(usb_device_t* device, uint8_t bus, uint8_t addr
     device->info.product = desc.idProduct;
     device->info.stage = STAGE_BOOTROM;  // Default to bootrom
     // Don't set default variant - preserve whatever was set by manager
-    printf("[DEBUG] usb_device_init: preserving variant %d, context=%p\n", device->info.variant, device->context);
+    DEBUG_PRINT("usb_device_init: preserving variant %d, context=%p\n", device->info.variant, device->context);
     
     libusb_free_device_list(devices, 1);
     
-    printf("[DEBUG] Device initialized: VID:0x%04X, PID:0x%04X, Bus:%d, Addr:%d\n",
+    DEBUG_PRINT("Device initialized: VID:0x%04X, PID:0x%04X, Bus:%d, Addr:%d\n",
         device->info.vendor, device->info.product, bus, address);
     
     return THINGINO_SUCCESS;
@@ -202,7 +202,7 @@ thingino_error_t usb_device_reset(usb_device_t* device) {
     
     int result = libusb_reset_device(device->handle);
     if (result != LIBUSB_SUCCESS) {
-        printf("[DEBUG] Reset device failed: %s\n", libusb_error_name(result));
+        DEBUG_PRINT("Reset device failed: %s\n", libusb_error_name(result));
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
     
@@ -217,7 +217,7 @@ thingino_error_t usb_device_claim_interface(usb_device_t* device) {
     
     int result = libusb_claim_interface(device->handle, 0);
     if (result != LIBUSB_SUCCESS) {
-        printf("[DEBUG] Claim interface failed: %s\n", libusb_error_name(result));
+        DEBUG_PRINT("Claim interface failed: %s\n", libusb_error_name(result));
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
     
@@ -232,7 +232,7 @@ thingino_error_t usb_device_release_interface(usb_device_t* device) {
     
     int result = libusb_release_interface(device->handle, 0);
     if (result != LIBUSB_SUCCESS) {
-        printf("[DEBUG] Release interface failed: %s\n", libusb_error_name(result));
+        DEBUG_PRINT("Release interface failed: %s\n", libusb_error_name(result));
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
     
@@ -250,7 +250,7 @@ thingino_error_t usb_device_control_transfer(usb_device_t* device, uint8_t reque
     int result = libusb_control_transfer(device->handle, request_type, request, value, index, data, length, 5000);
     
     if (result < 0) {
-        printf("[DEBUG] Control transfer failed: %s\n", libusb_error_name(result));
+        DEBUG_PRINT("Control transfer failed: %s\n", libusb_error_name(result));
         return THINGINO_ERROR_TRANSFER_FAILED;
     }
     
@@ -282,14 +282,14 @@ thingino_error_t usb_device_bulk_transfer(usb_device_t* device, uint8_t endpoint
     // Determine direction from endpoint (bit 7: 0=OUT, 1=IN)
     const char* direction = (endpoint & 0x80) ? "read" : "write";
 
-    printf("[DEBUG] Bulk transfer: %s %d bytes, timeout=%dms, endpoint=0x%02X\n",
+    DEBUG_PRINT("Bulk transfer: %s %d bytes, timeout=%dms, endpoint=0x%02X\n",
         direction, length, timeout, endpoint);
 
     // Use libusb for bulk transfer
     int result = libusb_bulk_transfer(device->handle, endpoint, data, length, transferred, timeout);
 
     if (result == LIBUSB_SUCCESS) {
-        printf("[DEBUG] Bulk transfer success: %d bytes transferred\n", *transferred);
+        DEBUG_PRINT("Bulk transfer success: %d bytes transferred\n", *transferred);
         return THINGINO_SUCCESS;
     }
     
@@ -310,7 +310,7 @@ thingino_error_t usb_device_interrupt_transfer(usb_device_t* device, uint8_t end
     // Determine direction from endpoint (bit 7: 0=OUT, 1=IN)
     const char* direction = (endpoint & 0x80) ? "read" : "write";
 
-    printf("[DEBUG] Interrupt transfer: %s %d bytes, timeout=%dms, endpoint=0x%02X\n",
+    DEBUG_PRINT("Interrupt transfer: %s %d bytes, timeout=%dms, endpoint=0x%02X\n",
         direction, length, timeout, endpoint);
 
     // Use libusb interrupt transfer
@@ -318,18 +318,18 @@ thingino_error_t usb_device_interrupt_transfer(usb_device_t* device, uint8_t end
                                           transferred, timeout);
     
     if (result == LIBUSB_SUCCESS) {
-        printf("[DEBUG] Interrupt transfer success (%s): %d bytes transferred\n",
+        DEBUG_PRINT("Interrupt transfer success (%s): %d bytes transferred\n",
             direction, *transferred);
         return THINGINO_SUCCESS;
     }
     
     if (result == LIBUSB_ERROR_TIMEOUT) {
-        printf("[DEBUG] Interrupt transfer timeout (%s): endpoint=0x%02X, length=%d, timeout=%dms\n",
+        DEBUG_PRINT("Interrupt transfer timeout (%s): endpoint=0x%02X, length=%d, timeout=%dms\n",
             direction, endpoint, length, timeout);
         return THINGINO_ERROR_TIMEOUT;
     }
     
-    printf("[DEBUG] Interrupt transfer failed (%s): %s (endpoint=0x%02X, length=%d, timeout=%dms)\n",
+    DEBUG_PRINT("Interrupt transfer failed (%s): %s (endpoint=0x%02X, length=%d, timeout=%dms)\n",
         direction, libusb_error_name(result), endpoint, length, timeout);
     return THINGINO_ERROR_TRANSFER_FAILED;
 }
@@ -363,7 +363,7 @@ thingino_error_t usb_device_vendor_request(usb_device_t* device, uint8_t request
         if (result == LIBUSB_ERROR_TIMEOUT || result == LIBUSB_ERROR_PIPE || result == LIBUSB_ERROR_NO_DEVICE) {
             retry_count++;
             if (retry_count < max_retries) {
-                printf("[DEBUG] Vendor request failed with %s, retrying in %d ms (attempt %d/%d)...\n", 
+                DEBUG_PRINT("Vendor request failed with %s, retrying in %d ms (attempt %d/%d)...\n", 
                     libusb_error_name(result), retry_delays[retry_count-1]/1000, retry_count, max_retries);
 #ifdef _WIN32
                 Sleep(retry_delays[retry_count-1] / 1000);
@@ -371,12 +371,12 @@ thingino_error_t usb_device_vendor_request(usb_device_t* device, uint8_t request
                 usleep(retry_delays[retry_count-1]);
 #endif
             } else {
-                printf("[DEBUG] Vendor request failed after %d retries: %s\n", max_retries, libusb_error_name(result));
+                DEBUG_PRINT("Vendor request failed after %d retries: %s\n", max_retries, libusb_error_name(result));
                 return THINGINO_ERROR_TRANSFER_FAILED;
             }
         } else {
             // Non-recoverable error
-            printf("[DEBUG] Vendor request failed: %s\n", libusb_error_name(result));
+            DEBUG_PRINT("Vendor request failed: %s\n", libusb_error_name(result));
             return THINGINO_ERROR_TRANSFER_FAILED;
         }
     }

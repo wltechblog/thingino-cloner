@@ -49,7 +49,7 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
-    printf("[DEBUG] FirmwareHandshakeReadChunk: index=%u, offset=0x%08X, size=%u\n",
+    DEBUG_PRINT("FirmwareHandshakeReadChunk: index=%u, offset=0x%08X, size=%u\n",
            chunk_index, chunk_offset, chunk_size);
 
     // NOTE: Unlike NAND_OPS, the handshake protocol does NOT use SetDataAddress/SetDataLength
@@ -102,23 +102,23 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
 
     // Bytes 32-39: zeros (already zeroed)
 
-    printf("[DEBUG] Sending handshake command (40 bytes)...\n");
+    DEBUG_PRINT("Sending handshake command (40 bytes)...\n");
 
     // Factory tool analysis: Always use VR_FW_WRITE1 (0x13) for firmware reads
     // VR_FW_WRITE2 (0x14) is used for different initialization commands, not reads
     uint8_t handshake_cmd_code = VR_FW_WRITE1;
-    printf("[DEBUG] Using command: 0x%02X\n", handshake_cmd_code);
+    DEBUG_PRINT("Using command: 0x%02X\n", handshake_cmd_code);
 
     int response_len = 0;
     result = usb_device_vendor_request(device, REQUEST_TYPE_OUT,
         handshake_cmd_code, 0, 0, handshake_cmd, 40, NULL, &response_len);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Failed to send handshake command: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Failed to send handshake command: %s\n", thingino_error_to_string(result));
         return result;
     }
 
-    printf("[DEBUG] Handshake command sent, waiting for status...\n");
+    DEBUG_PRINT("Handshake command sent, waiting for status...\n");
 
     // Small delay to allow device to process
     usleep(50000); // 50ms
@@ -130,16 +130,16 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
         VR_FW_READ_STATUS2, 0, 0, NULL, 8, status_buffer, &status_len);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Failed to read status handshake: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Failed to read status handshake: %s\n", thingino_error_to_string(result));
         return result;
     }
 
     if (status_len < 8) {
-        printf("[DEBUG] Warning: Incomplete status handshake (%d/8 bytes)\n", status_len);
+        DEBUG_PRINT("Warning: Incomplete status handshake (%d/8 bytes)\n", status_len);
     }
 
     // Debug: Print status buffer content
-    printf("[DEBUG] Status buffer: %02X %02X %02X %02X %02X %02X %02X %02X\n",
+    DEBUG_PRINT("Status buffer: %02X %02X %02X %02X %02X %02X %02X %02X\n",
         status_buffer[0], status_buffer[1], status_buffer[2], status_buffer[3],
         status_buffer[4], status_buffer[5], status_buffer[6], status_buffer[7]);
 
@@ -147,20 +147,20 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
     firmware_handshake_t* hs = (firmware_handshake_t*)status_buffer;
     uint32_t hs_result = parse_handshake_result(hs);
     
-    printf("[DEBUG] Handshake result: 0x%08X (low=0x%04X, high=0x%04X, status=0x%04X)\n",
+    DEBUG_PRINT("Handshake result: 0x%08X (low=0x%04X, high=0x%04X, status=0x%04X)\n",
            hs_result, hs->result_low, hs->result_high, hs->status);
 
     // Check for CRC failure indication (0xFFFF in result fields)
     // NOTE: Device may return 0xFFFF legitimately, so we log but don't fail
     if (hs->result_low == 0xFFFF || hs->result_high == 0xFFFF) {
-        printf("[DEBUG] Warning: Device handshake shows 0xFFFF (may not indicate failure)\n");
+        DEBUG_PRINT("Warning: Device handshake shows 0xFFFF (may not indicate failure)\n");
     }
 
     // Wait for device to prepare data for bulk transfer
     usleep(50000); // 50ms delay for device to prepare bulk data
 
     // Now perform bulk-in transfer to read the actual data
-    printf("[DEBUG] Reading %u bytes of data via bulk-in...\n", chunk_size);
+    DEBUG_PRINT("Reading %u bytes of data via bulk-in...\n", chunk_size);
 
     uint8_t* data_buffer = (uint8_t*)malloc(chunk_size);
     if (!data_buffer) {
@@ -173,14 +173,14 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
     result = usb_device_bulk_transfer(device, ENDPOINT_IN, data_buffer, chunk_size, &transferred, timeout);
     
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Bulk-in transfer failed: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Bulk-in transfer failed: %s\n", thingino_error_to_string(result));
         free(data_buffer);
         return result;
     }
 
-    printf("[DEBUG] Data received: %d/%u bytes\n", transferred, chunk_size);
-    printf("[DEBUG] DEBUG: transferred value after bulk transfer = %d\n", transferred);
-    printf("[DEBUG] First 32 bytes: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n",
+    DEBUG_PRINT("Data received: %d/%u bytes\n", transferred, chunk_size);
+    DEBUG_PRINT("DEBUG: transferred value after bulk transfer = %d\n", transferred);
+    DEBUG_PRINT("First 32 bytes: %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X %02X\n",
            data_buffer[0], data_buffer[1], data_buffer[2], data_buffer[3],
            data_buffer[4], data_buffer[5], data_buffer[6], data_buffer[7],
            data_buffer[8], data_buffer[9], data_buffer[10], data_buffer[11],
@@ -193,7 +193,7 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
     // CRITICAL: After bulk IN completes, must read final status with VR_FW_READ (0x10)
     // Factory tool analysis shows this is required to acknowledge the transfer
     // and prepare the device for the next operation
-    printf("[DEBUG] Reading final status with VR_FW_READ (0x10)...\n");
+    DEBUG_PRINT("Reading final status with VR_FW_READ (0x10)...\n");
     // NOTE: Buffer must be 8 bytes because usb_device_vendor_request always reads 8 bytes when response is provided
     uint8_t final_status[8] = {0};
     int final_status_len = 0;
@@ -201,19 +201,19 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
         VR_FW_READ, 0, 0, NULL, 8, final_status, &final_status_len);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Warning: Failed to read final status: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Warning: Failed to read final status: %s\n", thingino_error_to_string(result));
         // Don't fail the operation - the data was already received
     } else {
-        printf("[DEBUG] Final status: %02X %02X %02X %02X\n",
+        DEBUG_PRINT("Final status: %02X %02X %02X %02X\n",
                final_status[0], final_status[1], final_status[2], final_status[3]);
     }
 
-    printf("[DEBUG] DEBUG: transferred value before assignment = %d\n", transferred);
+    DEBUG_PRINT("DEBUG: transferred value before assignment = %d\n", transferred);
 
     *out_data = data_buffer;
     *out_len = transferred;
 
-    printf("[DEBUG] firmware_handshake_read_chunk returning: transferred=%d, *out_len=%d\n", transferred, *out_len);
+    DEBUG_PRINT("firmware_handshake_read_chunk returning: transferred=%d, *out_len=%d\n", transferred, *out_len);
 
     return THINGINO_SUCCESS;
 }
@@ -234,7 +234,7 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
-    printf("[DEBUG] FirmwareHandshakeWriteChunk: index=%u, offset=0x%08X, size=%u\n",
+    DEBUG_PRINT("FirmwareHandshakeWriteChunk: index=%u, offset=0x%08X, size=%u\n",
            chunk_index, chunk_offset, data_size);
 
     // Build 40-byte handshake command for write
@@ -265,31 +265,31 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
     // Send handshake using alternating command codes
     uint8_t handshake_cmd_code = (chunk_index % 2 == 0) ? VR_FW_WRITE1 : VR_FW_WRITE2;
     
-    printf("[DEBUG] Sending write handshake with command 0x%02X...\n", handshake_cmd_code);
+    DEBUG_PRINT("Sending write handshake with command 0x%02X...\n", handshake_cmd_code);
 
     int response_len = 0;
     thingino_error_t result = usb_device_vendor_request(device, REQUEST_TYPE_OUT,
         handshake_cmd_code, 0, 0, handshake_cmd, 40, NULL, &response_len);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Failed to send write handshake: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Failed to send write handshake: %s\n", thingino_error_to_string(result));
         return result;
     }
 
     usleep(50000); // 50ms delay
 
     // Send actual data via bulk-out
-    printf("[DEBUG] Sending %u bytes of data via bulk-out...\n", data_size);
+    DEBUG_PRINT("Sending %u bytes of data via bulk-out...\n", data_size);
 
     int transferred = 0;
     result = usb_device_bulk_transfer(device, ENDPOINT_OUT, (uint8_t*)data, data_size, &transferred, 10000);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Bulk-out transfer failed: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Bulk-out transfer failed: %s\n", thingino_error_to_string(result));
         return result;
     }
 
-    printf("[DEBUG] Data sent: %d/%u bytes\n", transferred, data_size);
+    DEBUG_PRINT("Data sent: %d/%u bytes\n", transferred, data_size);
 
     usleep(50000); // 50ms delay
 
@@ -300,17 +300,17 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
         VR_FW_READ_STATUS2, 0, 0, NULL, 8, status_buffer, &status_len);
 
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Failed to read write status: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Failed to read write status: %s\n", thingino_error_to_string(result));
         return result;
     }
 
     firmware_handshake_t* hs = (firmware_handshake_t*)status_buffer;
     uint32_t hs_result = parse_handshake_result(hs);
     
-    printf("[DEBUG] Write status result: 0x%08X\n", hs_result);
+    DEBUG_PRINT("Write status result: 0x%08X\n", hs_result);
 
     if (hs->result_low == 0xFFFF || hs->result_high == 0xFFFF) {
-        printf("[DEBUG] Write verification failed (CRC mismatch)\n");
+        DEBUG_PRINT("Write verification failed (CRC mismatch)\n");
         return THINGINO_ERROR_PROTOCOL;
     }
 
@@ -325,12 +325,12 @@ thingino_error_t firmware_handshake_init(usb_device_t* device) {
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
-    printf("[DEBUG] Initializing firmware handshake protocol...\n");
+    DEBUG_PRINT("Initializing firmware handshake protocol...\n");
 
     // Send firmware handshake to initialize protocol
     thingino_error_t result = protocol_fw_handshake(device);
     if (result != THINGINO_SUCCESS) {
-        printf("[DEBUG] Firmware handshake failed: %s\n", thingino_error_to_string(result));
+        DEBUG_PRINT("Firmware handshake failed: %s\n", thingino_error_to_string(result));
         return result;
     }
 

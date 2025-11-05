@@ -1,3 +1,4 @@
 firmware.bin
 .zencoder
 build/thingino-cloner
+*.o

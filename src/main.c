@@ -2,11 +2,18 @@
 #include <unistd.h>  // for sleep()
 
 // ============================================================================
+// GLOBAL DEBUG FLAG
+// ============================================================================
+
+bool g_debug_enabled = false;
+
+// ============================================================================
 // MAIN CLI INTERFACE
 // ============================================================================
 
 typedef struct {
     bool verbose;
+    bool debug;
     bool list_devices;
     bool bootstrap;
     bool read_firmware;
@@ -26,6 +33,7 @@ void print_usage(const char* program_name) {
     printf("Options:\n");
     printf("  -h, --help              Show this help message\n");
     printf("  -v, --verbose           Enable verbose logging\n");
+    printf("  -d, --debug             Enable debug output\n");
     printf("  -l, --list             List connected devices\n");
     printf("  -i, --index <num>       Device index to operate on (default: 0)\n");
     printf("  -b, --bootstrap         Bootstrap device to firmware stage\n");
@@ -57,6 +65,8 @@ thingino_error_t parse_arguments(int argc, char* argv[], cli_options_t* options)
             exit(0);
         } else if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--verbose") == 0) {
             options->verbose = true;
+        } else if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--debug") == 0) {
+            options->debug = true;
         } else if (strcmp(argv[i], "-l") == 0 || strcmp(argv[i], "--list") == 0) {
             options->list_devices = true;
         } else if (strcmp(argv[i], "-b") == 0 || strcmp(argv[i], "--bootstrap") == 0) {
@@ -181,7 +191,7 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         device_info->vendor, device_info->product);
     
     // Open device
-    printf("[DEBUG] Opening device...\n");
+    DEBUG_PRINT("Opening device...\n");
     usb_device_t* device;
     result = usb_manager_open_device(manager, device_info, &device);
     if (result != THINGINO_SUCCESS) {
@@ -189,10 +199,10 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         free(devices);
         return result;
     }
-    printf("[DEBUG] Device opened successfully\n");
-    printf("[DEBUG] Device variant from manager: %d (%s)\n",
+    DEBUG_PRINT("Device opened successfully\n");
+    DEBUG_PRINT("Device variant from manager: %d (%s)\n",
         device_info->variant, processor_variant_to_string(device_info->variant));
-    printf("[DEBUG] Device variant from opened device: %d (%s)\n",
+    DEBUG_PRINT("Device variant from opened device: %d (%s)\n",
         device->info.variant, processor_variant_to_string(device->info.variant));
     
     // Create bootstrap config
@@ -603,6 +613,9 @@ int main(int argc, char* argv[]) {
     if (result != THINGINO_SUCCESS) {
         return 1;
     }
+    
+    // Set global debug flag based on CLI options
+    g_debug_enabled = options.debug;
     
     // Initialize USB manager
     usb_manager_t manager;
