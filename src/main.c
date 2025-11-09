@@ -308,8 +308,20 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
         cpu_info_t cpu_info;
         thingino_error_t cpu_result = usb_device_get_cpu_info(test_device, &cpu_info);
         if (cpu_result == THINGINO_SUCCESS) {
+            // Show raw hex bytes for debugging
+            printf("CPU magic (raw hex): ");
+            for (int i = 0; i < 8; i++) {
+                printf("%02X ", cpu_info.magic[i]);
+            }
+            printf("\n");
+
             printf("Current device stage: %s (CPU magic: %.8s)\n",
                 device_stage_to_string(cpu_info.stage), cpu_info.magic);
+
+            // Detect and display processor variant
+            processor_variant_t detected_variant = detect_variant_from_magic(cpu_info.clean_magic);
+            printf("Detected processor variant: %s (from magic: '%s')\n",
+                processor_variant_to_string(detected_variant), cpu_info.clean_magic);
 
             // Check if device PID matches firmware stage
             bool pid_is_firmware = (device_info->product == PRODUCT_ID_FIRMWARE ||

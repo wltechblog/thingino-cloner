@@ -22,6 +22,22 @@ thingino-cloner: \
   CMakeFiles/thingino-cloner.dir/src/ddr/ddr_config_database.c.o \
   CMakeFiles/thingino-cloner.dir/src/utils.c.o \
   CMakeFiles/thingino-cloner.dir/src/bootstrap.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libusb-1.0.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libz.so \
   /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a \
@@ -97,6 +113,38 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_config_database.c.o:
 CMakeFiles/thingino-cloner.dir/src/utils.c.o:
 
 CMakeFiles/thingino-cloner.dir/src/bootstrap.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/libusb-1.0.so:
 

@@ -42,10 +42,17 @@ int ddr_get_platform_config_by_variant(int variant, platform_config_t *config) {
 
     // Map processor variant enum to platform name
     // These values match the processor_variant_t enum from thingino.h:
-    // VARIANT_T31X = 5, VARIANT_T31ZX = 6, VARIANT_T30 = 3, VARIANT_T41 = 9
+    // VARIANT_T20 = 0, VARIANT_T21 = 1, VARIANT_T30 = 3, VARIANT_T31X = 5,
+    // VARIANT_T31ZX = 6, VARIANT_T41 = 9
     const char *platform_name;
 
     switch (variant) {
+        case 0:  // VARIANT_T20
+            platform_name = "t20";
+            break;
+        case 1:  // VARIANT_T21
+            platform_name = "t21";
+            break;
         case 3:  // VARIANT_T30
             platform_name = "t30";
             break;

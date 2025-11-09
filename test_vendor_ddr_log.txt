@@ -1,0 +1,25 @@
+Reading firmware from device [0]: t20 bootrom (Bus 003 Address 103)
+Checking device stage...
+CPU magic (raw hex): 54 20 32 20 30 20 56 20 
+Current device stage: bootrom (CPU magic: T 2 0 V )
+Detected processor variant: t20 (from magic: 'T 2 0 V ')
+Device not in firmware stage, attempting bootstrap first...
+Bootstrapping device [0]: t20 bootrom (Bus 003 Address 103)
+  Vendor: 0xa108, Product: 0xc309
+Starting bootstrap sequence for t20
+CPU magic (raw hex): 54 20 32 20 30 20 56 20 
+CPU info: stage=bootrom, magic='T 2 0 V '
+Detected processor variant: t20 (from magic: 'T 2 0 V ')
+✓ Loaded custom DDR config: vendor_ddr_t20.bin (324 bytes)
+✓ Loaded default SPL: 10092 bytes
+✓ Loaded default U-Boot: 390532 bytes
+Firmware loaded - Config: 324 bytes, SPL: 10092 bytes, U-Boot: 390532 bytes
+Loading DDR configuration
+DDR configuration loaded
+Loading SPL (Stage 1 bootloader)
+SPL loaded
+SPL execution started
+Found 1 Ingenic device(s) after re-enumeration
+Loading U-Boot (Stage 2 bootloader)
+Bootstrap failed: Transfer failed
+Bootstrap failed: Transfer failed

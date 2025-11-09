@@ -65,7 +65,7 @@ int main(void) {
     printf("%-10s %-30s\n", "Processor", "Default DDR Chip");
     printf("%-10s %-30s\n", "----------", "------------------------------");
 
-    const char *test_processors[] = {"a1", "a1ne", "a1nt", "t20", "t21", "t23", "t30", "t31", "t31x", "t40", "t41"};
+    const char *test_processors[] = {"a1", "a1ne", "a1nt", "t20", "t21", "t23", "t30", "t31", "t31x", "t40", "t41", "t41n"};
     for (size_t i = 0; i < sizeof(test_processors) / sizeof(test_processors[0]); i++) {
         const ddr_chip_config_t *default_ddr = ddr_chip_config_get_default(test_processors[i]);
         if (default_ddr) {

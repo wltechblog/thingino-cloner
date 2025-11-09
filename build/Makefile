@@ -291,6 +291,19 @@ test_config_database/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_config_database.dir/build.make CMakeFiles/test_config_database.dir/build
 .PHONY : test_config_database/fast
 
+#=============================================================================
+# Target rules for targets named test_firmware_database
+
+# Build rule for target.
+test_firmware_database: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_firmware_database
+.PHONY : test_firmware_database
+
+# fast build rule for target.
+test_firmware_database/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/build
+.PHONY : test_firmware_database/fast
+
 src/bootstrap.o: src/bootstrap.c.o
 .PHONY : src/bootstrap.o
 
@@ -636,6 +649,438 @@ src/ddr/parser.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/ddr/parser.c.s
 .PHONY : src/ddr/parser.c.s
 
+src/firmware/firmware_a1_n_ne_x.o: src/firmware/firmware_a1_n_ne_x.c.o
+.PHONY : src/firmware/firmware_a1_n_ne_x.o
+
+# target to build an object file
+src/firmware/firmware_a1_n_ne_x.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_n_ne_x.c.o
+.PHONY : src/firmware/firmware_a1_n_ne_x.c.o
+
+src/firmware/firmware_a1_n_ne_x.i: src/firmware/firmware_a1_n_ne_x.c.i
+.PHONY : src/firmware/firmware_a1_n_ne_x.i
+
+# target to preprocess a source file
+src/firmware/firmware_a1_n_ne_x.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_n_ne_x.c.i
+.PHONY : src/firmware/firmware_a1_n_ne_x.c.i
+
+src/firmware/firmware_a1_n_ne_x.s: src/firmware/firmware_a1_n_ne_x.c.s
+.PHONY : src/firmware/firmware_a1_n_ne_x.s
+
+# target to generate assembly for a file
+src/firmware/firmware_a1_n_ne_x.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_n_ne_x.c.s
+.PHONY : src/firmware/firmware_a1_n_ne_x.c.s
+
+src/firmware/firmware_a1_nt_a.o: src/firmware/firmware_a1_nt_a.c.o
+.PHONY : src/firmware/firmware_a1_nt_a.o
+
+# target to build an object file
+src/firmware/firmware_a1_nt_a.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_nt_a.c.o
+.PHONY : src/firmware/firmware_a1_nt_a.c.o
+
+src/firmware/firmware_a1_nt_a.i: src/firmware/firmware_a1_nt_a.c.i
+.PHONY : src/firmware/firmware_a1_nt_a.i
+
+# target to preprocess a source file
+src/firmware/firmware_a1_nt_a.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_nt_a.c.i
+.PHONY : src/firmware/firmware_a1_nt_a.c.i
+
+src/firmware/firmware_a1_nt_a.s: src/firmware/firmware_a1_nt_a.c.s
+.PHONY : src/firmware/firmware_a1_nt_a.s
+
+# target to generate assembly for a file
+src/firmware/firmware_a1_nt_a.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_a1_nt_a.c.s
+.PHONY : src/firmware/firmware_a1_nt_a.c.s
+
+src/firmware/firmware_database.o: src/firmware/firmware_database.c.o
+.PHONY : src/firmware/firmware_database.o
+
+# target to build an object file
+src/firmware/firmware_database.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_database.c.o
+.PHONY : src/firmware/firmware_database.c.o
+
+src/firmware/firmware_database.i: src/firmware/firmware_database.c.i
+.PHONY : src/firmware/firmware_database.i
+
+# target to preprocess a source file
+src/firmware/firmware_database.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_database.c.i
+.PHONY : src/firmware/firmware_database.c.i
+
+src/firmware/firmware_database.s: src/firmware/firmware_database.c.s
+.PHONY : src/firmware/firmware_database.s
+
+# target to generate assembly for a file
+src/firmware/firmware_database.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_database.c.s
+.PHONY : src/firmware/firmware_database.c.s
+
+src/firmware/firmware_t20.o: src/firmware/firmware_t20.c.o
+.PHONY : src/firmware/firmware_t20.o
+
+# target to build an object file
+src/firmware/firmware_t20.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t20.c.o
+.PHONY : src/firmware/firmware_t20.c.o
+
+src/firmware/firmware_t20.i: src/firmware/firmware_t20.c.i
+.PHONY : src/firmware/firmware_t20.i
+
+# target to preprocess a source file
+src/firmware/firmware_t20.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t20.c.i
+.PHONY : src/firmware/firmware_t20.c.i
+
+src/firmware/firmware_t20.s: src/firmware/firmware_t20.c.s
+.PHONY : src/firmware/firmware_t20.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t20.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t20.c.s
+.PHONY : src/firmware/firmware_t20.c.s
+
+src/firmware/firmware_t21.o: src/firmware/firmware_t21.c.o
+.PHONY : src/firmware/firmware_t21.o
+
+# target to build an object file
+src/firmware/firmware_t21.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t21.c.o
+.PHONY : src/firmware/firmware_t21.c.o
+
+src/firmware/firmware_t21.i: src/firmware/firmware_t21.c.i
+.PHONY : src/firmware/firmware_t21.i
+
+# target to preprocess a source file
+src/firmware/firmware_t21.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t21.c.i
+.PHONY : src/firmware/firmware_t21.c.i
+
+src/firmware/firmware_t21.s: src/firmware/firmware_t21.c.s
+.PHONY : src/firmware/firmware_t21.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t21.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t21.c.s
+.PHONY : src/firmware/firmware_t21.c.s
+
+src/firmware/firmware_t23.o: src/firmware/firmware_t23.c.o
+.PHONY : src/firmware/firmware_t23.o
+
+# target to build an object file
+src/firmware/firmware_t23.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t23.c.o
+.PHONY : src/firmware/firmware_t23.c.o
+
+src/firmware/firmware_t23.i: src/firmware/firmware_t23.c.i
+.PHONY : src/firmware/firmware_t23.i
+
+# target to preprocess a source file
+src/firmware/firmware_t23.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t23.c.i
+.PHONY : src/firmware/firmware_t23.c.i
+
+src/firmware/firmware_t23.s: src/firmware/firmware_t23.c.s
+.PHONY : src/firmware/firmware_t23.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t23.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t23.c.s
+.PHONY : src/firmware/firmware_t23.c.s
+
+src/firmware/firmware_t30.o: src/firmware/firmware_t30.c.o
+.PHONY : src/firmware/firmware_t30.o
+
+# target to build an object file
+src/firmware/firmware_t30.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30.c.o
+.PHONY : src/firmware/firmware_t30.c.o
+
+src/firmware/firmware_t30.i: src/firmware/firmware_t30.c.i
+.PHONY : src/firmware/firmware_t30.i
+
+# target to preprocess a source file
+src/firmware/firmware_t30.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30.c.i
+.PHONY : src/firmware/firmware_t30.c.i
+
+src/firmware/firmware_t30.s: src/firmware/firmware_t30.c.s
+.PHONY : src/firmware/firmware_t30.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t30.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30.c.s
+.PHONY : src/firmware/firmware_t30.c.s
+
+src/firmware/firmware_t30a.o: src/firmware/firmware_t30a.c.o
+.PHONY : src/firmware/firmware_t30a.o
+
+# target to build an object file
+src/firmware/firmware_t30a.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30a.c.o
+.PHONY : src/firmware/firmware_t30a.c.o
+
+src/firmware/firmware_t30a.i: src/firmware/firmware_t30a.c.i
+.PHONY : src/firmware/firmware_t30a.i
+
+# target to preprocess a source file
+src/firmware/firmware_t30a.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30a.c.i
+.PHONY : src/firmware/firmware_t30a.c.i
+
+src/firmware/firmware_t30a.s: src/firmware/firmware_t30a.c.s
+.PHONY : src/firmware/firmware_t30a.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t30a.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30a.c.s
+.PHONY : src/firmware/firmware_t30a.c.s
+
+src/firmware/firmware_t30nl.o: src/firmware/firmware_t30nl.c.o
+.PHONY : src/firmware/firmware_t30nl.o
+
+# target to build an object file
+src/firmware/firmware_t30nl.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30nl.c.o
+.PHONY : src/firmware/firmware_t30nl.c.o
+
+src/firmware/firmware_t30nl.i: src/firmware/firmware_t30nl.c.i
+.PHONY : src/firmware/firmware_t30nl.i
+
+# target to preprocess a source file
+src/firmware/firmware_t30nl.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30nl.c.i
+.PHONY : src/firmware/firmware_t30nl.c.i
+
+src/firmware/firmware_t30nl.s: src/firmware/firmware_t30nl.c.s
+.PHONY : src/firmware/firmware_t30nl.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t30nl.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30nl.c.s
+.PHONY : src/firmware/firmware_t30nl.c.s
+
+src/firmware/firmware_t30x.o: src/firmware/firmware_t30x.c.o
+.PHONY : src/firmware/firmware_t30x.o
+
+# target to build an object file
+src/firmware/firmware_t30x.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30x.c.o
+.PHONY : src/firmware/firmware_t30x.c.o
+
+src/firmware/firmware_t30x.i: src/firmware/firmware_t30x.c.i
+.PHONY : src/firmware/firmware_t30x.i
+
+# target to preprocess a source file
+src/firmware/firmware_t30x.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30x.c.i
+.PHONY : src/firmware/firmware_t30x.c.i
+
+src/firmware/firmware_t30x.s: src/firmware/firmware_t30x.c.s
+.PHONY : src/firmware/firmware_t30x.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t30x.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t30x.c.s
+.PHONY : src/firmware/firmware_t30x.c.s
+
+src/firmware/firmware_t31.o: src/firmware/firmware_t31.c.o
+.PHONY : src/firmware/firmware_t31.o
+
+# target to build an object file
+src/firmware/firmware_t31.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31.c.o
+.PHONY : src/firmware/firmware_t31.c.o
+
+src/firmware/firmware_t31.i: src/firmware/firmware_t31.c.i
+.PHONY : src/firmware/firmware_t31.i
+
+# target to preprocess a source file
+src/firmware/firmware_t31.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31.c.i
+.PHONY : src/firmware/firmware_t31.c.i
+
+src/firmware/firmware_t31.s: src/firmware/firmware_t31.c.s
+.PHONY : src/firmware/firmware_t31.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t31.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31.c.s
+.PHONY : src/firmware/firmware_t31.c.s
+
+src/firmware/firmware_t31a.o: src/firmware/firmware_t31a.c.o
+.PHONY : src/firmware/firmware_t31a.o
+
+# target to build an object file
+src/firmware/firmware_t31a.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31a.c.o
+.PHONY : src/firmware/firmware_t31a.c.o
+
+src/firmware/firmware_t31a.i: src/firmware/firmware_t31a.c.i
+.PHONY : src/firmware/firmware_t31a.i
+
+# target to preprocess a source file
+src/firmware/firmware_t31a.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31a.c.i
+.PHONY : src/firmware/firmware_t31a.c.i
+
+src/firmware/firmware_t31a.s: src/firmware/firmware_t31a.c.s
+.PHONY : src/firmware/firmware_t31a.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t31a.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31a.c.s
+.PHONY : src/firmware/firmware_t31a.c.s
+
+src/firmware/firmware_t31nl.o: src/firmware/firmware_t31nl.c.o
+.PHONY : src/firmware/firmware_t31nl.o
+
+# target to build an object file
+src/firmware/firmware_t31nl.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31nl.c.o
+.PHONY : src/firmware/firmware_t31nl.c.o
+
+src/firmware/firmware_t31nl.i: src/firmware/firmware_t31nl.c.i
+.PHONY : src/firmware/firmware_t31nl.i
+
+# target to preprocess a source file
+src/firmware/firmware_t31nl.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31nl.c.i
+.PHONY : src/firmware/firmware_t31nl.c.i
+
+src/firmware/firmware_t31nl.s: src/firmware/firmware_t31nl.c.s
+.PHONY : src/firmware/firmware_t31nl.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t31nl.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31nl.c.s
+.PHONY : src/firmware/firmware_t31nl.c.s
+
+src/firmware/firmware_t31x.o: src/firmware/firmware_t31x.c.o
+.PHONY : src/firmware/firmware_t31x.o
+
+# target to build an object file
+src/firmware/firmware_t31x.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31x.c.o
+.PHONY : src/firmware/firmware_t31x.c.o
+
+src/firmware/firmware_t31x.i: src/firmware/firmware_t31x.c.i
+.PHONY : src/firmware/firmware_t31x.i
+
+# target to preprocess a source file
+src/firmware/firmware_t31x.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31x.c.i
+.PHONY : src/firmware/firmware_t31x.c.i
+
+src/firmware/firmware_t31x.s: src/firmware/firmware_t31x.c.s
+.PHONY : src/firmware/firmware_t31x.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t31x.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t31x.c.s
+.PHONY : src/firmware/firmware_t31x.c.s
+
+src/firmware/firmware_t40.o: src/firmware/firmware_t40.c.o
+.PHONY : src/firmware/firmware_t40.o
+
+# target to build an object file
+src/firmware/firmware_t40.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t40.c.o
+.PHONY : src/firmware/firmware_t40.c.o
+
+src/firmware/firmware_t40.i: src/firmware/firmware_t40.c.i
+.PHONY : src/firmware/firmware_t40.i
+
+# target to preprocess a source file
+src/firmware/firmware_t40.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t40.c.i
+.PHONY : src/firmware/firmware_t40.c.i
+
+src/firmware/firmware_t40.s: src/firmware/firmware_t40.c.s
+.PHONY : src/firmware/firmware_t40.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t40.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t40.c.s
+.PHONY : src/firmware/firmware_t40.c.s
+
+src/firmware/firmware_t41.o: src/firmware/firmware_t41.c.o
+.PHONY : src/firmware/firmware_t41.o
+
+# target to build an object file
+src/firmware/firmware_t41.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t41.c.o
+.PHONY : src/firmware/firmware_t41.c.o
+
+src/firmware/firmware_t41.i: src/firmware/firmware_t41.c.i
+.PHONY : src/firmware/firmware_t41.i
+
+# target to preprocess a source file
+src/firmware/firmware_t41.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t41.c.i
+.PHONY : src/firmware/firmware_t41.c.i
+
+src/firmware/firmware_t41.s: src/firmware/firmware_t41.c.s
+.PHONY : src/firmware/firmware_t41.s
+
+# target to generate assembly for a file
+src/firmware/firmware_t41.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/firmware/firmware_t41.c.s
+.PHONY : src/firmware/firmware_t41.c.s
+
 src/firmware/flash_descriptor.o: src/firmware/flash_descriptor.c.o
 .PHONY : src/firmware/flash_descriptor.o
 
@@ -948,6 +1393,30 @@ src/test_ddrc_analysis.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddrc_analysis.dir/build.make CMakeFiles/test_ddrc_analysis.dir/src/test_ddrc_analysis.c.s
 .PHONY : src/test_ddrc_analysis.c.s
 
+src/test_firmware_database.o: src/test_firmware_database.c.o
+.PHONY : src/test_firmware_database.o
+
+# target to build an object file
+src/test_firmware_database.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/test_firmware_database.c.o
+.PHONY : src/test_firmware_database.c.o
+
+src/test_firmware_database.i: src/test_firmware_database.c.i
+.PHONY : src/test_firmware_database.i
+
+# target to preprocess a source file
+src/test_firmware_database.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/test_firmware_database.c.i
+.PHONY : src/test_firmware_database.c.i
+
+src/test_firmware_database.s: src/test_firmware_database.c.s
+.PHONY : src/test_firmware_database.s
+
+# target to generate assembly for a file
+src/test_firmware_database.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_firmware_database.dir/build.make CMakeFiles/test_firmware_database.dir/src/test_firmware_database.c.s
+.PHONY : src/test_firmware_database.c.s
+
 src/test_txx_mapping_analysis.o: src/test_txx_mapping_analysis.c.o
 .PHONY : src/test_txx_mapping_analysis.o
 
@@ -1088,6 +1557,7 @@ help:
 	@echo "... test_ddr_multiplechip"
 	@echo "... test_ddr_reference_analysis"
 	@echo "... test_ddrc_analysis"
+	@echo "... test_firmware_database"
 	@echo "... test_txx_mapping_analysis"
 	@echo "... thingino-cloner"
 	@echo "... src/bootstrap.o"
@@ -1123,6 +1593,54 @@ help:
 	@echo "... src/ddr/parser.o"
 	@echo "... src/ddr/parser.i"
 	@echo "... src/ddr/parser.s"
+	@echo "... src/firmware/firmware_a1_n_ne_x.o"
+	@echo "... src/firmware/firmware_a1_n_ne_x.i"
+	@echo "... src/firmware/firmware_a1_n_ne_x.s"
+	@echo "... src/firmware/firmware_a1_nt_a.o"
+	@echo "... src/firmware/firmware_a1_nt_a.i"
+	@echo "... src/firmware/firmware_a1_nt_a.s"
+	@echo "... src/firmware/firmware_database.o"
+	@echo "... src/firmware/firmware_database.i"
+	@echo "... src/firmware/firmware_database.s"
+	@echo "... src/firmware/firmware_t20.o"
+	@echo "... src/firmware/firmware_t20.i"
+	@echo "... src/firmware/firmware_t20.s"
+	@echo "... src/firmware/firmware_t21.o"
+	@echo "... src/firmware/firmware_t21.i"
+	@echo "... src/firmware/firmware_t21.s"
+	@echo "... src/firmware/firmware_t23.o"
+	@echo "... src/firmware/firmware_t23.i"
+	@echo "... src/firmware/firmware_t23.s"
+	@echo "... src/firmware/firmware_t30.o"
+	@echo "... src/firmware/firmware_t30.i"
+	@echo "... src/firmware/firmware_t30.s"
+	@echo "... src/firmware/firmware_t30a.o"
+	@echo "... src/firmware/firmware_t30a.i"
+	@echo "... src/firmware/firmware_t30a.s"
+	@echo "... src/firmware/firmware_t30nl.o"
+	@echo "... src/firmware/firmware_t30nl.i"
+	@echo "... src/firmware/firmware_t30nl.s"
+	@echo "... src/firmware/firmware_t30x.o"
+	@echo "... src/firmware/firmware_t30x.i"
+	@echo "... src/firmware/firmware_t30x.s"
+	@echo "... src/firmware/firmware_t31.o"
+	@echo "... src/firmware/firmware_t31.i"
+	@echo "... src/firmware/firmware_t31.s"
+	@echo "... src/firmware/firmware_t31a.o"
+	@echo "... src/firmware/firmware_t31a.i"
+	@echo "... src/firmware/firmware_t31a.s"
+	@echo "... src/firmware/firmware_t31nl.o"
+	@echo "... src/firmware/firmware_t31nl.i"
+	@echo "... src/firmware/firmware_t31nl.s"
+	@echo "... src/firmware/firmware_t31x.o"
+	@echo "... src/firmware/firmware_t31x.i"
+	@echo "... src/firmware/firmware_t31x.s"
+	@echo "... src/firmware/firmware_t40.o"
+	@echo "... src/firmware/firmware_t40.i"
+	@echo "... src/firmware/firmware_t40.s"
+	@echo "... src/firmware/firmware_t41.o"
+	@echo "... src/firmware/firmware_t41.i"
+	@echo "... src/firmware/firmware_t41.s"
 	@echo "... src/firmware/flash_descriptor.o"
 	@echo "... src/firmware/flash_descriptor.i"
 	@echo "... src/firmware/flash_descriptor.s"
@@ -1162,6 +1680,9 @@ help:
 	@echo "... src/test_ddrc_analysis.o"
 	@echo "... src/test_ddrc_analysis.i"
 	@echo "... src/test_ddrc_analysis.s"
+	@echo "... src/test_firmware_database.o"
+	@echo "... src/test_firmware_database.i"
+	@echo "... src/test_firmware_database.s"
 	@echo "... src/test_txx_mapping_analysis.o"
 	@echo "... src/test_txx_mapping_analysis.i"
 	@echo "... src/test_txx_mapping_analysis.s"

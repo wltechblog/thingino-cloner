@@ -39,9 +39,21 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
         printf("Continuing with bootstrap anyway - device may not be ready\n");
         // Don't exit - continue with bootstrap and let it fail gracefully if needed
     } else {
+        // Show raw hex bytes for debugging
+        printf("CPU magic (raw hex): ");
+        for (int i = 0; i < 8; i++) {
+            printf("%02X ", cpu_info.magic[i]);
+        }
+        printf("\n");
+
         printf("CPU info: stage=%s, magic='%.8s'\n",
             device_stage_to_string(cpu_info.stage), cpu_info.magic);
-        
+
+        // Detect and display processor variant
+        processor_variant_t detected_variant = detect_variant_from_magic(cpu_info.clean_magic);
+        printf("Detected processor variant: %s (from magic: '%s')\n",
+            processor_variant_to_string(detected_variant), cpu_info.clean_magic);
+
         // Update device stage based on actual CPU info
         if (cpu_info.stage == STAGE_FIRMWARE) {
             device->info.stage = STAGE_FIRMWARE;
@@ -97,14 +109,17 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     }
     printf("SPL loaded\n");
     
-    // Step 3: Set execution size and execute SPL
-    DEBUG_PRINT("Setting execution size to 0x7000\n");
-    result = protocol_set_data_length(device, 0x7000);
+    // Step 3: Set execution size (d2i_len) and execute SPL
+    // This is processor-specific: T20 uses 0x4000, most others use 0x7000
+    uint32_t d2i_len = (device->info.variant == VARIANT_T20) ? 0x4000 : 0x7000;
+    DEBUG_PRINT("Setting execution size (d2i_len) to 0x%x for %s\n",
+        d2i_len, processor_variant_to_string(device->info.variant));
+    result = protocol_set_data_length(device, d2i_len);
     if (result != THINGINO_SUCCESS) {
         firmware_cleanup(&fw);
         return result;
     }
-    
+
     DEBUG_PRINT("Executing SPL from entry point 0x80001800\n");
     result = protocol_prog_stage1(device, 0x80001800);
     if (result != THINGINO_SUCCESS) {
@@ -112,106 +127,43 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
         return result;
     }
     printf("SPL execution started\n");
-    
-    // Device re-enumerates after SPL execution
-    // We must close the current device handle before it becomes invalid
-    DEBUG_PRINT("Closing device handle before re-enumeration...\n");
-    usb_device_close(device);
-    DEBUG_PRINT("Device handle closed\n");
-    
-    // Wait for SPL to complete execution and device to re-enumerate
-    DEBUG_PRINT("Waiting for SPL to complete execution and device to re-enumerate...\n");
-    DEBUG_PRINT("(Waiting 3 seconds for device re-enumeration)...\n");
+
+    // IMPORTANT: Unlike T31X, the vendor's T20 implementation does NOT close/reopen the device
+    // The USB device address stays the same (verified in pcap: address 106 throughout)
+    // We just wait for SPL to complete DDR initialization
+    DEBUG_PRINT("Waiting for SPL to complete DDR initialization (keeping device handle open)...\n");
 #ifdef _WIN32
-    Sleep(1000);
+    Sleep(1100);  // Vendor waits ~1.1 seconds (76.759s to 77.859s in pcap)
 #else
-    sleep(1);
+    usleep(1100000);  // 1.1 seconds
 #endif
-    
-    // Re-detect and re-open the device after re-enumeration
-    DEBUG_PRINT("Re-detecting device after re-enumeration...\n");
-    usb_manager_t manager;
-    result = usb_manager_init(&manager);
-    if (result != THINGINO_SUCCESS) {
-        printf("Failed to initialize USB manager for re-detection: %s\n", thingino_error_to_string(result));
-        firmware_cleanup(&fw);
-        return result;
-    }
-    
-    // Find the device using fast enumeration (skips CPU info checks to avoid timeouts)
-    device_info_t* found_devices = NULL;
-    int device_count = 0;
-    result = usb_manager_find_devices_fast(&manager, &found_devices, &device_count);
-    if (result != THINGINO_SUCCESS || device_count == 0) {
-        printf("Failed to find re-enumerated device: %s\n", thingino_error_to_string(result));
-        usb_manager_cleanup(&manager);
-        firmware_cleanup(&fw);
-        return THINGINO_ERROR_DEVICE_NOT_FOUND;
-    }
-    
-    printf("Found %d Ingenic device(s) after re-enumeration\n", device_count);
-    
-    // Use the first device (in practice there should be only one)
-    device_info_t new_device_info = found_devices[0];
-    DEBUG_PRINT("Using re-enumerated device at USB address: Bus %d, Address %d\n",
-        new_device_info.bus, new_device_info.address);
-    
-    // Open the newly enumerated device
-    usb_device_t* new_device = NULL;
-    result = usb_manager_open_device(&manager, &new_device_info, &new_device);
-    if (result != THINGINO_SUCCESS) {
-        printf("Failed to open re-enumerated device: %s\n", thingino_error_to_string(result));
-        free(found_devices);
-        usb_manager_cleanup(&manager);
-        firmware_cleanup(&fw);
-        return result;
-    }
-    
-    DEBUG_PRINT("Successfully re-opened device, updating device pointer\n");
-    
-    // Update device pointer to the newly opened device
-    // Copy the new device info and handle to the original device structure
-    device->handle = new_device->handle;
-    device->info = new_device->info;
-    device->closed = false;
-    free(new_device);
-    
-    DEBUG_PRINT("Device re-enumeration complete, waiting additional time for device to stabilize...\n");
-    // Give the device more time to fully initialize after re-enumeration
-    DEBUG_PRINT("(Waiting 3 more seconds for device to be ready)...\n");
-#ifdef _WIN32
-    Sleep(1000);
-#else
-    sleep(1);
-#endif
-    
-    DEBUG_PRINT("Device should now be ready, resuming bootstrap\n");
-    
+
+    DEBUG_PRINT("SPL should have completed, device handle remains valid\n");
+
     // Step 4: Load and program U-Boot (Stage 2 bootloader)
     printf("Loading U-Boot (Stage 2 bootloader)\n");
     result = bootstrap_program_stage2(device, fw.uboot, fw.uboot_size);
     if (result != THINGINO_SUCCESS) {
         firmware_cleanup(&fw);
-        free(found_devices);
-        usb_manager_cleanup(&manager);
         return result;
     }
     printf("U-Boot loaded\n");
-    
-    // Cleanup temporary manager resources
-    // NOTE: DO NOT call usb_manager_cleanup() because it will exit the libusb context
-    // that the device handle is still using. Just free the device list.
-    free(found_devices);
-    // The manager->context is now being used by device->context, so we can't exit it
-    
-    // NOTE: After ProgStage2, the device will re-enumerate with a new USB address.
-    // We cannot verify the transition here because the device handle is now invalid.
-    // The caller must re-scan for devices and verify the transition.
-    DEBUG_PRINT("Bootstrap sequence completed - device will re-enumerate\n");
-    DEBUG_PRINT("Note: Device handle is now invalid and must be re-opened after re-enumeration\n");
-    
+
+    // Vendor does GET_CPU_INFO immediately after PROG_START2 (verified in pcap)
+    // This might be necessary to "wake up" the device or trigger the transition
+    DEBUG_PRINT("Checking CPU info immediately after PROG_START2 (vendor sequence)...\n");
+    cpu_info_t cpu_info_after;
+    result = usb_device_get_cpu_info(device, &cpu_info_after);
+    if (result == THINGINO_SUCCESS) {
+        DEBUG_PRINT("CPU info after PROG_START2: stage=%s, magic='%s'\n",
+            device_stage_to_string(cpu_info_after.stage), cpu_info_after.clean_magic);
+    } else {
+        DEBUG_PRINT("GET_CPU_INFO after PROG_START2 failed (may be expected): %s\n",
+            thingino_error_to_string(result));
+    }
+
     printf("Bootstrap sequence completed successfully\n");
-    
+
     firmware_cleanup(&fw);
     return THINGINO_SUCCESS;
 }

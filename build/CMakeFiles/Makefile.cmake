@@ -60,4 +60,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test_binary_builder.dir/DependInfo.cmake"
   "CMakeFiles/test_ddr_integration.dir/DependInfo.cmake"
   "CMakeFiles/test_config_database.dir/DependInfo.cmake"
+  "CMakeFiles/test_firmware_database.dir/DependInfo.cmake"
   )

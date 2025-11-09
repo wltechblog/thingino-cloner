@@ -263,6 +263,7 @@ thingino_error_t protocol_nand_read(usb_device_t* device, uint32_t offset, uint3
 // Firmware functions
 thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* firmware);
 void firmware_cleanup(firmware_files_t* firmware);
+thingino_error_t firmware_load_t20(firmware_files_t* firmware);
 thingino_error_t firmware_load_t31x(firmware_files_t* firmware);
 thingino_error_t load_file(const char* filename, uint8_t** data, size_t* size);
 thingino_error_t firmware_load_from_files(processor_variant_t variant, const char* config_file, const char* spl_file, const char* uboot_file, firmware_files_t* firmware);

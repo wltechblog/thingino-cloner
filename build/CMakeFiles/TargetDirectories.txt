@@ -8,6 +8,7 @@
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_binary_builder.dir
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_ddr_integration.dir
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_config_database.dir
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_firmware_database.dir
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/edit_cache.dir
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/rebuild_cache.dir
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/list_install_components.dir

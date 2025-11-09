@@ -60,9 +60,20 @@ int main() {
     cpu_info_t cpu_info;
     result = usb_device_get_cpu_info(&device, &cpu_info);
     if (result == THINGINO_SUCCESS) {
-        printf("CPU Info: '%s' (clean: '%s')\n", 
+        // Show raw hex bytes for debugging
+        printf("CPU magic (raw hex): ");
+        for (int i = 0; i < 8; i++) {
+            printf("%02X ", cpu_info.magic[i]);
+        }
+        printf("\n");
+
+        printf("CPU Info: '%s' (clean: '%s')\n",
             cpu_info.clean_magic, cpu_info.clean_magic);
         printf("Device Stage: %s\n", device_stage_to_string(cpu_info.stage));
+
+        // Detect and display processor variant
+        processor_variant_t detected_variant = detect_variant_from_magic(cpu_info.clean_magic);
+        printf("Detected processor variant: %s\n", processor_variant_to_string(detected_variant));
     } else {
         printf("Warning: Could not get CPU info: %s\n", thingino_error_to_string(result));
     }

@@ -13,6 +13,7 @@ pkg_check_modules(LIBUSB REQUIRED libusb-1.0)
 include_directories(${LIBUSB_INCLUDE_DIRS})
 include_directories(include)
 include_directories(src/ddr)
+include_directories(src/firmware)
 
 # Compiler flags
 add_compile_options(-Wall -Wextra -Werror)
@@ -41,6 +42,10 @@ set(SOURCES
     src/utils.c
     src/bootstrap.c
 )
+
+# Firmware database files (auto-generated)
+file(GLOB FIRMWARE_SOURCES "src/firmware/firmware_*.c")
+list(APPEND SOURCES ${FIRMWARE_SOURCES})
 
 # Create executable
 add_executable(thingino-cloner ${SOURCES})
@@ -122,6 +127,12 @@ add_executable(test_config_database
     src/ddr/ddr_config_database.c
 )
 target_link_libraries(test_config_database z)
+
+# Test firmware database
+add_executable(test_firmware_database
+    src/test_firmware_database.c
+    ${FIRMWARE_SOURCES}
+)
 
 # Installation
 install(TARGETS thingino-cloner DESTINATION bin)

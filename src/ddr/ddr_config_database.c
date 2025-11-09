@@ -41,8 +41,8 @@ static const processor_config_t processor_configs[] = {
     {
         .name = "t20",
         .crystal_freq = 24000000,
-        .cpu_freq = 600000000,
-        .ddr_freq = 200000000,
+        .cpu_freq = 800000000,      // Updated to match vendor reference configs
+        .ddr_freq = 400000000,      // Updated to match vendor reference configs
         .uart_baud = 115200,
         .mem_size = 8 * 1024 * 1024  // 8 MB
     },
@@ -150,6 +150,14 @@ static const processor_config_t processor_configs[] = {
         .uart_baud = 115200,
         .mem_size = 32 * 1024 * 1024  // 32 MB
     },
+    {
+        .name = "t41n",
+        .crystal_freq = 24000000,
+        .cpu_freq = 800000000,
+        .ddr_freq = 400000000,  // 400 MHz DDR (vs 600 MHz on T41)
+        .uart_baud = 115200,
+        .mem_size = 32 * 1024 * 1024  // 32 MB
+    },
 };
 
 static const size_t processor_configs_count = sizeof(processor_configs) / sizeof(processor_configs[0]);
@@ -210,18 +218,18 @@ static const ddr_chip_config_t ddr_chip_configs[] = {
         .vendor = "ESMT",
         .ddr_type = 1,  // DDR2
         .row_bits = 13,
-        .col_bits = 9,
-        .cl = 6,
+        .col_bits = 10,  // Fixed: vendor reference shows COL=10
+        .cl = 7,         // Fixed: vendor reference shows CL=7
         .bl = 8,
-        .rl = 6,
-        .wl = 5,
+        .rl = 7,         // Fixed: vendor reference shows RL=7
+        .wl = 6,         // Fixed: vendor reference shows WL=6
         .tRAS = 45000,
-        .tRC = 60000,
-        .tRCD = 15000,
-        .tRP = 15000,
-        .tRFC = 127500,
-        .tRTP = 7500,
-        .tFAW = 50000,
+        .tRC = 58125,    // Fixed: vendor reference shows tRC=58125 ps
+        .tRCD = 13125,   // Fixed: vendor reference shows tRCD=13125 ps
+        .tRP = 13250,    // Fixed: vendor reference shows tRP=13250 ps
+        .tRFC = 105000,  // Fixed: vendor reference shows tRFC=105 ns
+        .tRTP = 8000,    // Fixed: vendor reference shows tRTP=8 ns
+        .tFAW = 45000,
         .tRRD = 10000,
         .tWTR = 7500,
         .tWR = 15000,
@@ -487,7 +495,7 @@ static const struct {
     {"a1", "M15T1G1664A_DDR3"},
     {"a1ne", "M15T1G1664A_DDR3"},
     {"a1nt", "W632GU6NG_DDR3"},
-    {"t20", "W9751V6NG_DDR2"},
+    {"t20", "M14D5121632A_DDR2"},  // Updated to match vendor reference configs
     {"t21", "W9751V6NG_DDR2"},
     {"t23", "M14D1G1664A_DDR2"},
     {"t30", "M14D1G1664A_DDR2"},
@@ -501,6 +509,7 @@ static const struct {
     {"t31nl", "M14D1G1664A_DDR2"},
     {"t40", "W631GU6NG_DDR3"},
     {"t41", "H5TQ2G83CFR_DDR3"},
+    {"t41n", "W631GU6NG_DDR3"},
 };
 
 static const size_t default_ddr_mappings_count = sizeof(default_ddr_mappings) / sizeof(default_ddr_mappings[0]);

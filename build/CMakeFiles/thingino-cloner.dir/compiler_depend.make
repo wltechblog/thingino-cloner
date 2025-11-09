@@ -563,6 +563,393 @@ CMakeFiles/thingino-cloner.dir/src/ddr/parser.c.o: /home/squash/go/src/github.co
   /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h \
   /usr/lib/gcc/x86_64-linux-gnu/14/include/syslimits.h
 
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_a1_n_ne_x.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_a1_nt_a.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_database.c \
+  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_database.h \
+  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_registry.h \
+  /usr/include/alloca.h \
+  /usr/include/endian.h \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/stdlib.h \
+  /usr/include/string.h \
+  /usr/include/strings.h \
+  /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
+  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
+  /usr/include/x86_64-linux-gnu/bits/endian.h \
+  /usr/include/x86_64-linux-gnu/bits/endianness.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
+  /usr/include/x86_64-linux-gnu/bits/floatn.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h \
+  /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h \
+  /usr/include/x86_64-linux-gnu/bits/select.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
+  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
+  /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
+  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
+  /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+  /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/include/x86_64-linux-gnu/sys/select.h \
+  /usr/include/x86_64-linux-gnu/sys/types.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t20.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t21.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t23.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30a.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30nl.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30x.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31a.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31nl.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31x.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t40.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t41.c \
+  /usr/include/features-time64.h \
+  /usr/include/features.h \
+  /usr/include/stdc-predef.h \
+  /usr/include/stdint.h \
+  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+  /usr/include/x86_64-linux-gnu/bits/long-double.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+  /usr/include/x86_64-linux-gnu/bits/time64.h \
+  /usr/include/x86_64-linux-gnu/bits/timesize.h \
+  /usr/include/x86_64-linux-gnu/bits/types.h \
+  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
+  /usr/include/x86_64-linux-gnu/bits/wchar.h \
+  /usr/include/x86_64-linux-gnu/bits/wordsize.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
+  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
+  /usr/include/x86_64-linux-gnu/sys/cdefs.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
+  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h
+
 CMakeFiles/thingino-cloner.dir/src/firmware/flash_descriptor.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/flash_descriptor.c \
   /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/flash_descriptor.h \
   /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/thingino.h \
@@ -745,9 +1132,9 @@ CMakeFiles/thingino-cloner.dir/src/firmware/handshake.c.o: /home/squash/go/src/g
 CMakeFiles/thingino-cloner.dir/src/firmware/loader.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/loader.c \
   /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/thingino.h \
   /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_binary_builder.h \
-  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.h \
-  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.h \
-  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_types.h \
+  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_config_database.h \
+  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/t20_reference_ddr.h \
+  /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_database.h \
   /usr/include/alloca.h \
   /usr/include/endian.h \
   /usr/include/features-time64.h \
@@ -1413,6 +1800,22 @@ thingino-cloner: /lib/i386-linux-gnu/libcap.so.2 \
   CMakeFiles/thingino-cloner.dir/src/ddr/ddr_phy_ddr2.c.o \
   CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o \
   CMakeFiles/thingino-cloner.dir/src/ddr/parser.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o \
+  CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o \
   CMakeFiles/thingino-cloner.dir/src/firmware/flash_descriptor.c.o \
   CMakeFiles/thingino-cloner.dir/src/firmware/handshake.c.o \
   CMakeFiles/thingino-cloner.dir/src/firmware/loader.c.o \
@@ -1434,6 +1837,24 @@ CMakeFiles/thingino-cloner.dir/src/firmware/loader.c.o:
 
 CMakeFiles/thingino-cloner.dir/src/firmware/handshake.c.o:
 
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t40.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31a.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30x.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30a.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t21.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t20.c.o:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_database.c.o:
+
 CMakeFiles/thingino-cloner.dir/src/ddr/parser.c.o:
 
 CMakeFiles/thingino-cloner.dir/src/ddr/ddr_phy_ddr2.c.o:
@@ -1449,6 +1870,8 @@ CMakeFiles/thingino-cloner.dir/src/bootstrap.c.o:
 CMakeFiles/thingino-cloner.dir/src/ddr/ddr_controller.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_n_ne_x.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o:
 
@@ -1482,13 +1905,13 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_controller.c.o:
 
 /usr/include/x86_64-linux-gnu/sys/ioctl.h:
 
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t30nl.c.o:
+
 /usr/include/x86_64-linux-gnu/bits/stat.h:
 
 /usr/include/x86_64-linux-gnu/bits/ioctl-types.h:
 
 /usr/include/x86_64-linux-gnu/bits/fcntl.h:
-
-/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
 
 /usr/include/x86_64-linux-gnu/bits/errno.h:
 
@@ -1507,6 +1930,42 @@ CMakeFiles/thingino-cloner.dir/src/firmware/flash_descriptor.c.o:
 /usr/include/linux/ioctl.h:
 
 /usr/include/fcntl.h:
+
+/usr/include/errno.h:
+
+CMakeFiles/thingino-cloner.dir/src/usb/device.c.o:
+
+/usr/include/asm-generic/ioctls.h:
+
+/usr/include/asm-generic/ioctl.h:
+
+/usr/include/asm-generic/int-ll64.h:
+
+/usr/include/asm-generic/errno.h:
+
+/usr/include/asm-generic/types.h:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/lib/x86_64-linux-gnu/libc.so:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/usb/device.c:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/reader.c:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/t20_reference_ddr.h:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t41.c.o:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/handshake.c:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/flash_descriptor.h:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31x.c.o:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t41.c:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t40.c:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
 
@@ -1534,19 +1993,23 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_generator.c.o:
 
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_ctrl_txx.c:
 
+CMakeFiles/thingino-cloner.dir/src/ddr/ddr_config_database.c.o:
+
+/usr/lib/linux/uapi/x86/asm/ioctl.h:
+
+/usr/include/asm-generic/posix_types.h:
+
+/usr/include/stdc-predef.h:
+
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
-/usr/lib/x86_64-linux-gnu/libc.so:
-
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/usb/device.c:
-
 /usr/include/x86_64-linux-gnu/bits/stdint-least.h:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_a1_nt_a.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/limits.h:
-
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/bootstrap.c:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
 
@@ -1560,6 +2023,10 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_generator.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
+/usr/include/asm-generic/bitsperlong.h:
+
+/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
+
 /usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/linux/errno.h:
@@ -1572,6 +2039,8 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_generator.c.o:
 
 /usr/include/libusb-1.0/libusb.h:
 
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t20.c:
+
 /usr/include/stdlib.h:
 
 /usr/include/linux/limits.h:
@@ -1583,6 +2052,12 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_generator.c.o:
 /usr/include/string.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/main.c:
+
+/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30a.c:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
@@ -1600,10 +2075,6 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_generator.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
-/usr/include/x86_64-linux-gnu/bits/posix_opt.h:
-
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/main.c:
-
 CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o:
@@ -1611,8 +2082,6 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o:
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/asm-generic/ioctl.h:
 
 /usr/include/time.h:
 
@@ -1626,11 +2095,15 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
 
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_registry.h:
+
 /usr/include/endian.h:
 
 CMakeFiles/thingino-cloner.dir/src/main.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30x.c:
 
 /usr/include/x86_64-linux-gnu/bits/endianness.h:
 
@@ -1650,15 +2123,13 @@ CMakeFiles/thingino-cloner.dir/src/main.c.o:
 
 /usr/include/alloca.h:
 
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/flash_descriptor.c:
-
-/usr/include/zconf.h:
-
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t31nl.c.o:
 
 /usr/lib/linux/uapi/x86/asm/errno.h:
 
@@ -1668,13 +2139,7 @@ CMakeFiles/thingino-cloner.dir/src/main.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
-CMakeFiles/thingino-cloner.dir/src/ddr/ddr_config_database.c.o:
-
-/usr/lib/linux/uapi/x86/asm/ioctl.h:
-
-/usr/include/stdc-predef.h:
-
-/usr/include/asm-generic/posix_types.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31.c:
 
 /usr/lib/linux/uapi/x86/asm/posix_types.h:
 
@@ -1694,13 +2159,19 @@ CMakeFiles/thingino-cloner.dir/src/utils.c.o:
 
 /usr/lib/i386-linux-gnu/libudev.so.1:
 
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30.c:
+
 /usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/parser.c:
 
+CMakeFiles/thingino-cloner.dir/src/firmware/firmware_t23.c.o:
+
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t30nl.c:
 
 /usr/include/x86_64-linux-gnu/bits/local_lim.h:
 
@@ -1712,19 +2183,19 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_param_builder.c.o:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31x.c:
+
 /usr/lib/x86_64-linux-gnu/libusb-1.0.so:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/usr/include/asm-generic/int-ll64.h:
 
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
-/usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/loader.c:
 
-/usr/include/asm-generic/bitsperlong.h:
+/usr/include/x86_64-linux-gnu/sys/time.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
@@ -1762,6 +2233,10 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_param_builder.c.o:
 
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy_ddr2.h:
 
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/bootstrap.c:
+
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_a1_nt_a.c:
+
 /usr/include/x86_64-linux-gnu/bits/ioctls.h:
 
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_types.h:
@@ -1790,24 +2265,22 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_ctrl_txx.c.o:
 
 /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c:
 
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/flash_descriptor.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_a1_n_ne_x.c:
 
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/handshake.c:
+/usr/include/x86_64-linux-gnu/bits/fcntl-linux.h:
 
-/usr/include/x86_64-linux-gnu/sys/time.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_database.c:
 
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/loader.c:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_database.h:
 
-/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/reader.c:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t21.c:
 
-/usr/include/asm-generic/types.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/flash_descriptor.c:
 
-/usr/include/asm-generic/errno-base.h:
+/usr/include/zconf.h:
 
-/usr/include/asm-generic/errno.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31a.c:
 
-CMakeFiles/thingino-cloner.dir/src/usb/device.c.o:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t23.c:
 
-/usr/include/asm-generic/ioctls.h:
-
-/usr/include/errno.h:
+/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/firmware_t31nl.c:
