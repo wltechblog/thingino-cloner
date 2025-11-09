@@ -1,7 +1,7 @@
 CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o: \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.c \
  /usr/include/stdc-predef.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -18,7 +18,7 @@ CMakeFiles/thingino-cloner.dir/src/ddr/ddr_utils.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_types.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_types.h \
  /usr/include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/14/include/stddef.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdarg.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \

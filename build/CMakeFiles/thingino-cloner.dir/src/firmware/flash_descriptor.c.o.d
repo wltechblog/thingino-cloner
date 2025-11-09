@@ -1,7 +1,7 @@
 CMakeFiles/thingino-cloner.dir/src/firmware/flash_descriptor.c.o: \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/flash_descriptor.c \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/firmware/flash_descriptor.c \
  /usr/include/stdc-predef.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/thingino.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/include/thingino.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -71,7 +71,7 @@ CMakeFiles/thingino-cloner.dir/src/firmware/flash_descriptor.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/strings.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdbool.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/flash_descriptor.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/include/flash_descriptor.h \
  /usr/include/unistd.h /usr/include/x86_64-linux-gnu/bits/posix_opt.h \
  /usr/include/x86_64-linux-gnu/bits/environments.h \
  /usr/include/x86_64-linux-gnu/bits/confname.h \

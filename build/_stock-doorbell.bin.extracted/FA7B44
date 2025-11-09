@@ -1,0 +1,13 @@
+[SETTING]
+recordType=1
+telntSwitch=2
+logUdisk=1
+logSd=1
+osdSwitch=1
+verSwitch=1
+horSwitch=1
+fps=15
+res=1
+bitRate=192
+nightVision=3
+indicator=1

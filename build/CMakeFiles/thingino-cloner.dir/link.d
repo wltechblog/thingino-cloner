@@ -41,12 +41,8 @@ thingino-cloner: \
   /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o \
-  /lib/i386-linux-gnu/libudev.so.1 \
-  /usr/lib/i386-linux-gnu/libudev.so.1 \
   /lib/x86_64-linux-gnu/libudev.so.1 \
   /lib64/ld-linux-x86-64.so.2 \
-  /lib/i386-linux-gnu/libcap.so.2 \
-  /usr/lib/i386-linux-gnu/libcap.so.2 \
   /lib/x86_64-linux-gnu/libcap.so.2
 
 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/Scrt1.o:
@@ -133,16 +129,8 @@ CMakeFiles/thingino-cloner.dir/src/bootstrap.c.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o:
 
-/lib/i386-linux-gnu/libudev.so.1:
-
-/usr/lib/i386-linux-gnu/libudev.so.1:
-
 /lib/x86_64-linux-gnu/libudev.so.1:
 
 /lib64/ld-linux-x86-64.so.2:
-
-/lib/i386-linux-gnu/libcap.so.2:
-
-/usr/lib/i386-linux-gnu/libcap.so.2:
 
 /lib/x86_64-linux-gnu/libcap.so.2:

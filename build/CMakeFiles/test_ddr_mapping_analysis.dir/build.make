@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c
+CMAKE_SOURCE_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build
+CMAKE_BINARY_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test_ddr_mapping_analysis.dir/depend.make
@@ -73,116 +73,116 @@ CMakeFiles/test_ddr_mapping_analysis.dir/codegen:
 .PHONY : CMakeFiles/test_ddr_mapping_analysis.dir/codegen
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_ddr_mapping_analysis.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_ddr_mapping_analysis.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_ddr_mapping_analysis.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_ddr_mapping_analysis.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_ddr_mapping_analysis.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_ddr_mapping_analysis.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_ddr_mapping_analysis.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_ddr_mapping_analysis.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/test_ddr_mapping_analysis.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_utils.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_utils.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_controller.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_controller.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_controller.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_controller.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_controller.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_controller.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_controller.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_controller.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_param_builder.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_param_builder.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_param_builder.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_param_builder.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy_ddr2.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy_ddr2.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy_ddr2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy_ddr2.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy_ddr2.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy_ddr2.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_phy_ddr2.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_phy_ddr2.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_ctrl_txx.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_ctrl_txx.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_ctrl_txx.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_ctrl_txx.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_ctrl_txx.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_ctrl_txx.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_ctrl_txx.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_ctrl_txx.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.s
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/flags.make
-CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.c
+CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_generator.c
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o -MF CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o.d -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_generator.c
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_generator.c > CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.i
 
 CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_generator.c -o CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.s
 
 # Object files for target test_ddr_mapping_analysis
 test_ddr_mapping_analysis_OBJECTS = \
@@ -209,7 +209,7 @@ test_ddr_mapping_analysis: CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_
 test_ddr_mapping_analysis: CMakeFiles/test_ddr_mapping_analysis.dir/build.make
 test_ddr_mapping_analysis: CMakeFiles/test_ddr_mapping_analysis.dir/compiler_depend.ts
 test_ddr_mapping_analysis: CMakeFiles/test_ddr_mapping_analysis.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable test_ddr_mapping_analysis"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking C executable test_ddr_mapping_analysis"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_ddr_mapping_analysis.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -221,6 +221,6 @@ CMakeFiles/test_ddr_mapping_analysis.dir/clean:
 .PHONY : CMakeFiles/test_ddr_mapping_analysis.dir/clean
 
 CMakeFiles/test_ddr_mapping_analysis.dir/depend:
-	cd /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/squash/go/src/github.com/wltechblog/thingino-cloner-c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_ddr_mapping_analysis.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles/test_ddr_mapping_analysis.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/test_ddr_mapping_analysis.dir/depend
 

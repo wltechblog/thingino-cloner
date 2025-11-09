@@ -1,7 +1,7 @@
 CMakeFiles/thingino-cloner.dir/src/ddr/parser.c.o: \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/parser.c \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/parser.c \
  /usr/include/stdc-predef.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/thingino.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/include/thingino.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \

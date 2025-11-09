@@ -10,8 +10,12 @@ int main() {
     }
     
     uint8_t reference[324];
-    fread(reference, 1, 324, fp);
+    size_t bytes_read = fread(reference, 1, 324, fp);
     fclose(fp);
+
+    if (bytes_read != 324) {
+        printf("Warning: only read %zu bytes instead of 324\n", bytes_read);
+    }
     
     printf("=== DDRC Register Analysis (from DDRP section) ===\n\n");
     printf("TXX mapping copies DDRC values to DDRP section:\n");

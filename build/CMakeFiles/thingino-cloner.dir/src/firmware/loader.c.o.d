@@ -1,7 +1,7 @@
 CMakeFiles/thingino-cloner.dir/src/firmware/loader.c.o: \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/firmware/loader.c \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/firmware/loader.c \
  /usr/include/stdc-predef.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/include/thingino.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/include/thingino.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdint.h /usr/include/stdint.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -71,7 +71,7 @@ CMakeFiles/thingino-cloner.dir/src/firmware/loader.c.o: \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h /usr/include/string.h \
  /usr/include/strings.h \
  /usr/lib/gcc/x86_64-linux-gnu/14/include/stdbool.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_param_builder.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_generator.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_types.h \
- /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/ddr/ddr_types.h
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_param_builder.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_generator.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_types.h \
+ /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/ddr/ddr_types.h

@@ -35,6 +35,7 @@ const char* processor_variant_to_string(processor_variant_t variant) {
         case VARIANT_T31ZX: return "t31zx";
         case VARIANT_T40:   return "t40";
         case VARIANT_T41:   return "t41";
+        case VARIANT_T41N:  return "t41n";
         case VARIANT_X1000: return "x1000";
         case VARIANT_X1600: return "x1600";
         case VARIANT_X1700: return "x1700";

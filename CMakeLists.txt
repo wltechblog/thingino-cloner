@@ -97,6 +97,23 @@ add_executable(test_ddrc_analysis
     src/test_ddrc_analysis.c
 )
 
+# Test executable for DDR binary comparison
+add_executable(test_ddr_compare
+    src/test_ddr_compare.c
+)
+
+# Test executable for T31X DDR generation
+add_executable(test_generate_t31x
+    src/test_generate_t31x.c
+    src/ddr/ddr_utils.c
+    src/ddr/ddr_controller.c
+    src/ddr/ddr_param_builder.c
+    src/ddr/ddr_phy.c
+    src/ddr/ddr_phy_ddr2.c
+    src/ddr/ddr_ctrl_txx.c
+    src/ddr/ddr_generator.c
+)
+
 # Installation
 install(TARGETS thingino-cloner DESTINATION bin)
 

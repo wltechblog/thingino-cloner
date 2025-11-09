@@ -17,6 +17,7 @@ typedef enum {
     CHIP_T23N = 0x23,
     CHIP_T31L = 0x32,   // T31NL - different identifier from T31X
     CHIP_T31X = 0x31,
+    CHIP_T41N = 0x41,   // T41N
 } chip_type_t;
 
 /**

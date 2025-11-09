@@ -1,0 +1,60 @@
+Frame 609: 9920 bytes on wire (79360 bits), 9920 bytes captured (79360 bits) on interface usbmon1, id 0
+    Section number: 1
+    Interface id: 0 (usbmon1)
+        Interface name: usbmon1
+    Encapsulation type: USB packets with Linux header and padding (115)
+    Arrival Time: Nov  9, 2025 07:14:48.233495000 EST
+    UTC Arrival Time: Nov  9, 2025 12:14:48.233495000 UTC
+    Epoch Arrival Time: 1762690488.233495000
+    [Time shift for this packet: 0.000000000 seconds]
+    [Time delta from previous captured frame: 0.000039000 seconds]
+    [Time delta from previous displayed frame: 0.000000000 seconds]
+    [Time since reference or first frame: 3.098586000 seconds]
+    Frame Number: 609
+    Frame Length: 9920 bytes (79360 bits)
+    Capture Length: 9920 bytes (79360 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: usb]
+USB URB
+    [Source: host]
+    [Destination: 1.77.1]
+    URB id: 0xffff89c964ea52c0
+    URB type: URB_SUBMIT ('S')
+    URB transfer type: URB_BULK (0x03)
+    Endpoint: 0x01, Direction: OUT
+        0... .... = Direction: OUT (0)
+        .... 0001 = Endpoint number: 1
+    Device: 77
+    URB bus id: 1
+    Device setup request: not relevant ('-')
+    Data: present ('\0')
+    URB sec: 1762690488
+    URB usec: 233495
+    URB status: Operation now in progress (-EINPROGRESS) (-115)
+    URB length [bytes]: 9856
+    Data length [bytes]: 9856
+    [Response in: 610]
+    [bInterfaceClass: Vendor Specific (0xff)]
+    Unused Setup Header
+    Interval: 0
+    Start frame: 0
+    Copy of Transfer Flags: 0x00000000
+        .... .... .... .... .... .... .... ...0 = Short not OK: False
+        .... .... .... .... .... .... .... ..0. = ISO ASAP: False
+        .... .... .... .... .... .... .... .0.. = No transfer DMA map: False
+        .... .... .... .... .... .... ..0. .... = No FSBR: False
+        .... .... .... .... .... .... .0.. .... = Zero Packet: False
+        .... .... .... .... .... .... 0... .... = No Interrupt: False
+        .... .... .... .... .... ...0 .... .... = Free Buffer: False
+        .... .... .... .... .... ..0. .... .... = Dir IN: False
+        .... .... .... ...0 .... .... .... .... = DMA Map Single: False
+        .... .... .... ..0. .... .... .... .... = DMA Map Page: False
+        .... .... .... .0.. .... .... .... .... = DMA Map SG: False
+        .... .... .... 0... .... .... .... .... = Map Local: False
+        .... .... ...0 .... .... .... .... .... = Setup Map Single: False
+        .... .... ..0. .... .... .... .... .... = Setup Map Local: False
+        .... .... .0.. .... .... .... .... .... = DMA S-G Combined: False
+        .... .... 0... .... .... .... .... .... = Aligned Temp Buffer: False
+    Number of ISO descriptors: 0
+Leftover Capture Data […]: 20b2183ce00f18370000088f0080093c25400901000008af20b2083ce00f08350000098d18002935000009ad4000083c04fc083500608840006808408000093c254009010068884042070008000000007800428f0d000424212800001400488c0080023c8034422410

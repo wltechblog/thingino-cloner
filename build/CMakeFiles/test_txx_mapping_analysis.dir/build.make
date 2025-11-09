@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c
+CMAKE_SOURCE_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build
+CMAKE_BINARY_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/test_txx_mapping_analysis.dir/depend.make
@@ -73,18 +73,18 @@ CMakeFiles/test_txx_mapping_analysis.dir/codegen:
 .PHONY : CMakeFiles/test_txx_mapping_analysis.dir/codegen
 
 CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o: CMakeFiles/test_txx_mapping_analysis.dir/flags.make
-CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_txx_mapping_analysis.c
+CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_txx_mapping_analysis.c
 CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o: CMakeFiles/test_txx_mapping_analysis.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o -MF CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o.d -o CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o -c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_txx_mapping_analysis.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o -MF CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o.d -o CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o -c /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_txx_mapping_analysis.c
 
 CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_txx_mapping_analysis.c > CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_txx_mapping_analysis.c > CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.i
 
 CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_txx_mapping_analysis.c -o CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_txx_mapping_analysis.c -o CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.s
 
 # Object files for target test_txx_mapping_analysis
 test_txx_mapping_analysis_OBJECTS = \
@@ -97,7 +97,7 @@ test_txx_mapping_analysis: CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx
 test_txx_mapping_analysis: CMakeFiles/test_txx_mapping_analysis.dir/build.make
 test_txx_mapping_analysis: CMakeFiles/test_txx_mapping_analysis.dir/compiler_depend.ts
 test_txx_mapping_analysis: CMakeFiles/test_txx_mapping_analysis.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable test_txx_mapping_analysis"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable test_txx_mapping_analysis"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/test_txx_mapping_analysis.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -109,6 +109,6 @@ CMakeFiles/test_txx_mapping_analysis.dir/clean:
 .PHONY : CMakeFiles/test_txx_mapping_analysis.dir/clean
 
 CMakeFiles/test_txx_mapping_analysis.dir/depend:
-	cd /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/squash/go/src/github.com/wltechblog/thingino-cloner-c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/test_txx_mapping_analysis.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles/test_txx_mapping_analysis.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/test_txx_mapping_analysis.dir/depend
 

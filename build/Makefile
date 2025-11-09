@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c
+CMAKE_SOURCE_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build
+CMAKE_BINARY_DIR = /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -252,6 +252,32 @@ test_ddrc_analysis/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddrc_analysis.dir/build.make CMakeFiles/test_ddrc_analysis.dir/build
 .PHONY : test_ddrc_analysis/fast
 
+#=============================================================================
+# Target rules for targets named test_ddr_compare
+
+# Build rule for target.
+test_ddr_compare: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_ddr_compare
+.PHONY : test_ddr_compare
+
+# fast build rule for target.
+test_ddr_compare/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_compare.dir/build.make CMakeFiles/test_ddr_compare.dir/build
+.PHONY : test_ddr_compare/fast
+
+#=============================================================================
+# Target rules for targets named test_generate_t31x
+
+# Build rule for target.
+test_generate_t31x: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_generate_t31x
+.PHONY : test_generate_t31x
+
+# fast build rule for target.
+test_generate_t31x/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/build
+.PHONY : test_generate_t31x/fast
+
 src/bootstrap.o: src/bootstrap.c.o
 .PHONY : src/bootstrap.o
 
@@ -285,6 +311,7 @@ src/ddr/ddr_controller.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_controller.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_controller.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_controller.c.o
 .PHONY : src/ddr/ddr_controller.c.o
 
 src/ddr/ddr_controller.i: src/ddr/ddr_controller.c.i
@@ -296,6 +323,7 @@ src/ddr/ddr_controller.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_controller.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_controller.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_controller.c.i
 .PHONY : src/ddr/ddr_controller.c.i
 
 src/ddr/ddr_controller.s: src/ddr/ddr_controller.c.s
@@ -307,6 +335,7 @@ src/ddr/ddr_controller.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_controller.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_controller.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_controller.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_controller.c.s
 .PHONY : src/ddr/ddr_controller.c.s
 
 src/ddr/ddr_ctrl_txx.o: src/ddr/ddr_ctrl_txx.c.o
@@ -318,6 +347,7 @@ src/ddr/ddr_ctrl_txx.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_ctrl_txx.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_ctrl_txx.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_ctrl_txx.c.o
 .PHONY : src/ddr/ddr_ctrl_txx.c.o
 
 src/ddr/ddr_ctrl_txx.i: src/ddr/ddr_ctrl_txx.c.i
@@ -329,6 +359,7 @@ src/ddr/ddr_ctrl_txx.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_ctrl_txx.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_ctrl_txx.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_ctrl_txx.c.i
 .PHONY : src/ddr/ddr_ctrl_txx.c.i
 
 src/ddr/ddr_ctrl_txx.s: src/ddr/ddr_ctrl_txx.c.s
@@ -340,6 +371,7 @@ src/ddr/ddr_ctrl_txx.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_ctrl_txx.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_ctrl_txx.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_ctrl_txx.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_ctrl_txx.c.s
 .PHONY : src/ddr/ddr_ctrl_txx.c.s
 
 src/ddr/ddr_generator.o: src/ddr/ddr_generator.c.o
@@ -351,6 +383,7 @@ src/ddr/ddr_generator.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_generator.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_generator.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_generator.c.o
 .PHONY : src/ddr/ddr_generator.c.o
 
 src/ddr/ddr_generator.i: src/ddr/ddr_generator.c.i
@@ -362,6 +395,7 @@ src/ddr/ddr_generator.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_generator.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_generator.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_generator.c.i
 .PHONY : src/ddr/ddr_generator.c.i
 
 src/ddr/ddr_generator.s: src/ddr/ddr_generator.c.s
@@ -373,6 +407,7 @@ src/ddr/ddr_generator.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_generator.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_generator.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_generator.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_generator.c.s
 .PHONY : src/ddr/ddr_generator.c.s
 
 src/ddr/ddr_param_builder.o: src/ddr/ddr_param_builder.c.o
@@ -384,6 +419,7 @@ src/ddr/ddr_param_builder.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_param_builder.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_param_builder.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_param_builder.c.o
 .PHONY : src/ddr/ddr_param_builder.c.o
 
 src/ddr/ddr_param_builder.i: src/ddr/ddr_param_builder.c.i
@@ -395,6 +431,7 @@ src/ddr/ddr_param_builder.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_param_builder.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_param_builder.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_param_builder.c.i
 .PHONY : src/ddr/ddr_param_builder.c.i
 
 src/ddr/ddr_param_builder.s: src/ddr/ddr_param_builder.c.s
@@ -406,6 +443,7 @@ src/ddr/ddr_param_builder.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_param_builder.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_param_builder.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_param_builder.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_param_builder.c.s
 .PHONY : src/ddr/ddr_param_builder.c.s
 
 src/ddr/ddr_phy.o: src/ddr/ddr_phy.c.o
@@ -417,6 +455,7 @@ src/ddr/ddr_phy.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy.c.o
 .PHONY : src/ddr/ddr_phy.c.o
 
 src/ddr/ddr_phy.i: src/ddr/ddr_phy.c.i
@@ -428,6 +467,7 @@ src/ddr/ddr_phy.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy.c.i
 .PHONY : src/ddr/ddr_phy.c.i
 
 src/ddr/ddr_phy.s: src/ddr/ddr_phy.c.s
@@ -439,6 +479,7 @@ src/ddr/ddr_phy.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy.c.s
 .PHONY : src/ddr/ddr_phy.c.s
 
 src/ddr/ddr_phy_ddr2.o: src/ddr/ddr_phy_ddr2.c.o
@@ -450,6 +491,7 @@ src/ddr/ddr_phy_ddr2.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy_ddr2.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy_ddr2.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy_ddr2.c.o
 .PHONY : src/ddr/ddr_phy_ddr2.c.o
 
 src/ddr/ddr_phy_ddr2.i: src/ddr/ddr_phy_ddr2.c.i
@@ -461,6 +503,7 @@ src/ddr/ddr_phy_ddr2.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy_ddr2.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy_ddr2.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy_ddr2.c.i
 .PHONY : src/ddr/ddr_phy_ddr2.c.i
 
 src/ddr/ddr_phy_ddr2.s: src/ddr/ddr_phy_ddr2.c.s
@@ -472,6 +515,7 @@ src/ddr/ddr_phy_ddr2.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_phy_ddr2.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_phy_ddr2.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_phy_ddr2.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_phy_ddr2.c.s
 .PHONY : src/ddr/ddr_phy_ddr2.c.s
 
 src/ddr/ddr_utils.o: src/ddr/ddr_utils.c.o
@@ -483,6 +527,7 @@ src/ddr/ddr_utils.c.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_utils.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_utils.c.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_utils.c.o
 .PHONY : src/ddr/ddr_utils.c.o
 
 src/ddr/ddr_utils.i: src/ddr/ddr_utils.c.i
@@ -494,6 +539,7 @@ src/ddr/ddr_utils.c.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_utils.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_utils.c.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_utils.c.i
 .PHONY : src/ddr/ddr_utils.c.i
 
 src/ddr/ddr_utils.s: src/ddr/ddr_utils.c.s
@@ -505,6 +551,7 @@ src/ddr/ddr_utils.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_generator.dir/build.make CMakeFiles/test_ddr_generator.dir/src/ddr/ddr_utils.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_multiplechip.dir/build.make CMakeFiles/test_ddr_multiplechip.dir/src/ddr/ddr_utils.c.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_mapping_analysis.dir/build.make CMakeFiles/test_ddr_mapping_analysis.dir/src/ddr/ddr_utils.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/ddr/ddr_utils.c.s
 .PHONY : src/ddr/ddr_utils.c.s
 
 src/ddr/parser.o: src/ddr/parser.c.o
@@ -651,6 +698,30 @@ src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/thingino-cloner.dir/build.make CMakeFiles/thingino-cloner.dir/src/main.c.s
 .PHONY : src/main.c.s
 
+src/test_ddr_compare.o: src/test_ddr_compare.c.o
+.PHONY : src/test_ddr_compare.o
+
+# target to build an object file
+src/test_ddr_compare.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_compare.dir/build.make CMakeFiles/test_ddr_compare.dir/src/test_ddr_compare.c.o
+.PHONY : src/test_ddr_compare.c.o
+
+src/test_ddr_compare.i: src/test_ddr_compare.c.i
+.PHONY : src/test_ddr_compare.i
+
+# target to preprocess a source file
+src/test_ddr_compare.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_compare.dir/build.make CMakeFiles/test_ddr_compare.dir/src/test_ddr_compare.c.i
+.PHONY : src/test_ddr_compare.c.i
+
+src/test_ddr_compare.s: src/test_ddr_compare.c.s
+.PHONY : src/test_ddr_compare.s
+
+# target to generate assembly for a file
+src/test_ddr_compare.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddr_compare.dir/build.make CMakeFiles/test_ddr_compare.dir/src/test_ddr_compare.c.s
+.PHONY : src/test_ddr_compare.c.s
+
 src/test_ddr_generator.o: src/test_ddr_generator.c.o
 .PHONY : src/test_ddr_generator.o
 
@@ -770,6 +841,30 @@ src/test_ddrc_analysis.s: src/test_ddrc_analysis.c.s
 src/test_ddrc_analysis.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_ddrc_analysis.dir/build.make CMakeFiles/test_ddrc_analysis.dir/src/test_ddrc_analysis.c.s
 .PHONY : src/test_ddrc_analysis.c.s
+
+src/test_generate_t31x.o: src/test_generate_t31x.c.o
+.PHONY : src/test_generate_t31x.o
+
+# target to build an object file
+src/test_generate_t31x.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/test_generate_t31x.c.o
+.PHONY : src/test_generate_t31x.c.o
+
+src/test_generate_t31x.i: src/test_generate_t31x.c.i
+.PHONY : src/test_generate_t31x.i
+
+# target to preprocess a source file
+src/test_generate_t31x.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/test_generate_t31x.c.i
+.PHONY : src/test_generate_t31x.c.i
+
+src/test_generate_t31x.s: src/test_generate_t31x.c.s
+.PHONY : src/test_generate_t31x.s
+
+# target to generate assembly for a file
+src/test_generate_t31x.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_generate_t31x.dir/build.make CMakeFiles/test_generate_t31x.dir/src/test_generate_t31x.c.s
+.PHONY : src/test_generate_t31x.c.s
 
 src/test_txx_mapping_analysis.o: src/test_txx_mapping_analysis.c.o
 .PHONY : src/test_txx_mapping_analysis.o
@@ -903,11 +998,13 @@ help:
 	@echo "... install/strip"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... test_ddr_compare"
 	@echo "... test_ddr_generator"
 	@echo "... test_ddr_mapping_analysis"
 	@echo "... test_ddr_multiplechip"
 	@echo "... test_ddr_reference_analysis"
 	@echo "... test_ddrc_analysis"
+	@echo "... test_generate_t31x"
 	@echo "... test_txx_mapping_analysis"
 	@echo "... thingino-cloner"
 	@echo "... src/bootstrap.o"
@@ -952,6 +1049,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/test_ddr_compare.o"
+	@echo "... src/test_ddr_compare.i"
+	@echo "... src/test_ddr_compare.s"
 	@echo "... src/test_ddr_generator.o"
 	@echo "... src/test_ddr_generator.i"
 	@echo "... src/test_ddr_generator.s"
@@ -967,6 +1067,9 @@ help:
 	@echo "... src/test_ddrc_analysis.o"
 	@echo "... src/test_ddrc_analysis.i"
 	@echo "... src/test_ddrc_analysis.s"
+	@echo "... src/test_generate_t31x.o"
+	@echo "... src/test_generate_t31x.i"
+	@echo "... src/test_generate_t31x.s"
 	@echo "... src/test_txx_mapping_analysis.o"
 	@echo "... src/test_txx_mapping_analysis.i"
 	@echo "... src/test_txx_mapping_analysis.s"

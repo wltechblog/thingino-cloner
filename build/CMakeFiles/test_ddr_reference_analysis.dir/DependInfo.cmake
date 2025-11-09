@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/src/test_ddr_reference_analysis.c" "CMakeFiles/test_ddr_reference_analysis.dir/src/test_ddr_reference_analysis.c.o" "gcc" "CMakeFiles/test_ddr_reference_analysis.dir/src/test_ddr_reference_analysis.c.o.d"
+  "/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/src/test_ddr_reference_analysis.c" "CMakeFiles/test_ddr_reference_analysis.dir/src/test_ddr_reference_analysis.c.o" "gcc" "CMakeFiles/test_ddr_reference_analysis.dir/src/test_ddr_reference_analysis.c.o.d"
   "" "test_ddr_reference_analysis" "gcc" "CMakeFiles/test_ddr_reference_analysis.dir/link.d"
   )
 

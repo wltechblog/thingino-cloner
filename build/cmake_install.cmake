@@ -1,4 +1,4 @@
-# Install script for directory: /home/squash/go/src/github.com/wltechblog/thingino-cloner-c
+# Install script for directory: /home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -49,7 +49,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/thingino-cloner"
          RPATH "")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/thingino-cloner")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/thingino-cloner")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/thingino-cloner" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/thingino-cloner")
     if(CMAKE_INSTALL_DO_STRIP)
@@ -59,13 +59,13 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/CMakeFiles/thingino-cloner.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
+  include("/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/CMakeFiles/thingino-cloner.dir/install-cxx-module-bmi-noconfig.cmake" OPTIONAL)
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/install_local_manifest.txt"
+  file(WRITE "/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -81,6 +81,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/home/squash/go/src/github.com/wltechblog/thingino-cloner-c/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "/home/matteius/Downloads/cloner-2.5.43-ubuntu_thingino_t31/thingino-cloner/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

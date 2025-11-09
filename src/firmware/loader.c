@@ -25,6 +25,9 @@ static chip_type_t variant_to_chip_type(processor_variant_t variant) {
         case VARIANT_T31X:
         case VARIANT_T31ZX:
             return CHIP_T31X;
+        case VARIANT_T41:
+        case VARIANT_T41N:
+            return CHIP_T41N;  // T41/T41N map to T41N
         default:
             // Default to T31X for compatibility with other T-series
             return CHIP_T31X;
@@ -42,8 +45,16 @@ static int bridge_chip_config_to_ddr_config(const ddr_chip_config_t* chip_cfg, d
     memset(ddr_cfg, 0, sizeof(ddr_config_t));
     
     // Set DDR type
-    ddr_cfg->type = DDR_TYPE_DDR2;  // All supported chips use DDR2
-    
+    // Map vendor ddr_type to internal enum
+    switch (chip_cfg->ddr_type) {
+        case 0: ddr_cfg->type = DDR_TYPE_DDR3; break;   // Vendor "0,DDR3"
+        case 1: ddr_cfg->type = DDR_TYPE_DDR2; break;
+        case 2: ddr_cfg->type = DDR_TYPE_LPDDR2; break;
+        case 3: ddr_cfg->type = DDR_TYPE_LPDDR; break;
+        case 4: ddr_cfg->type = DDR_TYPE_LPDDR3; break;
+        default: ddr_cfg->type = DDR_TYPE_DDR2; break;
+    }
+
     // Set frequency
     ddr_cfg->clock_mhz = chip_cfg->ddr_freq / 1000000;  // Convert Hz to MHz
     
@@ -156,7 +167,15 @@ thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* fi
             DEBUG_PRINT("firmware_load: matched VARIANT_T31ZX (%d)\n", VARIANT_T31ZX);
             DEBUG_PRINT("firmware_load: calling firmware_load_t31x\n");
             return firmware_load_t31x(firmware);
-            
+        case VARIANT_T41:
+            DEBUG_PRINT("firmware_load: matched VARIANT_T41 (%d)\n", VARIANT_T41);
+            DEBUG_PRINT("firmware_load: calling firmware_load_t41\n");
+            return firmware_load_t41(firmware);
+        case VARIANT_T41N:
+            DEBUG_PRINT("firmware_load: matched VARIANT_T41N (%d)\n", VARIANT_T41N);
+            DEBUG_PRINT("firmware_load: calling firmware_load_t41\n");
+            return firmware_load_t41(firmware);
+
         default:
             DEBUG_PRINT("firmware_load: unsupported variant %d\n", variant);
             return THINGINO_ERROR_INVALID_PARAMETER;
@@ -256,9 +275,118 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
     }
     
     DEBUG_PRINT("T31X firmware loaded successfully (official cloner files)\n");
-    DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n", 
+    DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n",
            firmware->config_size, firmware->spl_size, firmware->uboot_size);
-    
+
+    return THINGINO_SUCCESS;
+}
+
+thingino_error_t firmware_load_t41(firmware_files_t* firmware) {
+    thingino_error_t result;
+
+    DEBUG_PRINT("Loading T41 firmware...\n");
+
+    // Try to generate DDR configuration dynamically first
+    DEBUG_PRINT("Attempting to generate DDR configuration dynamically\n");
+    thingino_error_t gen_result = firmware_generate_ddr_config(VARIANT_T41,
+        &firmware->config, &firmware->config_size);
+
+    if (gen_result == THINGINO_SUCCESS) {
+        DEBUG_PRINT("Successfully generated DDR configuration: %zu bytes\n", firmware->config_size);
+        printf("✓ Generated DDR configuration: %zu bytes\n", firmware->config_size);
+    } else {
+        DEBUG_PRINT("Failed to generate DDR configuration, trying reference binary\n");
+
+        // Try to load reference DDR binary
+        const char* ddr_paths[] = {
+            "./references/ddr_extracted.bin",
+            "../references/ddr_extracted.bin",
+            "./ddr_extracted.bin",
+            "../ddr_extracted.bin",
+            NULL
+        };
+
+        result = THINGINO_ERROR_FILE_IO;
+        for (int i = 0; ddr_paths[i]; i++) {
+            DEBUG_PRINT("Trying to load DDR config from: %s\n", ddr_paths[i]);
+            result = load_file(ddr_paths[i], &firmware->config, &firmware->config_size);
+            if (result == THINGINO_SUCCESS) {
+                DEBUG_PRINT("Loaded reference DDR config: %zu bytes\n", firmware->config_size);
+                printf("Note: Using reference binary for DDR configuration\n");
+                printf("✓ DDR configuration loaded from reference binary: %zu bytes\n", firmware->config_size);
+                break;
+            }
+        }
+
+        if (result != THINGINO_SUCCESS) {
+            fprintf(stderr, "ERROR: Failed to generate or load DDR configuration\n");
+            return result;
+        }
+    }
+
+    // Define SPL and U-Boot paths for T41
+    const char* spl_paths[] = {
+        "./references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/spl.bin",
+        "../references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/spl.bin",
+        "./firmwares/t41/spl.bin",
+        "../firmwares/t41/spl.bin",
+        NULL
+    };
+
+    // Prefer secure U-Boot if available (matches vendor tool behavior)
+    const char* uboot_paths[] = {
+        "./references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/uboot_sec.bin",
+        "../references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/uboot_sec.bin",
+        "./firmwares/t41/uboot_sec.bin",
+        "../firmwares/t41/uboot_sec.bin",
+        // Fallback to non-secure U-Boot
+        "./references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/uboot.bin",
+        "../references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/uboot.bin",
+        "./firmwares/t41/uboot.bin",
+        "../firmwares/t41/uboot.bin",
+        NULL
+    };
+
+    // Load SPL binary
+    result = THINGINO_ERROR_FILE_IO;
+    for (int i = 0; spl_paths[i]; i++) {
+        DEBUG_PRINT("Trying to load SPL from: %s\n", spl_paths[i]);
+        result = load_file(spl_paths[i], &firmware->spl, &firmware->spl_size);
+        if (result == THINGINO_SUCCESS) {
+            DEBUG_PRINT("Loaded SPL: %zu bytes\n", firmware->spl_size);
+            break;
+        }
+    }
+
+    if (result != THINGINO_SUCCESS) {
+        fprintf(stderr, "ERROR: Failed to load SPL file for T41\n");
+        fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/spl.bin\n");
+        firmware_cleanup(firmware);
+        return result;
+    }
+
+    // Load U-Boot binary (separate from SPL)
+    result = THINGINO_ERROR_FILE_IO;
+    for (int i = 0; uboot_paths[i]; i++) {
+        DEBUG_PRINT("Trying to load U-Boot from: %s\n", uboot_paths[i]);
+        result = load_file(uboot_paths[i], &firmware->uboot, &firmware->uboot_size);
+        if (result == THINGINO_SUCCESS) {
+            DEBUG_PRINT("Loaded U-Boot: %zu bytes\n", firmware->uboot_size);
+            break;
+        }
+    }
+
+    if (result != THINGINO_SUCCESS) {
+        fprintf(stderr, "ERROR: Failed to load U-Boot file for T41\n");
+        fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/t41/uboot.bin\n");
+        firmware_cleanup(firmware);
+        return result;
+    }
+
+    DEBUG_PRINT("T41 firmware loaded successfully\n");
+    DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n",
+           firmware->config_size, firmware->spl_size, firmware->uboot_size);
+
     return THINGINO_SUCCESS;
 }
 
@@ -345,11 +473,18 @@ thingino_error_t firmware_load_from_files(processor_variant_t variant,
     } else {
         // No custom SPL provided - load default based on variant
         DEBUG_PRINT("No custom SPL provided, loading default for variant %d\n", variant);
-        const char* spl_paths[] = {
-            "./references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/spl.bin",
-            "../references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/spl.bin",
-            NULL
-        };
+
+        // Determine variant directory name
+        const char* variant_dir = "t31x";  // default
+        if (variant == VARIANT_T41 || variant == VARIANT_T41N) variant_dir = "t41";
+        else if (variant == VARIANT_T31X || variant == VARIANT_T31ZX) variant_dir = "t31x";
+        else if (variant == VARIANT_T23) variant_dir = "t23";
+
+        char spl_path1[256], spl_path2[256];
+        snprintf(spl_path1, sizeof(spl_path1), "./references/cloner-2.5.43-ubuntu_thingino/firmwares/%s/spl.bin", variant_dir);
+        snprintf(spl_path2, sizeof(spl_path2), "../references/cloner-2.5.43-ubuntu_thingino/firmwares/%s/spl.bin", variant_dir);
+
+        const char* spl_paths[] = { spl_path1, spl_path2, NULL };
 
         thingino_error_t result = THINGINO_ERROR_FILE_IO;
         for (int i = 0; spl_paths[i]; i++) {
@@ -364,7 +499,7 @@ thingino_error_t firmware_load_from_files(processor_variant_t variant,
 
         if (result != THINGINO_SUCCESS) {
             fprintf(stderr, "ERROR: Failed to load SPL file\n");
-            fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/spl.bin\n");
+            fprintf(stderr, "  Expected at: %s\n", spl_path1);
             firmware_cleanup(firmware);
             return result;
         }
@@ -383,11 +518,18 @@ thingino_error_t firmware_load_from_files(processor_variant_t variant,
     } else {
         // No custom U-Boot provided - load default based on variant
         DEBUG_PRINT("No custom U-Boot provided, loading default for variant %d\n", variant);
-        const char* uboot_paths[] = {
-            "./references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/uboot.bin",
-            "../references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/uboot.bin",
-            NULL
-        };
+
+        // Determine variant directory name
+        const char* variant_dir = "t31x";  // default
+        if (variant == VARIANT_T41 || variant == VARIANT_T41N) variant_dir = "t41";
+        else if (variant == VARIANT_T31X || variant == VARIANT_T31ZX) variant_dir = "t31x";
+        else if (variant == VARIANT_T23) variant_dir = "t23";
+
+        char uboot_path1[256], uboot_path2[256];
+        snprintf(uboot_path1, sizeof(uboot_path1), "./references/cloner-2.5.43-ubuntu_thingino/firmwares/%s/uboot.bin", variant_dir);
+        snprintf(uboot_path2, sizeof(uboot_path2), "../references/cloner-2.5.43-ubuntu_thingino/firmwares/%s/uboot.bin", variant_dir);
+
+        const char* uboot_paths[] = { uboot_path1, uboot_path2, NULL };
 
         thingino_error_t result = THINGINO_ERROR_FILE_IO;
         for (int i = 0; uboot_paths[i]; i++) {
@@ -402,7 +544,7 @@ thingino_error_t firmware_load_from_files(processor_variant_t variant,
 
         if (result != THINGINO_SUCCESS) {
             fprintf(stderr, "ERROR: Failed to load U-Boot file\n");
-            fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/t31x/uboot.bin\n");
+            fprintf(stderr, "  Expected at: %s\n", uboot_path1);
             firmware_cleanup(firmware);
             return result;
         }
