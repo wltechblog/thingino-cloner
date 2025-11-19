@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test_ddrc_analysis.dir/link.d CMakeFiles/test_ddrc_analysis.dir/src/test_ddrc_analysis.c.o -o test_ddrc_analysis

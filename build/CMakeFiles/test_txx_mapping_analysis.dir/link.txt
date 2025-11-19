@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test_txx_mapping_analysis.dir/link.d CMakeFiles/test_txx_mapping_analysis.dir/src/test_txx_mapping_analysis.c.o -o test_txx_mapping_analysis

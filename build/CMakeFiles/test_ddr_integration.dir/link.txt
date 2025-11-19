@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test_ddr_integration.dir/link.d CMakeFiles/test_ddr_integration.dir/src/test_ddr_integration.c.o CMakeFiles/test_ddr_integration.dir/src/ddr/ddr_binary_builder.c.o CMakeFiles/test_ddr_integration.dir/src/ddr/ddr_config_database.c.o -o test_ddr_integration  -lz

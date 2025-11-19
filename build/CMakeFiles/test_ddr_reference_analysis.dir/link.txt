@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test_ddr_reference_analysis.dir/link.d CMakeFiles/test_ddr_reference_analysis.dir/src/test_ddr_reference_analysis.c.o -o test_ddr_reference_analysis

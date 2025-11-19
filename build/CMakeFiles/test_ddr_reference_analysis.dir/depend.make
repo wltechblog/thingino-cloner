@@ -1,2 +1,0 @@
-# Empty dependencies file for test_ddr_reference_analysis.
-# This may be replaced when dependencies are built.

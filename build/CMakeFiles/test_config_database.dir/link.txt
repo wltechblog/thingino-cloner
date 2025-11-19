@@ -1,1 +1,0 @@
-/usr/bin/cc -Wl,--dependency-file=CMakeFiles/test_config_database.dir/link.d CMakeFiles/test_config_database.dir/src/test_config_database.c.o CMakeFiles/test_config_database.dir/src/ddr/ddr_binary_builder.c.o CMakeFiles/test_config_database.dir/src/ddr/ddr_config_database.c.o -o test_config_database  -lz
