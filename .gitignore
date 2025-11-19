@@ -2,3 +2,4 @@ firmware.bin
 .zencoder
 build/thingino-cloner
 build/
+__pycache__
