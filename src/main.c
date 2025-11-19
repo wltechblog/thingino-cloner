@@ -1,5 +1,7 @@
 #include "thingino.h"
 #include "flash_descriptor.h"
+#include "ddr/ddr_binary_builder.h"
+#include "ddr/ddr_config_database.h"
 #include <unistd.h>  // for sleep()
 
 // ============================================================================
@@ -19,6 +21,7 @@ typedef struct {
     bool bootstrap;
     bool read_firmware;
     bool write_firmware;
+    bool auto_ddr;
     int device_index;
     char* config_file;
     char* spl_file;
@@ -44,6 +47,7 @@ void print_usage(const char* program_name) {
     printf("  --spl <file>            Custom SPL file\n");
     printf("  --uboot <file>          Custom U-Boot file\n");
     printf("  --skip-ddr              Skip DDR configuration during bootstrap\n");
+    printf("  --auto-ddr              Test DDR config by attempting bootstrap only (no flash read/write)\n");
     printf("\nExamples:\n");
     printf("  %s -l                           # List devices\n", program_name);
     printf("  %s -i 0 -b                      # Bootstrap device 0\n", program_name);
@@ -59,7 +63,7 @@ thingino_error_t parse_arguments(int argc, char* argv[], cli_options_t* options)
     // Initialize options
     memset(options, 0, sizeof(cli_options_t));
     options->device_index = 0;
-    
+
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
             print_usage(argv[0]);
@@ -106,6 +110,8 @@ thingino_error_t parse_arguments(int argc, char* argv[], cli_options_t* options)
             options->uboot_file = argv[++i];
         } else if (strcmp(argv[i], "--skip-ddr") == 0) {
             options->skip_ddr = true;
+        } else if (strcmp(argv[i], "--auto-ddr") == 0) {
+            options->auto_ddr = true;
         } else if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--index") == 0) {
             if (i + 1 >= argc) {
                 printf("Error: %s requires a device index\n", argv[i]);
@@ -122,13 +128,13 @@ thingino_error_t parse_arguments(int argc, char* argv[], cli_options_t* options)
             return THINGINO_ERROR_INVALID_PARAMETER;
         }
     }
-    
+
     return THINGINO_SUCCESS;
 }
 
 thingino_error_t list_devices(usb_manager_t* manager) {
     printf("Scanning for Ingenic devices...\n\n");
-    
+
     device_info_t* devices;
     int device_count;
     thingino_error_t result = usb_manager_find_devices(manager, &devices, &device_count);
@@ -136,16 +142,16 @@ thingino_error_t list_devices(usb_manager_t* manager) {
         printf("Failed to list devices: %s\n", thingino_error_to_string(result));
         return result;
     }
-    
+
     if (device_count == 0) {
         printf("No Ingenic devices found\n");
         return THINGINO_SUCCESS;
     }
-    
+
     printf("Found %d device(s):\n", device_count);
     printf("Index | Bus | Addr | Vendor  | Product | Stage    | Variant\n");
     printf("-----|-----|------|---------|----------|--------\n");
-    
+
     for (int i = 0; i < device_count; i++) {
         device_info_t* dev = &devices[i];
         printf("%5d | %3d | %4d | 0x%04X  | 0x%04X  | %-8s | %s\n",
@@ -153,7 +159,7 @@ thingino_error_t list_devices(usb_manager_t* manager) {
             device_stage_to_string(dev->stage),
             processor_variant_to_string(dev->variant));
     }
-    
+
     printf("\n");
     free(devices);
     return THINGINO_SUCCESS;
@@ -168,29 +174,29 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         printf("Failed to list devices: %s\n", thingino_error_to_string(result));
         return result;
     }
-    
+
     if (device_count == 0) {
         printf("No devices found\n");
         free(devices);
         return THINGINO_ERROR_DEVICE_NOT_FOUND;
     }
-    
+
     if (index >= device_count) {
-        printf("Error: device index %d out of range (found %d devices)\n", 
+        printf("Error: device index %d out of range (found %d devices)\n",
             index, device_count);
         free(devices);
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
-    
+
     // Show device info
     device_info_t* device_info = &devices[index];
-    printf("Bootstrapping device [%d]: %s %s (Bus %03d Address %03d)\n", 
-        index, processor_variant_to_string(device_info->variant), 
-        device_stage_to_string(device_info->stage), 
+    printf("Bootstrapping device [%d]: %s %s (Bus %03d Address %03d)\n",
+        index, processor_variant_to_string(device_info->variant),
+        device_stage_to_string(device_info->stage),
         device_info->bus, device_info->address);
-    printf("  Vendor: 0x%04x, Product: 0x%04x\n", 
+    printf("  Vendor: 0x%04x, Product: 0x%04x\n",
         device_info->vendor, device_info->product);
-    
+
     // Open device
     DEBUG_PRINT("Opening device...\n");
     usb_device_t* device;
@@ -205,7 +211,7 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         device_info->variant, processor_variant_to_string(device_info->variant));
     DEBUG_PRINT("Device variant from opened device: %d (%s)\n",
         device->info.variant, processor_variant_to_string(device->info.variant));
-    
+
     // Create bootstrap config
     bootstrap_config_t config = {
         .sdram_address = BOOTLOADER_ADDRESS_SDRAM,
@@ -216,7 +222,7 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         .spl_file = options->spl_file,
         .uboot_file = options->uboot_file
     };
-    
+
     // Run bootstrap
     result = bootstrap_device(device, &config);
     if (result != THINGINO_SUCCESS) {
@@ -224,31 +230,31 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
     } else {
         printf("Bootstrap completed successfully!\n");
     }
-    
+
     // Cleanup
     usb_device_close(device);
     free(device);
     free(devices);
-    
+
     return result;
 }
 
 /**
  * CLI Command: Read Firmware from Device
- * 
+ *
  * PROTOCOL WORKFLOW (Session 13 Update - FIRMWARE_UPLOAD_DOWNLOAD_ANALYSIS.md):
  * ==================================================================================
- * 
+ *
  * 1. DEVICE DETECTION & BOOTSTRAP:
  *    - Scan for Ingenic devices via USB VID/PID
  *    - Check device stage (bootrom vs firmware)
  *    - If bootrom: Auto-bootstrap to firmware stage
  *    - Wait for device re-enumeration (2-3 seconds)
- * 
+ *
  * 2. HANDSHAKE PROTOCOL INITIALIZATION:
  *    - Send VR_FW_HANDSHAKE to enter firmware read mode
  *    - Device acknowledges and prepares for transfers
- * 
+ *
  * 3. FIRMWARE READ (Session 13 - Using firmware_handshake_read_chunk):
  *    For each 1MB chunk:
  *    a) Send handshake command via firmware_handshake_read_chunk():
@@ -261,12 +267,12 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
  *    b) Receive 8-byte status handshake from device
  *    c) Perform bulk-in transfer to receive firmware data
  *    d) On failure: fallback to protocol_vendor_style_read() for reliability
- * 
+ *
  * 4. FILE WRITE & CLEANUP:
  *    - Save firmware to output file
  *    - Close USB device
  *    - Cleanup resources
- * 
+ *
  * NOTE: Session 13 upgrades the firmware_read_bank() function to use the new
  * firmware_handshake_read_chunk() function with proper alternating command pattern
  * and status verification. Falls back to vendor-style read if handshake fails.
@@ -280,27 +286,27 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
         printf("Failed to list devices: %s\n", thingino_error_to_string(result));
         return result;
     }
-    
+
     if (device_count == 0) {
         printf("No devices found\n");
         free(devices);
         return THINGINO_ERROR_DEVICE_NOT_FOUND;
     }
-    
+
     if (index >= device_count) {
-        printf("Error: device index %d out of range (found %d devices)\n", 
+        printf("Error: device index %d out of range (found %d devices)\n",
             index, device_count);
         free(devices);
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
-    
+
     // Show device info
     device_info_t* device_info = &devices[index];
-    printf("Reading firmware from device [%d]: %s %s (Bus %03d Address %03d)\n", 
-        index, processor_variant_to_string(device_info->variant), 
-        device_stage_to_string(device_info->stage), 
+    printf("Reading firmware from device [%d]: %s %s (Bus %03d Address %03d)\n",
+        index, processor_variant_to_string(device_info->variant),
+        device_stage_to_string(device_info->stage),
         device_info->bus, device_info->address);
-    
+
     // Check if device is in firmware stage, but also verify by getting CPU info
     printf("Checking device stage...\n");
     usb_device_t* test_device;
@@ -422,13 +428,13 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
 
                     // Bootstrap device - pass through the original options to preserve custom file paths
                 result = bootstrap_device_by_index(manager, index, options);
-                
+
                 if (result != THINGINO_SUCCESS) {
                     printf("Bootstrap failed: %s\n", thingino_error_to_string(result));
                     free(devices);
                     return result;
                 }
-                
+
                 // Re-check device stage after bootstrap
                 // Device may have re-enumerated with new address, so wait and re-scan
                 printf("Waiting for device to stabilize after bootstrap...\n");
@@ -563,14 +569,14 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
         free(devices);
         return result;
     }
-    
+
     printf("Reading firmware from device...\n");
-    
+
     // Read full firmware from device
     uint8_t* firmware_data = NULL;
     uint32_t firmware_size = 0;
     result = firmware_read_full(device, &firmware_data, &firmware_size);
-    
+
     if (result != THINGINO_SUCCESS) {
         printf("Failed to read firmware: %s\n", thingino_error_to_string(result));
         usb_device_close(device);
@@ -578,9 +584,9 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
         free(devices);
         return result;
     }
-    
+
     printf("Successfully read %u bytes from device\n", firmware_size);
-    
+
     // Save to file
     FILE* file = fopen(output_file, "wb");
     if (!file) {
@@ -591,24 +597,24 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
         free(devices);
         return THINGINO_ERROR_FILE_IO;
     }
-    
+
     size_t bytes_written = fwrite(firmware_data, 1, firmware_size, file);
     fclose(file);
-    
+
     free(firmware_data);
-    
+
     if (bytes_written != (size_t)firmware_size) {
         printf("Warning: only %zu of %u bytes written to file\n", bytes_written, firmware_size);
     } else {
-        printf("Firmware successfully saved to: %s (%.2f MB)\n", 
+        printf("Firmware successfully saved to: %s (%.2f MB)\n",
             output_file, (float)firmware_size / (1024 * 1024));
     }
-    
+
     // Cleanup
     usb_device_close(device);
     free(device);
     free(devices);
-    
+
     return THINGINO_SUCCESS;
 }
 
@@ -813,16 +819,175 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
     return THINGINO_SUCCESS;
 }
 
+// DDR auto-probe flow: use existing bootstrap path and default DDR config.
+// No custom probe SPL or new VR commands; we just attempt a normal
+// bootstrap in bootrom stage and treat success/failure as the probe signal.
+static inline uint32_t ddr_ps_to_cycles_ceil(uint32_t ps, uint32_t freq_hz) {
+    uint64_t numerator = (uint64_t)ps * freq_hz + 999999999999ULL;
+    return (uint32_t)(numerator / 1000000000000ULL);
+}
+
+static thingino_error_t ddr_auto_probe_from_cli(usb_manager_t* manager, int index, const cli_options_t* options) {
+    // Discover target device
+    device_info_t* devices = NULL;
+    int device_count = 0;
+    thingino_error_t result = usb_manager_find_devices(manager, &devices, &device_count);
+    if (result != THINGINO_SUCCESS) {
+        printf("Failed to list devices: %s\n", thingino_error_to_string(result));
+        return result;
+    }
+    if (device_count == 0 || index >= device_count) {
+        printf("No device at index %d (found %d devices)\n", index, device_count);
+        free(devices);
+        return THINGINO_ERROR_DEVICE_NOT_FOUND;
+    }
+
+    device_info_t* info = &devices[index];
+    printf("DDR auto-probe on device [%d]: %s %s (Bus %03d Address %03d)\n",
+           index,
+           processor_variant_to_string(info->variant),
+           device_stage_to_string(info->stage),
+           info->bus, info->address);
+
+    if (info->variant == VARIANT_T20) {
+        printf("--auto-ddr is not implemented for T20 (different DDR format).\n");
+        free(devices);
+        return THINGINO_ERROR_INVALID_PARAMETER;
+    }
+
+    // Build candidate DDR config using the embedded database (same path used by firmware_load()).
+    platform_config_t plat;
+    if (ddr_get_platform_config_by_variant(info->variant, &plat) != 0) {
+        printf("Unsupported processor variant for DDR probe: %s\n",
+               processor_variant_to_string(info->variant));
+        free(devices);
+        return THINGINO_ERROR_INVALID_PARAMETER;
+    }
+
+    const char* platform_name = processor_variant_to_string(info->variant);
+    const ddr_chip_config_t* chip = ddr_chip_config_get_default(platform_name);
+    if (!chip) {
+        printf("No default DDR chip config for platform %s\n", platform_name);
+        free(devices);
+        return THINGINO_ERROR_INVALID_PARAMETER;
+    }
+
+    printf("Using embedded default DDR candidate: %s (%s)\n", chip->name, chip->vendor);
+    if (options->verbose) {
+        printf("  DDR type=%u, ROW=%u, COL=%u, CL=%u, BL=%u\n",
+               chip->ddr_type, chip->row_bits, chip->col_bits, chip->cl, chip->bl);
+        printf("  tRAS=%u ps, tRC=%u ps, tRCD=%u ps, tRP=%u ps, tRFC=%u ps\n",
+               chip->tRAS, chip->tRC, chip->tRCD, chip->tRP, chip->tRFC);
+    }
+
+    // Build a debug DDR binary matching what firmware_generate_ddr_config() would produce.
+    ddr_phy_params_t params;
+    params.ddr_type = chip->ddr_type;
+    params.row_bits = chip->row_bits;
+    params.col_bits = chip->col_bits;
+    params.cl = chip->cl;
+    params.bl = chip->bl;
+    params.tRAS = ddr_ps_to_cycles_ceil(chip->tRAS, plat.ddr_freq);
+    params.tRC  = ddr_ps_to_cycles_ceil(chip->tRC,  plat.ddr_freq);
+    params.tRCD = ddr_ps_to_cycles_ceil(chip->tRCD, plat.ddr_freq);
+    params.tRP  = ddr_ps_to_cycles_ceil(chip->tRP,  plat.ddr_freq);
+    params.tRFC = ddr_ps_to_cycles_ceil(chip->tRFC, plat.ddr_freq);
+    params.tRTP = ddr_ps_to_cycles_ceil(chip->tRTP, plat.ddr_freq);
+    params.tFAW = ddr_ps_to_cycles_ceil(chip->tFAW, plat.ddr_freq);
+    params.tRRD = ddr_ps_to_cycles_ceil(chip->tRRD, plat.ddr_freq);
+    params.tWTR = ddr_ps_to_cycles_ceil(chip->tWTR, plat.ddr_freq);
+
+    uint8_t ddr_binary[DDR_BINARY_SIZE];
+    size_t dd_size = ddr_build_binary(&plat, &params, ddr_binary);
+    if (dd_size == 0) {
+        printf("Failed to build DDR binary for probe.\n");
+        free(devices);
+        return THINGINO_ERROR_PROTOCOL;
+    }
+
+    // Save candidate DDR binary for offline comparison against known-good configs.
+    FILE* dbg = fopen("ddr_auto_candidate.bin", "wb");
+    if (dbg) {
+        fwrite(ddr_binary, 1, dd_size, dbg);
+        fclose(dbg);
+        if (options->verbose) {
+            printf("Saved candidate DDR binary to ./ddr_auto_candidate.bin (%zu bytes)\n", dd_size);
+        }
+    } else if (options->verbose) {
+        fprintf(stderr, "Warning: could not save ddr_auto_candidate.bin for debugging\n");
+    }
+
+    // Open device in bootrom stage and attempt a normal bootstrap using the default path.
+    usb_device_t* device = NULL;
+    result = usb_manager_open_device(manager, info, &device);
+    if (result != THINGINO_SUCCESS) {
+        printf("Failed to open device: %s\n", thingino_error_to_string(result));
+        free(devices);
+        return result;
+    }
+
+    if (device->info.stage != STAGE_BOOTROM) {
+        printf("Device is not in bootrom stage (stage=%s). Put it in USB boot mode and retry.\n",
+               device_stage_to_string(device->info.stage));
+        usb_device_close(device);
+        free(device);
+        free(devices);
+        return THINGINO_ERROR_INVALID_PARAMETER;
+    }
+
+    bootstrap_config_t config = {
+        .sdram_address = BOOTLOADER_ADDRESS_SDRAM,
+        .timeout       = BOOTSTRAP_TIMEOUT_SECONDS,
+        .verbose       = options->verbose,
+        .skip_ddr      = false,
+        .config_file   = NULL,  // use embedded/default DDR generation
+        .spl_file      = NULL,
+        .uboot_file    = NULL
+    };
+
+    printf("Running bootstrap with this DDR candidate (no flash read/write)...\n");
+    result = bootstrap_device(device, &config);
+    if (result != THINGINO_SUCCESS) {
+        printf("DDR auto-probe: bootstrap FAILED with this DDR candidate: %s\n",
+               thingino_error_to_string(result));
+        printf("NOTE: Device DDR may now be in a bad state; power-cycle before retrying.\n");
+        usb_device_close(device);
+        free(device);
+        free(devices);
+        return result;
+    }
+
+    printf("DDR auto-probe: bootstrap SUCCEEDED with this DDR candidate.\n");
+
+    // Try to confirm that the device is now in firmware stage.
+    cpu_info_t cpu_info;
+    thingino_error_t cpu_result = usb_device_get_cpu_info(device, &cpu_info);
+    if (cpu_result == THINGINO_SUCCESS) {
+        printf("Post-bootstrap CPU stage: %s (magic: '%.8s')\n",
+               device_stage_to_string(cpu_info.stage), cpu_info.magic);
+    } else if (options->verbose) {
+        printf("Warning: GET_CPU_INFO after bootstrap failed: %s\n",
+               thingino_error_to_string(cpu_result));
+    }
+
+    printf("You can now compare ./ddr_auto_candidate.bin to known-good DDR binaries to refine configs.\n");
+
+    usb_device_close(device);
+    free(device);
+    free(devices);
+    return THINGINO_SUCCESS;
+}
+
 int main(int argc, char* argv[]) {
     cli_options_t options;
     thingino_error_t result = parse_arguments(argc, argv, &options);
     if (result != THINGINO_SUCCESS) {
         return 1;
     }
-    
+
     // Set global debug flag based on CLI options
     g_debug_enabled = options.debug;
-    
+
     // Initialize USB manager
     usb_manager_t manager;
     result = usb_manager_init(&manager);
@@ -830,11 +995,16 @@ int main(int argc, char* argv[]) {
         printf("Failed to initialize USB manager: %s\n", thingino_error_to_string(result));
         return 1;
     }
-    
+
     int exit_code = 0;
-    
+
     if (options.list_devices) {
         result = list_devices(&manager);
+        if (result != THINGINO_SUCCESS) {
+            exit_code = 1;
+        }
+    } else if (options.auto_ddr) {
+        result = ddr_auto_probe_from_cli(&manager, options.device_index, &options);
         if (result != THINGINO_SUCCESS) {
             exit_code = 1;
         }
@@ -859,9 +1029,9 @@ int main(int argc, char* argv[]) {
         printf("No action specified. Use -h for help.\n");
         exit_code = 1;
     }
-    
+
     // Cleanup
     usb_manager_cleanup(&manager);
-    
+
     return exit_code;
 }

@@ -17,14 +17,14 @@ def extract_usb_data(pcap_file):
     """Extract USB bulk OUT data from pcap file using tshark"""
     print(f"Analyzing {pcap_file}...")
     
-    # Use tshark to extract USB bulk OUT data
+    # Use tshark to extract all OUT transfers with payload (control + bulk)
     cmd = [
         'tshark', '-r', pcap_file,
-        '-Y', 'usb.transfer_type == 0x03 && usb.endpoint_address.direction == 0',
+        '-Y', 'usb.endpoint_address.direction == 0 && usb.data_len > 0',
         '-T', 'fields',
         '-e', 'usb.capdata'
     ]
-    
+
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         

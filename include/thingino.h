@@ -75,6 +75,10 @@ typedef struct {
 #define NAND_OPERATION_READ   0x05  // NAND read subcommand
 #define NAND_OPERATION_WRITE  0x06  // NAND write subcommand
 
+// DDR auto-probe (custom SPL) commands
+#define VR_DDR_PROBE_SET_CONFIG  0x30
+#define VR_DDR_PROBE_RUN_TEST    0x31
+
 // USB Configuration constants
 #define DEFAULT_BUFFER_SIZE    (1024 * 1024)  // 1MB default buffer
 #define REQUEST_TYPE_VENDOR    0xC0           // USB vendor request type for device-to-host
@@ -276,6 +280,8 @@ thingino_error_t protocol_prog_stage2(usb_device_t* device, uint32_t addr);
 thingino_error_t protocol_get_ack(usb_device_t* device, int32_t* status);
 thingino_error_t protocol_init(usb_device_t* device);
 thingino_error_t protocol_nand_read(usb_device_t* device, uint32_t offset, uint32_t size, uint8_t** data, int* transferred);
+thingino_error_t protocol_ddr_probe_set_config(usb_device_t* device, const uint8_t* config, size_t length);
+thingino_error_t protocol_ddr_probe_run_test(usb_device_t* device, uint8_t* result);
 
 // Firmware functions
 thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* firmware);
