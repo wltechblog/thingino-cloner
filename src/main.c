@@ -734,20 +734,43 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
 
     free(devices);
 
+    // Detect A1 firmware-stage boards via CPU magic so we can use the correct
+    // flash descriptor (A1 uses XM25QH128B, T31x uses GD25Q127CSIG).
+    bool is_a1_fw_stage = false;
+    cpu_info_t fw_cpu_info;
+    memset(&fw_cpu_info, 0, sizeof(fw_cpu_info));
+    thingino_error_t fw_cpu_res = usb_device_get_cpu_info(device, &fw_cpu_info);
+    if (fw_cpu_res == THINGINO_SUCCESS) {
+        if (strncmp(fw_cpu_info.clean_magic, "A1", 2) == 0 ||
+            strncmp(fw_cpu_info.clean_magic, "a1", 2) == 0) {
+            is_a1_fw_stage = true;
+            DEBUG_PRINT("Detected A1 CPU magic ('%s') in firmware stage\n",
+                       fw_cpu_info.clean_magic);
+        }
+    }
+
     // Prepare burner protocol in firmware stage: send partition marker,
     // then flash descriptor, then initialize the firmware handshake
     // protocol. This mirrors the vendor write sequence more closely:
     //   - Chunk 3: 172-byte "ILOP" partition marker (bulk OUT)
-    //   - Chunk 4: 972-byte flash descriptor + policies
+    //   - Chunk 4: 972-byte flash descriptor + policies (contains "nor" string
+    //     that tells A1 burner to use NOR flash mode instead of MMC mode)
     //   - Then firmware write handshakes and data chunks.
+    //
+    // NOTE: A1 boards also need this! The metadata contains the crucial "nor"
+    // string at offset 0xF0 that tells the burner to use NOR flash mode.
+    // Without it, the A1 burner tries to write to MMC/SD card and fails.
     if (device->info.stage == STAGE_FIRMWARE &&
         (device->info.variant == VARIANT_T31 ||
          device->info.variant == VARIANT_T31X ||
          device->info.variant == VARIANT_T31ZX)) {
+
+        thingino_error_t prep_result = THINGINO_SUCCESS;
+
         printf("Preparing partition marker, flash descriptor and firmware handshake...\n");
 
         // 1) Send 172-byte partition marker ("ILOP" header)
-        thingino_error_t prep_result = flash_partition_marker_send(device);
+        prep_result = flash_partition_marker_send(device);
         if (prep_result != THINGINO_SUCCESS) {
             printf("[ERROR] Failed to send partition marker: %s\n",
                    thingino_error_to_string(prep_result));
@@ -757,12 +780,28 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
         }
 
         // 2) Build and send full 972-byte flash descriptor
+        // Use A1-specific descriptor for A1 boards, T31x descriptor otherwise.
+        // The A1 descriptor contains the XM25QH128B flash chip info and the
+        // crucial "nor" string at offset 0xF0 that tells the burner to use
+        // NOR flash mode instead of MMC mode.
         uint8_t flash_descriptor[FLASH_DESCRIPTOR_SIZE];
-        if (flash_descriptor_create_t31x_writer_full(flash_descriptor) != 0) {
-            printf("[ERROR] Failed to create T31x writer_full flash descriptor\n");
-            usb_device_close(device);
-            free(device);
-            return THINGINO_ERROR_MEMORY;
+        int desc_result;
+        if (is_a1_fw_stage) {
+            desc_result = flash_descriptor_create_a1_writer_full(flash_descriptor);
+            if (desc_result != 0) {
+                printf("[ERROR] Failed to create A1 writer_full flash descriptor\n");
+                usb_device_close(device);
+                free(device);
+                return THINGINO_ERROR_MEMORY;
+            }
+        } else {
+            desc_result = flash_descriptor_create_t31x_writer_full(flash_descriptor);
+            if (desc_result != 0) {
+                printf("[ERROR] Failed to create T31x writer_full flash descriptor\n");
+                usb_device_close(device);
+                free(device);
+                return THINGINO_ERROR_MEMORY;
+            }
         }
 
         prep_result = flash_descriptor_send(device, flash_descriptor);
@@ -798,7 +837,7 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
     printf("  Source file: %s\n", firmware_file);
     printf("\n");
 
-    result = write_firmware_to_device(device, firmware_file, fw_binary, options->force_erase);
+    result = write_firmware_to_device(device, firmware_file, fw_binary, options->force_erase, is_a1_fw_stage);
     if (result != THINGINO_SUCCESS) {
         fprintf(stderr, "Error: Firmware write failed: %s\n", thingino_error_to_string(result));
         usb_device_close(device);

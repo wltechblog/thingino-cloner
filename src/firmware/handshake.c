@@ -477,6 +477,130 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
     usleep(300000); // 300ms delay
 
     return THINGINO_SUCCESS;
+
+}
+
+
+/**
+ * Firmware write with 40-byte handshake protocol for A1 boards.
+ *
+ * A1 uses a different handshake layout than T31/T41, with 1MB chunks and
+ * a unique trailer. Pattern derived from a1_full_write_20251119_221121.pcap:
+ *   Bytes  0-7 : zeros
+ *   Bytes  8-11: Constant 0x00000600 (00 00 06 00)
+ *   Bytes 12-15: Chunk offset in bytes (little-endian)
+ *   Bytes 16-19: Chunk size 0x00100000 (00 00 10 00) = 1MB
+ *   Bytes 20-23: ~CRC32(chunk_data) (little-endian)
+ *   Bytes 24-31: zeros
+ *   Bytes 32-39: A1 trailer (30 24 00 D4 02 75 00 00)
+ */
+thingino_error_t firmware_handshake_write_chunk_a1(usb_device_t* device, uint32_t chunk_index,
+                                                  uint32_t chunk_offset, const uint8_t* data,
+                                                  uint32_t data_size) {
+    if (!device || !data || data_size == 0) {
+        return THINGINO_ERROR_INVALID_PARAMETER;
+    }
+
+    DEBUG_PRINT("FirmwareHandshakeWriteChunkA1: index=%u, offset=0x%08X, size=%u\n",
+           chunk_index, chunk_offset, data_size);
+
+    // Build 40-byte handshake command for write (A1-specific layout)
+    // Pattern from a1_full_write_20251119_221121.pcap showing 1MB chunks:
+    //   Bytes  0-7 : zeros
+    //   Bytes  8-11: Constant 0x00000600 (00 00 06 00)
+    //   Bytes 12-15: Chunk offset in bytes (little-endian)
+    //   Bytes 16-19: Chunk size 0x00100000 (00 00 10 00) = 1MB
+    //   Bytes 20-23: ~CRC32(chunk_data) (little-endian)
+    //   Bytes 24-31: zeros
+    //   Bytes 32-39: A1 trailer (30 24 00 D4 02 75 00 00)
+    uint8_t handshake_cmd[40] = {0};
+
+    // Bytes 8-11: Constant pattern 0x00000600
+    handshake_cmd[8] = 0x00;
+    handshake_cmd[9] = 0x00;
+    handshake_cmd[10] = 0x06;
+    handshake_cmd[11] = 0x00;
+
+    // Bytes 12-15: Chunk offset in bytes (little-endian)
+    handshake_cmd[12] = (chunk_offset >> 0) & 0xFF;
+    handshake_cmd[13] = (chunk_offset >> 8) & 0xFF;
+    handshake_cmd[14] = (chunk_offset >> 16) & 0xFF;
+    handshake_cmd[15] = (chunk_offset >> 24) & 0xFF;
+
+    // Bytes 16-19: Chunk size in bytes (little-endian)
+    // A1 uses 1MB (0x100000) chunks
+    handshake_cmd[16] = (data_size >> 0) & 0xFF;
+    handshake_cmd[17] = (data_size >> 8) & 0xFF;
+    handshake_cmd[18] = (data_size >> 16) & 0xFF;
+    handshake_cmd[19] = (data_size >> 24) & 0xFF;
+
+    // Compute inverted CRC32 of chunk data
+    uint32_t crc = firmware_crc32(data, data_size);
+    uint32_t crc_inv = ~crc;
+
+    // Bytes 20-23: Inverted CRC32 of chunk data (little-endian)
+    handshake_cmd[20] = (crc_inv >> 0) & 0xFF;
+    handshake_cmd[21] = (crc_inv >> 8) & 0xFF;
+    handshake_cmd[22] = (crc_inv >> 16) & 0xFF;
+    handshake_cmd[23] = (crc_inv >> 24) & 0xFF;
+
+    // Bytes 24-31: zeros (already initialized)
+
+    // Bytes 32-39: A1-specific trailer from vendor capture
+    handshake_cmd[32] = 0x30;
+    handshake_cmd[33] = 0x24;
+    handshake_cmd[34] = 0x00;
+    handshake_cmd[35] = 0xD4;
+    handshake_cmd[36] = 0x02;
+    handshake_cmd[37] = 0x75;
+    handshake_cmd[38] = 0x00;
+    handshake_cmd[39] = 0x00;
+
+    // Send handshake using VR_WRITE (0x12)
+    uint8_t handshake_cmd_code = VR_WRITE;
+
+    DEBUG_PRINT("Sending A1 write handshake with command 0x%02X...\n", handshake_cmd_code);
+
+    // Debug: dump handshake bytes for analysis
+    DEBUG_PRINT("A1 Handshake bytes:");
+    for (int i = 0; i < 40; i++) {
+        if (i % 8 == 0) {
+            DEBUG_PRINT("\n  ");
+        }
+        fprintf(stderr, "%02X ", handshake_cmd[i]);
+    }
+    fprintf(stderr, "\n");
+
+    int response_len = 0;
+    thingino_error_t result = usb_device_vendor_request(device, REQUEST_TYPE_OUT,
+        handshake_cmd_code, 0, 0, handshake_cmd, 40, NULL, &response_len);
+
+    if (result != THINGINO_SUCCESS) {
+        DEBUG_PRINT("Failed to send A1 write handshake: %s\n", thingino_error_to_string(result));
+        return result;
+    }
+
+    usleep(50000); // 50ms delay
+
+    // Send actual data via bulk-out
+    DEBUG_PRINT("[A1] Sending %u bytes of data via bulk-out...\n", data_size);
+
+    int transferred = 0;
+    result = usb_device_bulk_transfer(device, ENDPOINT_OUT, (uint8_t*)data,
+                                      data_size, &transferred, 6000);
+
+    if (result != THINGINO_SUCCESS) {
+        DEBUG_PRINT("[A1] Bulk-out transfer failed: %s\n", thingino_error_to_string(result));
+        return result;
+    }
+
+    DEBUG_PRINT("[A1] Data sent: %d/%u bytes\n", transferred, data_size);
+
+    // Give device time to start and finish processing the chunk.
+    DEBUG_PRINT("[A1] Waiting 300ms for device to process chunk...\n");
+    usleep(300000); // 300ms delay
+
+    return THINGINO_SUCCESS;
 }
 
 /**

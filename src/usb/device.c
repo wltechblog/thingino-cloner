@@ -97,14 +97,17 @@ thingino_error_t usb_device_get_cpu_info(usb_device_t* device, cpu_info_t* info)
 
     // Determine boot stage based on CPU info
     // Firmware stage is normally indicated by a "Boot"/"BOOT" prefix, but some
-    // XBurst2 boards (e.g. X2580/T41N) report a short CPU string like "X2580"
-    // once the vendor firmware is running. Treat that as firmware stage too so
-    // that post-bootstrap detection works correctly.
+    // boards report a short CPU string (e.g. "X2580" for T41N/XBurst2, "A1" for
+    // A1-series NVRs) once the vendor firmware is running. Treat these as
+    // firmware stage too so that post-bootstrap detection works correctly.
     bool is_firmware_stage = false;
     if (strncmp(cpu_str, "Boot", 4) == 0 || strncmp(cpu_str, "BOOT", 4) == 0) {
         is_firmware_stage = true;
     } else if (strcmp(cpu_str, "X2580") == 0 || strcmp(cpu_str, "x2580") == 0) {
         DEBUG_PRINT("GetCPUInfo: Detected X2580 magic, treating as firmware stage (T41N/XBurst2)\n");
+        is_firmware_stage = true;
+    } else if (strncmp(cpu_str, "A1", 2) == 0 || strncmp(cpu_str, "a1", 2) == 0) {
+        DEBUG_PRINT("GetCPUInfo: Detected A1 magic, treating as firmware stage (A1/T31VX board)\n");
         is_firmware_stage = true;
     }
 

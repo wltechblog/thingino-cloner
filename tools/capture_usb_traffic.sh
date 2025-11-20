@@ -136,15 +136,15 @@ echo ""
 
 # Determine capture interface and filter
 if [ -n "$INGENIC_INFO" ]; then
-    # Capture only the specific USB bus with device filter
+    # Capture only the specific USB bus (we'll filter by device in analysis)
     CAPTURE_INTERFACE="usbmon${INGENIC_BUS_NUM}"
 
-    echo -e "${CYAN}Capture mode: FILTERED (Ingenic device only)${NC}"
+    echo -e "${CYAN}Capture mode: BUS-LEVEL (Ingenic bus only)${NC}"
     echo "  Interface: $CAPTURE_INTERFACE"
-    echo "  Device filter: usb.device_address == $INGENIC_DEV_NUM"
+    echo "  Note: libpcap cannot filter by usb.device_address at capture time;\n        analysis tools will filter by device later."
     echo ""
-    echo -e "${YELLOW}This will capture ONLY the Ingenic device traffic${NC}"
-    echo -e "${YELLOW}(No keyboard, mouse, or other USB devices)${NC}"
+    echo -e "${YELLOW}This will capture ALL traffic on this USB bus${NC}"
+    echo -e "${YELLOW}(Other devices on the same bus may appear in the trace)${NC}"
 else
     # Fallback: capture all USB traffic
     CAPTURE_INTERFACE="usbmon0"
@@ -173,23 +173,25 @@ trap 'echo -e "\n${YELLOW}Stopping capture...${NC}"' INT
 # -w writes to file
 # -s 0 captures full packets (no truncation)
 if [ -n "$INGENIC_INFO" ]; then
-    # Filtered capture for specific device
-    # Note: tcpdump filter syntax for USB is limited, so we capture the whole bus
-    # and rely on the device being the only active one, or use tshark for better filtering
+    # Filtered capture for specific device (bus-level capture; filter by device in analysis)
+    # Note: libpcap/usbmon do NOT support USB capture filters, so we capture the whole bus
+    # and later filter by usb.device_address using tshark or Python tools.
 
     if command -v tshark &> /dev/null; then
-        # Use tshark for better filtering
-        echo -e "${CYAN}Using tshark for precise device filtering...${NC}"
-        tshark -i "$CAPTURE_INTERFACE" -w "$CAPTURE_PATH" \
-            -f "usb.device_address == $INGENIC_DEV_NUM" 2>/dev/null || \
-        tshark -i "$CAPTURE_INTERFACE" -w "$CAPTURE_PATH" 2>/dev/null
+        echo -e "${CYAN}Using tshark (whole bus capture on ${CAPTURE_INTERFACE})...${NC}"
+        # Use '-w -' and let the shell write the file. This avoids dumpcap/AppArmor
+        # path restrictions while still using tshark's capture engine.
+        if ! tshark -i "$CAPTURE_INTERFACE" -w - > "$CAPTURE_PATH"; then
+            echo -e "${YELLOW}WARNING: tshark failed; falling back to tcpdump${NC}"
+            tcpdump -i "$CAPTURE_INTERFACE" -w "$CAPTURE_PATH" -s 0
+        fi
     else
         # Use tcpdump (captures whole bus)
-        echo -e "${CYAN}Using tcpdump (whole bus capture)...${NC}"
+        echo -e "${CYAN}Using tcpdump (whole bus capture on ${CAPTURE_INTERFACE})...${NC}"
         tcpdump -i "$CAPTURE_INTERFACE" -w "$CAPTURE_PATH" -s 0
     fi
 else
-    # Unfiltered capture
+    # Unfiltered capture (no Ingenic device detected)
     tcpdump -i "$CAPTURE_INTERFACE" -w "$CAPTURE_PATH" -s 0
 fi
 

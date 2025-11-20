@@ -335,13 +335,17 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
 thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t chunk_index,
                                                 uint32_t chunk_offset, const uint8_t* data,
                                                 uint32_t data_size);
+thingino_error_t firmware_handshake_write_chunk_a1(usb_device_t* device, uint32_t chunk_index,
+                                                   uint32_t chunk_offset, const uint8_t* data,
+                                                   uint32_t data_size);
 thingino_error_t firmware_handshake_init(usb_device_t* device);
 
 // Firmware writer functions
 thingino_error_t write_firmware_to_device(usb_device_t* device,
                                          const char* firmware_file,
                                          const firmware_binary_t* fw_binary,
-                                         bool force_erase);
+                                         bool force_erase,
+                                         bool is_a1_board);
 thingino_error_t send_bulk_data(usb_device_t* device, uint8_t endpoint,
                                 const uint8_t* data, uint32_t size);
 

@@ -13,15 +13,19 @@
 
 /**
  * Write firmware to device
- * 
+ *
  * @param device USB device handle
  * @param firmware_file Path to firmware file
- * @param fw_config Firmware configuration for the target SoC
+ * @param fw_binary Firmware binary configuration for the target SoC
+ * @param force_erase Force erase flag (currently unused)
+ * @param is_a1_board True if device is an A1 board (uses 1MB chunks)
  * @return THINGINO_SUCCESS on success, error code otherwise
  */
-thingino_error_t write_firmware_to_device(usb_device_t* device, 
+thingino_error_t write_firmware_to_device(usb_device_t* device,
                                          const char* firmware_file,
-                                         const firmware_config_t* fw_config);
+                                         const firmware_binary_t* fw_binary,
+                                         bool force_erase,
+                                         bool is_a1_board);
 
 /**
  * Send bulk data to device

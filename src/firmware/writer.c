@@ -15,9 +15,11 @@
 #include "thingino.h"
 #include "firmware_database.h"
 #include <unistd.h>
+#include <string.h>
 
 #define CHUNK_SIZE_128KB (128 * 1024)
 #define CHUNK_SIZE_64KB  (64 * 1024)
+#define CHUNK_SIZE_1MB   (1024 * 1024)
 #define ENDPOINT_OUT 0x01
 
 // Wait for NOR erase to complete in firmware stage using VR_FW_READ_STATUS2.
@@ -436,12 +438,13 @@ static thingino_error_t t41n_send_write_metadata(usb_device_t *device) {
  * - Bootstrap device (DDR + SPL + U-Boot)
  * - Send partition marker
  * - Send metadata
- * - Send firmware in 128KB chunks
+ * - Send firmware in 128KB chunks (T31x) or 1MB chunks (A1)
  */
 thingino_error_t write_firmware_to_device(usb_device_t* device,
                                          const char* firmware_file,
                                          const firmware_binary_t* fw_binary,
-                                         bool force_erase) {
+                                         bool force_erase,
+                                         bool is_a1_board) {
     if (!device || !firmware_file) {
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
@@ -452,6 +455,25 @@ thingino_error_t write_firmware_to_device(usb_device_t* device,
     printf("  Firmware file: %s\n", firmware_file);
     if (fw_binary) {
         printf("  SoC: %s\n", fw_binary->processor);
+    }
+
+    // Use the is_a1_board flag passed from main.c (detected before flash
+    // descriptor was sent, when the device was still responsive).
+    // We can't reliably detect A1 here because the device may be busy
+    // processing the flash descriptor and timeout on GetCPUInfo.
+    bool is_a1_fw = is_a1_board;
+
+    // Also allow embedded firmware database keys to force A1 mode (e.g. "a1_*").
+    if (!is_a1_fw && fw_binary && fw_binary->processor) {
+        if (strncmp(fw_binary->processor, "a1_", 3) == 0) {
+            is_a1_fw = true;
+            printf("  Detected A1 firmware variant (%s) -> enabling A1 write handshakes\n",
+                   fw_binary->processor);
+        }
+    }
+
+    if (is_a1_fw) {
+        printf("  Detected A1 CPU magic ('A1') -> enabling A1 write handshakes\n");
     }
 
     // Step 1: Load firmware file
@@ -538,9 +560,29 @@ thingino_error_t write_firmware_to_device(usb_device_t* device,
         return result;
     }
 
+    // For A1 boards, the VR_FW_HANDSHAKE (0x11) triggers a chip erase that takes
+    // ~50-60 seconds. The vendor capture shows they wait ~53 seconds before sending
+    // VR_SET_DATA_LEN, with no status polling during the erase. A1 doesn't respond
+    // to VR_FW_READ_STATUS2 during erase (returns 0 or times out), so we use a
+    // fixed delay instead of status polling.
+    if (is_a1_fw) {
+        printf("Waiting for A1 chip erase to complete (this takes ~60 seconds)...\n");
+        printf("  The device will not respond to status requests during erase.\n");
+
+        // Wait 60 seconds for erase to complete
+        for (int i = 0; i < 60; i++) {
+            printf("\r  Erase progress: %d/60 seconds...", i + 1);
+            fflush(stdout);
+            sleep(1);
+        }
+        printf("\n");
+        printf("Erase should be complete, proceeding with write...\n");
+    }
+
     // Set data length before the first chunk. Vendor captures show:
     // - T31x: Set total firmware size.
     // - T41N: Use a fixed 64KB length for per-chunk VR_WRITE writes.
+    // - A1: Set total firmware size (sent after erase completes).
     uint32_t set_length = (device->info.stage == STAGE_FIRMWARE &&
                            device->info.variant == VARIANT_T41)
                               ? (uint32_t)CHUNK_SIZE_64KB
@@ -555,12 +597,15 @@ thingino_error_t write_firmware_to_device(usb_device_t* device,
         return result;
     }
 
-    // Wait for device to prepare (erase flash, etc.). The first full-chip
-    // erase on a fresh or previously-programmed device can take significantly
-    // longer than subsequent runs, so rely on firmware status polling instead
-    // of a fixed sleep. We still enforce a minimum 5s delay and cap the wait
-    // at 60s for safety.
-    firmware_wait_for_erase_ready(device, 5000 /* min_wait_ms */, 60000 /* max_wait_ms */);
+    // Wait for device to prepare (erase flash, etc.) for non-A1 boards.
+    // A1 boards already waited above with a fixed delay.
+    if (!is_a1_fw) {
+        // The first full-chip erase on a fresh or previously-programmed device
+        // can take significantly longer than subsequent runs, so rely on firmware
+        // status polling instead of a fixed sleep. We still enforce a minimum 5s
+        // delay and cap the wait at 60s for safety.
+        firmware_wait_for_erase_ready(device, 5000 /* min_wait_ms */, 60000 /* max_wait_ms */);
+    }
 
     // NOTE: VR_FW_HANDSHAKE (0x11) should be sent earlier (after U-Boot load),
     // not here. Vendor capture shows it's sent once at frame 13467, way before
@@ -599,6 +644,36 @@ thingino_error_t write_firmware_to_device(usb_device_t* device,
                                                    chunk_size);
             if (result != THINGINO_SUCCESS) {
                 fprintf(stderr, "Error: Failed to write T41N chunk %u\n", chunk_num);
+                free(firmware_data);
+                return result;
+            }
+
+            bytes_written += chunk_size;
+        }
+    } else if (is_a1_fw) {
+        // A1 path: 1MB chunks with A1-specific VR_WRITE handshakes.
+        // Pattern from a1_full_write_20251119_221121.pcap shows 1MB (0x100000) chunks.
+        while (bytes_written < (uint32_t)firmware_size) {
+            uint32_t chunk_size = CHUNK_SIZE_1MB;
+            if (bytes_written + chunk_size > (uint32_t)firmware_size) {
+                chunk_size = (uint32_t)firmware_size - bytes_written;
+            }
+
+            chunk_num++;
+            uint32_t chunk_offset = bytes_written;  // offset relative to flash_base_address
+            uint32_t current_flash_addr = flash_base_address + chunk_offset;
+
+            printf("  [A1] Chunk %u: Writing %u bytes at 0x%08X (%.1f%%)...\n",
+                   chunk_num, chunk_size, current_flash_addr,
+                   (bytes_written + chunk_size) * 100.0 / firmware_size);
+
+            // Use A1-specific 40-byte VR_WRITE (0x12) handshakes per chunk.
+            result = firmware_handshake_write_chunk_a1(device, chunk_num - 1,  // 0-based index
+                                                       chunk_offset,
+                                                       firmware_data + bytes_written,
+                                                       chunk_size);
+            if (result != THINGINO_SUCCESS) {
+                fprintf(stderr, "Error: Failed to write A1 chunk %u\n", chunk_num);
                 free(firmware_data);
                 return result;
             }

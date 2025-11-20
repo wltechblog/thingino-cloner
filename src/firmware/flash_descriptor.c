@@ -263,6 +263,58 @@ int flash_descriptor_create_t31x_writer_full(uint8_t *buffer) {
 }
 
 /**
+ * Load the A1 NOR writer_full flash descriptor captured from the vendor A1 write.
+ *
+ * The binary comes from tools/usb_captures/a1_full_write_extracted/
+ *   bulk_out_0004_frame1813_992bytes.bin
+ * and describes an XM25QH128B NOR with a single "full_image" partition
+ * covering the whole device. This descriptor contains the "nor" string at
+ * offset 0xF0 that tells the A1 burner to use NOR flash mode.
+ */
+int flash_descriptor_create_a1_writer_full(uint8_t *buffer) {
+    if (!buffer) {
+        return -1;
+    }
+
+    const char *candidates[] = {
+        "tools/usb_captures/a1_full_write_extracted/bulk_out_0004_frame1813_992bytes.bin",
+        "../tools/usb_captures/a1_full_write_extracted/bulk_out_0004_frame1813_992bytes.bin",
+        "../../tools/usb_captures/a1_full_write_extracted/bulk_out_0004_frame1813_992bytes.bin"
+    };
+
+    FILE *f = NULL;
+    const char *path_used = NULL;
+    for (size_t i = 0; i < sizeof(candidates) / sizeof(candidates[0]); ++i) {
+        f = fopen(candidates[i], "rb");
+        if (f) {
+            path_used = candidates[i];
+            break;
+        }
+    }
+
+    if (!f) {
+        printf("[ERROR] A1 writer_full descriptor file not found.\n");
+        printf("        Expected at tools/usb_captures/a1_full_write_extracted/"
+               "bulk_out_0004_frame1813_992bytes.bin (relative to CWD).\n");
+        return -1;
+    }
+
+    size_t n = fread(buffer, 1, FLASH_DESCRIPTOR_SIZE, f);
+    fclose(f);
+
+    if (n != FLASH_DESCRIPTOR_SIZE) {
+        printf("[ERROR] Failed to read A1 writer_full descriptor from %s: "
+               "got %zu bytes, expected %d\n",
+               path_used ? path_used : "(unknown)", n, FLASH_DESCRIPTOR_SIZE);
+        return -1;
+    }
+
+    DEBUG_PRINT("Loaded A1 writer_full descriptor from %s\n", path_used);
+
+    return 0;
+}
+
+/**
  * Send flash descriptor to device
  */
 thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *descriptor) {

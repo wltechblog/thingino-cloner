@@ -45,6 +45,16 @@ int flash_descriptor_create_win25q128(uint8_t *buffer);
  */
 int flash_descriptor_create_t31x_writer_full(uint8_t *buffer);
 
+/**
+ * Create flash descriptor for A1 NOR writer_full (XM25QH128B, full_image).
+ *
+ * This loads the exact 972-byte descriptor captured from the vendor A1 write
+ * and contains the "nor" string that tells the A1 burner to use NOR flash mode.
+ *
+ * @param buffer Output buffer (must be at least FLASH_DESCRIPTOR_SIZE bytes)
+ * @return 0 on success, -1 on error
+ */
+int flash_descriptor_create_a1_writer_full(uint8_t *buffer);
 
 /**
  * Send flash partition marker ("ILOP" header, 172 bytes) to device.
