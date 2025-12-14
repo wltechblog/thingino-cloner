@@ -1,11 +1,5 @@
 #include "thingino.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ============================================================================
 // FIRMWARE READER IMPLEMENTATION - Session 19 Fix
 // Based on READ_FIRMWARE_PROTOCOL_ANALYSIS.md - vendor tool streams data automatically
@@ -94,7 +88,7 @@ static thingino_error_t firmware_read_components(usb_device_t* device) {
         DEBUG_PRINT("Component %d read successfully (%d bytes)\n", i, transferred);
         
         // Small delay between components to let device prepare
-        usleep(100000); // 100ms
+        thingino_sleep_microseconds(100000); // 100ms
     }
     
     DEBUG_PRINT("All firmware components read successfully\n");
@@ -123,7 +117,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         DEBUG_PRINT("Components read successfully, now reading main firmware...\n");
     } else {
         DEBUG_PRINT("Non-first bank, giving device 100ms to stabilize...\n");
-        usleep(100000);  // 100ms for subsequent banks
+        thingino_sleep_microseconds(100000);  // 100ms for subsequent banks
     }
 
     // STAGE 2: Read main firmware in 1MB chunks (via BULK IN EP 0x81)
@@ -189,7 +183,7 @@ thingino_error_t firmware_read_bank(usb_device_t* device, uint32_t offset, uint3
         total_read += (uint32_t)transferred;
         
         // Small delay between chunks to prevent device buffer overflow
-        usleep(100000);  // 100ms between chunks
+        thingino_sleep_microseconds(100000);  // 100ms between chunks
     }
     
     DEBUG_PRINT("Bank read complete: %u bytes total\n", total_read);
@@ -213,7 +207,7 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
     DEBUG_PRINT("This matches vendor tool protocol from READ_FIRMWARE_PROTOCOL_ANALYSIS.md\n");
     
     // Give device time to stabilize after bootstrap
-    usleep(1000000); // 1 second delay
+    thingino_sleep_microseconds(1000000); // 1 second delay
     
     // Initialize read configuration
     firmware_read_config_t config;

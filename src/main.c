@@ -2,7 +2,6 @@
 #include "flash_descriptor.h"
 #include "ddr/ddr_binary_builder.h"
 #include "ddr/ddr_config_database.h"
-#include <unistd.h>  // for sleep()
 
 // ============================================================================
 // GLOBAL DEBUG FLAG
@@ -347,7 +346,7 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
                     test_device = NULL;
 
                     // Wait for device to re-enumerate
-                    sleep(1);
+                    thingino_sleep_seconds(1);
 
                     // Re-scan for devices
                     printf("Re-scanning for devices after transition...\n");
@@ -450,7 +449,7 @@ thingino_error_t read_firmware_from_device(usb_manager_t* manager, int index, co
                 // Device may re-enumerate multiple times after ProgStage2
                 // User reports it takes about 10 seconds to reappear
                 printf("Waiting 1 seconds for device to fully stabilize...\n");
-                sleep(1);
+                thingino_sleep_seconds(1);
 
                 // Re-scan for devices to get updated address
                 printf("Re-scanning for devices after bootstrap...\n");
@@ -692,7 +691,7 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
 
         printf("\nBootstrap complete. Device should now be in firmware stage.\n");
         printf("Waiting for device to stabilize...\n\n");
-        usleep(2000000);  // 2 seconds
+        thingino_sleep_microseconds(2000000);
 
         // Close and reopen device to get fresh connection
         usb_device_close(device);
@@ -777,7 +776,7 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
         }
 
         // Give the burner time to process descriptor, matching read path
-        usleep(500000); // 500ms
+        thingino_sleep_microseconds(500000);
 
         // 3) Initialize the firmware handshake protocol (VR_FW_HANDSHAKE)
         prep_result = firmware_handshake_init(device);

@@ -3,6 +3,7 @@
  * DO NOT EDIT
  */
 
+#include "thingino.h"
 #include "firmware_database.h"
 #include "firmware_registry.h"
 #include <string.h>
@@ -40,7 +41,7 @@ const firmware_binary_t* firmware_get(const char *processor) {
     static firmware_binary_t result;
 
     for (size_t i = 0; i < sizeof(firmware_registry) / sizeof(firmware_registry[0]); i++) {
-        if (strcasecmp(firmware_registry[i].processor, processor) == 0) {
+        if (thingino_strcasecmp(firmware_registry[i].processor, processor) == 0) {
             result.processor = firmware_registry[i].processor;
             result.spl_data = firmware_registry[i].get_spl(&result.spl_size);
             result.uboot_data = firmware_registry[i].get_uboot(&result.uboot_size);

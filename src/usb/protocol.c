@@ -1,11 +1,5 @@
 #include "thingino.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ============================================================================
 // PROTOCOL IMPLEMENTATION
 // ============================================================================
@@ -30,11 +24,7 @@ thingino_error_t protocol_set_data_address(usb_device_t* device, uint32_t addr) 
     DEBUG_PRINT("SetDataAddress OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
+    thingino_sleep_microseconds(100000);
 
     return THINGINO_SUCCESS;
 }
@@ -59,11 +49,7 @@ thingino_error_t protocol_set_data_length(usb_device_t* device, uint32_t length)
     DEBUG_PRINT("SetDataLength OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
+    thingino_sleep_microseconds(100000);
 
     return THINGINO_SUCCESS;
 }
@@ -87,11 +73,7 @@ thingino_error_t protocol_flush_cache(usb_device_t* device) {
     DEBUG_PRINT("FlushCache OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
+    thingino_sleep_microseconds(100000);
 
     return THINGINO_SUCCESS;
 }
@@ -140,11 +122,7 @@ thingino_error_t protocol_prog_stage1(usb_device_t* device, uint32_t addr) {
     DEBUG_PRINT("ProgStage1 OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
+    thingino_sleep_microseconds(100000);
 
     return THINGINO_SUCCESS;
 }
@@ -172,11 +150,7 @@ thingino_error_t protocol_prog_stage2(usb_device_t* device, uint32_t addr) {
     DEBUG_PRINT("ProgStage2 OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(100);
-#else
-    usleep(100000);
-#endif
+    thingino_sleep_microseconds(100000);
 
     return THINGINO_SUCCESS;
 }
@@ -302,7 +276,7 @@ thingino_error_t protocol_fw_read(usb_device_t* device, int data_len, uint8_t** 
             usb_device_release_interface(device);
 
             // Small delay before retry
-            usleep(100000); // 100ms
+            thingino_sleep_microseconds(100000); // 100ms
 
             // Re-claim interface and retry once with longer timeout
             thingino_error_t claim_result = usb_device_claim_interface(device);
@@ -356,11 +330,7 @@ thingino_error_t protocol_fw_handshake(usb_device_t* device) {
     DEBUG_PRINT("FWHandshake vendor request sent successfully\n");
 
     // Platform-specific sleep after successful handshake
-#ifdef _WIN32
-    Sleep(50);
-#else
-    usleep(50000);
-#endif
+    thingino_sleep_microseconds(50000);
 
     return THINGINO_SUCCESS;
 }
@@ -384,11 +354,7 @@ thingino_error_t protocol_fw_write_chunk1(usb_device_t* device, const uint8_t* d
     DEBUG_PRINT("FWWriteChunk1 OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(50);
-#else
-    usleep(50000);
-#endif
+    thingino_sleep_microseconds(50000);
 
     return THINGINO_SUCCESS;
 }
@@ -623,7 +589,7 @@ thingino_error_t protocol_vendor_style_read(usb_device_t* device, uint32_t offse
 
     // Wait for device to prepare data for bulk transfer
     // Using 50ms like the handshake protocol to ensure device has data ready
-    usleep(50000); // 50ms delay for device to prepare bulk data
+    thingino_sleep_microseconds(50000); // 50ms delay for device to prepare bulk data
 
     // Allocate buffer for bulk read
     uint8_t* buffer = (uint8_t*)malloc(size);
@@ -787,11 +753,7 @@ thingino_error_t protocol_fw_write_chunk2(usb_device_t* device, const uint8_t* d
     DEBUG_PRINT("FWWriteChunk2 OK\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(50);
-#else
-    usleep(50000);
-#endif
+    thingino_sleep_microseconds(50000);
 
     return THINGINO_SUCCESS;
 }
@@ -849,11 +811,7 @@ thingino_error_t protocol_nand_read(usb_device_t* device, uint32_t offset, uint3
 
     // Give device time to prepare data for bulk transfer
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(50);
-#else
-    usleep(50000);  // 50ms
-#endif
+    thingino_sleep_microseconds(50000);
 
     // Step 4: Bulk-in transfer to read the data
     uint8_t* buffer = (uint8_t*)malloc(size);

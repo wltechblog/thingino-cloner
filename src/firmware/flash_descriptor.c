@@ -1,7 +1,6 @@
 #include "thingino.h"
 #include "flash_descriptor.h"
 #include <string.h>
-#include <unistd.h>
 #include <stdio.h>
 
 // The complete 972-byte flash descriptor captured from factory tool
@@ -189,7 +188,7 @@ thingino_error_t flash_partition_marker_send(usb_device_t *device) {
     }
 
     // Short delay to let burner process the marker
-    usleep(100000); // 100ms
+    thingino_sleep_microseconds(100000); // 100ms
 
     DEBUG_PRINT("Partition marker sent successfully\n");
 
@@ -293,7 +292,7 @@ thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *desc
     DEBUG_PRINT("Control transfer successful\n");
 
     // Step 2: Wait 100ms for device to process
-    usleep(100000);
+    thingino_sleep_microseconds(100000);
 
     // Step 3: Send full 972-byte structure via bulk OUT to endpoint 0x01
     DEBUG_PRINT("Step 2: Sending bulk OUT transfer (972 bytes to endpoint 0x01)...\n");
@@ -320,7 +319,7 @@ thingino_error_t flash_descriptor_send(usb_device_t *device, const uint8_t *desc
     DEBUG_PRINT("Bulk transfer successful: %d bytes\n", transferred);
 
     // Step 4: Wait for device to process the descriptor
-    usleep(100000);
+    thingino_sleep_microseconds(100000);
 
     DEBUG_PRINT("Flash descriptor sent successfully\n");
 

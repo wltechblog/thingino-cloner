@@ -511,7 +511,7 @@ thingino_error_t usb_device_vendor_request(usb_device_t* device, uint8_t request
     }
 
     // Retry logic for device re-enumeration issues
-    int max_retries = 5;
+    int max_retries = 10;
     int retry_count = 0;
     int retry_delays[] = {500000, 1000000, 2000000, 3000000, 5000000};  // microseconds: 0.5s, 1s, 2s, 3s, 5s
 
@@ -534,11 +534,7 @@ thingino_error_t usb_device_vendor_request(usb_device_t* device, uint8_t request
             if (retry_count < max_retries) {
                 DEBUG_PRINT("Vendor request failed with %s, retrying in %d ms (attempt %d/%d)...\n",
                     libusb_error_name(result), retry_delays[retry_count-1]/1000, retry_count, max_retries);
-#ifdef _WIN32
-                Sleep(retry_delays[retry_count-1] / 1000);
-#else
-                usleep(retry_delays[retry_count-1]);
-#endif
+                thingino_sleep_microseconds(retry_delays[retry_count-1]);
             } else {
                 DEBUG_PRINT("Vendor request failed after %d retries: %s\n", max_retries, libusb_error_name(result));
                 return THINGINO_ERROR_TRANSFER_FAILED;

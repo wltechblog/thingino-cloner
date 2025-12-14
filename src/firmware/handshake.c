@@ -1,11 +1,5 @@
 #include "thingino.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ============================================================================
 // FIRMWARE HANDSHAKE PROTOCOL (40-byte chunk transfers)
 // ============================================================================
@@ -171,7 +165,7 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
     DEBUG_PRINT("Handshake command sent, waiting for status...\n");
 
     // Small delay to allow device to process
-    usleep(50000); // 50ms
+    thingino_sleep_microseconds(50000); // 50ms
 
     // Read status handshake from device (8 bytes)
     uint8_t status_buffer[8] = {0};
@@ -207,7 +201,7 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
     }
 
     // Wait for device to prepare data for bulk transfer
-    usleep(50000); // 50ms delay for device to prepare bulk data
+    thingino_sleep_microseconds(50000); // 50ms delay for device to prepare bulk data
 
     // Now perform bulk-in transfer to read the actual data
     DEBUG_PRINT("Reading %u bytes of data via bulk-in...\n", chunk_size);
@@ -375,7 +369,7 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
         return result;
     }
 
-    usleep(50000); // 50ms delay
+    thingino_sleep_microseconds(50000); // 50ms delay
 
     // Send actual data via bulk-out
     DEBUG_PRINT("Sending %u bytes of data via bulk-out...\n", data_size);
@@ -397,7 +391,7 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
 
     // Give device time to start processing the chunk
     DEBUG_PRINT("Waiting 100ms for device to start processing chunk...\n");
-    usleep(100000); // 100ms delay
+    thingino_sleep_microseconds(100000); // 100ms delay
 
     // NOTE: In the vendor capture, VR_FW_READ (0x10) is sent after every chunk
     // and returns a 4-byte status before the next VR_WRITE handshake. On this
@@ -436,7 +430,7 @@ thingino_error_t firmware_handshake_write_chunk(usb_device_t* device, uint32_t c
     // Tightened from 1000ms to 300ms to speed up full-image writes while
     // still giving firmware time to progress internal state.
     DEBUG_PRINT("Waiting 300ms for device to finish processing chunk...\n");
-    usleep(300000); // 300ms delay
+    thingino_sleep_microseconds(300000); // 300ms delay
 
     return THINGINO_SUCCESS;
 }
@@ -458,7 +452,7 @@ thingino_error_t firmware_handshake_init(usb_device_t* device) {
         return result;
     }
 
-    usleep(100000); // 100ms delay for device to prepare
+    thingino_sleep_microseconds(100000); // 100ms delay for device to prepare
 
     return THINGINO_SUCCESS;
 }

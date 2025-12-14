@@ -1,12 +1,6 @@
 #include "thingino.h"
 #include "flash_descriptor.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ============================================================================
 // FIRMWARE READER IMPLEMENTATION - Proper Handshake Protocol
 // Based on READ_FIRMWARE_PROTOCOL_ANALYSIS.md
@@ -137,7 +131,7 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
 
     // Extended delay to let device stabilize after bootstrap
     DEBUG_PRINT("Waiting for device to stabilize after bootstrap...\n");
-    usleep(2000000); // 2 second delay for device to fully settle
+    thingino_sleep_microseconds(2000000);
 
     DEBUG_PRINT("Device should now be ready for firmware read\n");
 
@@ -162,7 +156,7 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
 
     // Wait for device to process the descriptor
     DEBUG_PRINT("Waiting for device to process flash descriptor...\n");
-    usleep(500000); // 500ms delay
+    thingino_sleep_microseconds(500000);
 
     // Initialize firmware handshake protocol (VR_FW_HANDSHAKE 0x11)
     DEBUG_PRINT("firmware_read_full: PHASE 2 - Initializing handshake protocol...\n");
@@ -223,7 +217,7 @@ thingino_error_t firmware_read_full(usb_device_t* device, uint8_t** data, uint32
             i, total_read, config.total_size, (total_read * 100) / config.total_size);
         
         // Small delay between banks to let device stabilize
-        usleep(50000); // 50ms between banks
+        thingino_sleep_microseconds(50000);
     }
     
     DEBUG_PRINT("firmware_read_full: Completed reading %u bytes\n", total_read);

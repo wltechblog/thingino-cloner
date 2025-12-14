@@ -1,11 +1,5 @@
 #include "thingino.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#else
-#include <unistd.h>
-#endif
-
 // ============================================================================
 // BOOTSTRAP IMPLEMENTATION
 // ============================================================================
@@ -137,11 +131,7 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
     int wait_ms = 2000;  // 2 seconds for T31 variants
     DEBUG_PRINT("Waiting %d ms for DDR init...\n", wait_ms);
 
-#ifdef _WIN32
-    Sleep(wait_ms);
-#else
-    usleep(wait_ms * 1000);
-#endif
+    thingino_sleep_milliseconds((uint32_t)wait_ms);
 
     DEBUG_PRINT("SPL should have completed, device handle remains valid\n");
 
@@ -271,15 +261,7 @@ thingino_error_t bootstrap_program_stage2(usb_device_t* device,
     DEBUG_PRINT("Waiting for device to process U-Boot transfer...\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(500);
-#else
-#ifdef _WIN32
-    Sleep(500);
-#else
-    usleep(500000);
-#endif
-#endif
+    thingino_sleep_milliseconds(500);
 
     // Step 4: Flush cache before executing U-Boot
     DEBUG_PRINT("Flushing cache before U-Boot execution\n");
@@ -305,11 +287,7 @@ thingino_error_t bootstrap_program_stage2(usb_device_t* device,
     DEBUG_PRINT("ProgStage2 completed - device should now be in firmware stage\n");
 
     // Platform-specific sleep
-#ifdef _WIN32
-    Sleep(1000);
-#else
-    sleep(1);
-#endif
+    thingino_sleep_seconds(1);
 
     return THINGINO_SUCCESS;
 }
@@ -388,11 +366,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
                         retry + 2, max_retries);
 
                     // Platform-specific sleep
-#ifdef _WIN32
-                    Sleep(50);
-#else
-                    usleep(50000);
-#endif
+                    thingino_sleep_microseconds(50000);
                     continue;
                 }
 
@@ -410,11 +384,7 @@ thingino_error_t bootstrap_transfer_data(usb_device_t* device,
         // Small delay between chunks for large transfers to prevent overwhelming device
         if (size > 100 * 1024 && offset < size) {
             // Platform-specific sleep
-#ifdef _WIN32
-            Sleep(10);
-#else
-            usleep(10000);
-#endif
+            thingino_sleep_microseconds(10000);
         }
     }
 

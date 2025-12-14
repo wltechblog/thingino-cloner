@@ -3,6 +3,7 @@
  */
 
 #include "ddr_config_database.h"
+#include "thingino.h"
 #include <string.h>
 #include <strings.h>
 
@@ -170,7 +171,7 @@ const processor_config_t* processor_config_get(const char *name) {
     if (!name) return NULL;
     
     for (size_t i = 0; i < processor_configs_count; i++) {
-        if (strcasecmp(processor_configs[i].name, name) == 0) {
+        if (thingino_strcasecmp(processor_configs[i].name, name) == 0) {
             return &processor_configs[i];
         }
     }
@@ -522,7 +523,7 @@ const ddr_chip_config_t* ddr_chip_config_get(const char *name) {
     if (!name) return NULL;
 
     for (size_t i = 0; i < ddr_chip_configs_count; i++) {
-        if (strcasecmp(ddr_chip_configs[i].name, name) == 0) {
+        if (thingino_strcasecmp(ddr_chip_configs[i].name, name) == 0) {
             return &ddr_chip_configs[i];
         }
     }
@@ -535,7 +536,7 @@ const ddr_chip_config_t* ddr_chip_config_get_default(const char *processor_name)
 
     // Find default DDR for this processor
     for (size_t i = 0; i < default_ddr_mappings_count; i++) {
-        if (strcasecmp(default_ddr_mappings[i].processor, processor_name) == 0) {
+        if (thingino_strcasecmp(default_ddr_mappings[i].processor, processor_name) == 0) {
             return ddr_chip_config_get(default_ddr_mappings[i].default_ddr);
         }
     }

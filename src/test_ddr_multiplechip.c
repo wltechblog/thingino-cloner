@@ -74,7 +74,7 @@ void compare_binaries(const char *label, uint8_t *generated, uint8_t *reference,
         int shown = 0;
         for (size_t i = 0; i < size && shown < 10; i++) {
             if (generated[i] != reference[i]) {
-                printf("  Offset 0x%04lx: generated=0x%02x, reference=0x%02x\n",
+                printf("  Offset 0x%04zx: generated=0x%02x, reference=0x%02x\n",
                        i, generated[i], reference[i]);
                 shown++;
             }
