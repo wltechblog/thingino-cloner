@@ -4,6 +4,7 @@
 #include "firmware_database.h"
 #include "t20_reference_ddr.h"
 #include "t31zx_reference_ddr.h"
+#include "a1_reference_ddr.h"
 
 // ============================================================================
 // FIRMWARE LOADER IMPLEMENTATION
@@ -70,6 +71,12 @@ static thingino_error_t firmware_generate_ddr_config(processor_variant_t variant
             DEBUG_PRINT("Using T31 family reference DDR binary\n");
             break;
 
+        case VARIANT_A1:
+            ref_binary = vendor_ddr_a1_bin;
+            ref_size = vendor_ddr_a1_bin_len;
+            DEBUG_PRINT("Using A1 reference DDR binary (DDR3)\n");
+            break;
+
         case VARIANT_T40:
         case VARIANT_T41:
         default:
@@ -121,6 +128,10 @@ thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* fi
             DEBUG_PRINT("firmware_load: matched VARIANT_T31ZX (%d)\n", VARIANT_T31ZX);
             DEBUG_PRINT("firmware_load: calling firmware_load_t31x\n");
             return firmware_load_t31x(firmware);
+        case VARIANT_A1:
+            DEBUG_PRINT("firmware_load: matched VARIANT_A1 (%d)\n", VARIANT_A1);
+            DEBUG_PRINT("firmware_load: calling firmware_load_a1\n");
+            return firmware_load_a1(firmware);
 
         default:
             DEBUG_PRINT("firmware_load: unsupported variant %d\n", variant);
@@ -221,6 +232,80 @@ thingino_error_t firmware_load_t31x(firmware_files_t* firmware) {
     }
     
     DEBUG_PRINT("T31X firmware loaded successfully (official cloner files)\n");
+    DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n",
+           firmware->config_size, firmware->spl_size, firmware->uboot_size);
+
+    return THINGINO_SUCCESS;
+}
+
+thingino_error_t firmware_load_a1(firmware_files_t* firmware) {
+    thingino_error_t result;
+
+    DEBUG_PRINT("Loading A1 firmware...\n");
+
+    // Try to generate DDR configuration dynamically first
+    DEBUG_PRINT("Attempting to generate A1 DDR configuration dynamically\n");
+    thingino_error_t gen_result = firmware_generate_ddr_config(VARIANT_A1,
+        &firmware->config, &firmware->config_size);
+
+    if (gen_result == THINGINO_SUCCESS) {
+        printf("✓ A1 DDR configuration generated dynamically: %zu bytes\n", firmware->config_size);
+    } else {
+        // Fall back to reference binary
+        DEBUG_PRINT("Dynamic generation failed, falling back to reference binary\n");
+        fprintf(stderr, "ERROR: Failed to generate A1 DDR configuration\n");
+        return gen_result;
+    }
+
+    // Load SPL binary
+    const char* spl_paths[] = {
+        "./references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/spl.bin",
+        "../references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/spl.bin",
+        NULL
+    };
+
+    result = THINGINO_ERROR_FILE_IO;
+    for (int i = 0; spl_paths[i]; i++) {
+        DEBUG_PRINT("Trying to load A1 SPL from: %s\n", spl_paths[i]);
+        result = load_file(spl_paths[i], &firmware->spl, &firmware->spl_size);
+        if (result == THINGINO_SUCCESS) {
+            DEBUG_PRINT("Loaded A1 SPL: %zu bytes\n", firmware->spl_size);
+            break;
+        }
+    }
+
+    if (result != THINGINO_SUCCESS) {
+        fprintf(stderr, "ERROR: Failed to load A1 SPL file\n");
+        fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/spl.bin\n");
+        firmware_cleanup(firmware);
+        return result;
+    }
+
+    // Load U-Boot binary
+    const char* uboot_paths[] = {
+        "./references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/uboot.bin",
+        "../references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/uboot.bin",
+        NULL
+    };
+
+    result = THINGINO_ERROR_FILE_IO;
+    for (int i = 0; uboot_paths[i]; i++) {
+        DEBUG_PRINT("Trying to load A1 U-Boot from: %s\n", uboot_paths[i]);
+        result = load_file(uboot_paths[i], &firmware->uboot, &firmware->uboot_size);
+        if (result == THINGINO_SUCCESS) {
+            DEBUG_PRINT("Loaded A1 U-Boot: %zu bytes\n", firmware->uboot_size);
+            break;
+        }
+    }
+
+    if (result != THINGINO_SUCCESS) {
+        fprintf(stderr, "ERROR: Failed to load A1 U-Boot file\n");
+        fprintf(stderr, "  Expected at: ./references/cloner-2.5.43-ubuntu_thingino/firmwares/a1_n_ne_x/uboot.bin\n");
+        firmware_cleanup(firmware);
+        return result;
+    }
+
+    DEBUG_PRINT("A1 firmware loaded successfully (official cloner files)\n");
     DEBUG_PRINT("DDR config: %zu bytes, SPL: %zu bytes, U-Boot: %zu bytes\n",
            firmware->config_size, firmware->spl_size, firmware->uboot_size);
 

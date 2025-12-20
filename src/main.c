@@ -27,6 +27,7 @@ typedef struct {
     char* input_file;
     bool force_erase;
     bool skip_ddr;
+    char* force_cpu;  // Force specific CPU variant (e.g., "a1", "t31x", "t31zx")
 } cli_options_t;
 
 void print_usage(const char* program_name) {
@@ -42,6 +43,7 @@ void print_usage(const char* program_name) {
     printf("  -r, --read <file>       Read firmware from device to file\n");
     printf("  -w, --write <file>       Write firmware from file to device\n");
     printf("      --erase              Request full flash erase before writing (when supported)\n");
+    printf("      --cpu <variant>      Force specific CPU variant (a1, t31x, t31zx, t20, etc.)\n");
     printf("  --config <file>         Custom DDR configuration file\n");
     printf("  --spl <file>            Custom SPL file\n");
     printf("  --uboot <file>          Custom U-Boot file\n");
@@ -110,6 +112,12 @@ thingino_error_t parse_arguments(int argc, char* argv[], cli_options_t* options)
             options->skip_ddr = true;
         } else if (strcmp(argv[i], "--erase") == 0) {
             options->force_erase = true;
+        } else if (strcmp(argv[i], "--cpu") == 0) {
+            if (i + 1 >= argc) {
+                printf("Error: %s requires a CPU variant (e.g., a1, t31x, t31zx)\n", argv[i]);
+                return THINGINO_ERROR_INVALID_PARAMETER;
+            }
+            options->force_cpu = argv[++i];
         } else if (strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--index") == 0) {
             if (i + 1 >= argc) {
                 printf("Error: %s requires a device index\n", argv[i]);
@@ -209,7 +217,16 @@ thingino_error_t bootstrap_device_by_index(usb_manager_t* manager, int index, co
         device_info->variant, processor_variant_to_string(device_info->variant));
     DEBUG_PRINT("Device variant from opened device: %d (%s)\n",
         device->info.variant, processor_variant_to_string(device->info.variant));
-    
+
+    // Override variant if --cpu option was specified
+    if (options->force_cpu) {
+        processor_variant_t forced_variant = string_to_processor_variant(options->force_cpu);
+        printf("Forcing CPU variant to: %s (was: %s)\n",
+            processor_variant_to_string(forced_variant),
+            processor_variant_to_string(device->info.variant));
+        device->info.variant = forced_variant;
+    }
+
     // Create bootstrap config
     bootstrap_config_t config = {
         .sdram_address = BOOTLOADER_ADDRESS_SDRAM,
@@ -665,6 +682,19 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
     printf("  Stage: %s\n", device_stage_to_string(devices[device_index].stage));
     printf("\n");
 
+    // Apply CPU variant override if specified (before bootstrap)
+    if (options->force_cpu) {
+        processor_variant_t forced_variant = string_to_processor_variant(options->force_cpu);
+        if (forced_variant != VARIANT_T31X || strcmp(options->force_cpu, "t31x") == 0) {
+            printf("Forcing CPU variant to: %s (was: %s)\n",
+                   options->force_cpu,
+                   processor_variant_to_string(device->info.variant));
+            device->info.variant = forced_variant;
+        } else {
+            fprintf(stderr, "Warning: Unknown CPU variant '%s', ignoring\n", options->force_cpu);
+        }
+    }
+
     // Check if device needs bootstrap
     if (devices[device_index].stage == STAGE_BOOTROM) {
         printf("Device is in bootrom stage. Bootstrapping to firmware stage first...\n\n");
@@ -734,6 +764,19 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
 
     free(devices);
 
+    // Apply CPU variant override if specified
+    if (options->force_cpu) {
+        processor_variant_t forced_variant = string_to_processor_variant(options->force_cpu);
+        if (forced_variant != VARIANT_T31X || strcmp(options->force_cpu, "t31x") == 0) {
+            printf("Forcing CPU variant to: %s (was: %s)\n",
+                   options->force_cpu,
+                   processor_variant_to_string(device->info.variant));
+            device->info.variant = forced_variant;
+        } else {
+            fprintf(stderr, "Warning: Unknown CPU variant '%s', ignoring\n", options->force_cpu);
+        }
+    }
+
     // Detect A1 firmware-stage boards via CPU magic so we can use the correct
     // flash descriptor (A1 uses XM25QH128B, T31x uses GD25Q127CSIG).
     bool is_a1_fw_stage = false;
@@ -747,6 +790,12 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
             DEBUG_PRINT("Detected A1 CPU magic ('%s') in firmware stage\n",
                        fw_cpu_info.clean_magic);
         }
+    }
+
+    // Also check device variant for A1
+    if (device->info.variant == VARIANT_A1) {
+        is_a1_fw_stage = true;
+        DEBUG_PRINT("Device variant is A1\n");
     }
 
     // Prepare burner protocol in firmware stage: send partition marker,
@@ -763,7 +812,8 @@ thingino_error_t write_firmware_from_file(usb_manager_t* manager, int device_ind
     if (device->info.stage == STAGE_FIRMWARE &&
         (device->info.variant == VARIANT_T31 ||
          device->info.variant == VARIANT_T31X ||
-         device->info.variant == VARIANT_T31ZX)) {
+         device->info.variant == VARIANT_T31ZX ||
+         device->info.variant == VARIANT_A1)) {
 
         thingino_error_t prep_result = THINGINO_SUCCESS;
 

@@ -154,10 +154,17 @@ thingino_error_t firmware_handshake_read_chunk(usb_device_t* device, uint32_t ch
 
     DEBUG_PRINT("Sending handshake command (40 bytes)...\n");
 
-    // Factory tool analysis: Always use VR_FW_WRITE1 (0x13) for firmware reads
+    // Factory tool analysis: Most chips use VR_FW_WRITE1 (0x13) for firmware reads
+    // However, A1 may use VR_FW_READ (0x10) instead
     // VR_FW_WRITE2 (0x14) is used for different initialization commands, not reads
-    uint8_t handshake_cmd_code = VR_FW_WRITE1;
-    DEBUG_PRINT("Using command: 0x%02X\n", handshake_cmd_code);
+    uint8_t handshake_cmd_code;
+    if (device->info.variant == VARIANT_A1) {
+        handshake_cmd_code = VR_FW_READ;  // 0x10 for A1
+        DEBUG_PRINT("Using A1-specific command: 0x%02X (VR_FW_READ)\n", handshake_cmd_code);
+    } else {
+        handshake_cmd_code = VR_FW_WRITE1;  // 0x13 for other chips
+        DEBUG_PRINT("Using command: 0x%02X (VR_FW_WRITE1)\n", handshake_cmd_code);
+    }
 
     int response_len = 0;
     result = usb_device_vendor_request(device, REQUEST_TYPE_OUT,

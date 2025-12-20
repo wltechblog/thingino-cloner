@@ -188,6 +188,16 @@ thingino_error_t bootstrap_device(usb_device_t* device, const bootstrap_config_t
             firmware_cleanup(&fw);
             return reopen_result;
         }
+
+        // Give the device additional time to be ready after reopen
+        // Some boards (like A1) need extra time after USB re-enumeration
+        // Testing shows A1 needs at least 5 seconds, while T31ZX works with 500ms
+        DEBUG_PRINT("Waiting 5000ms after USB reopen for device to be ready...\n");
+#ifdef _WIN32
+        Sleep(5000);
+#else
+        usleep(5000000);
+#endif
     }
 
 

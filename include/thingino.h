@@ -111,6 +111,7 @@ typedef enum {
     VARIANT_T31,
     VARIANT_T31X,
     VARIANT_T31ZX,
+    VARIANT_A1,      // A1 (T31-based but with DDR3, different handling)
     VARIANT_T40,
     VARIANT_T41,
     VARIANT_X1000,
@@ -283,6 +284,7 @@ thingino_error_t firmware_load(processor_variant_t variant, firmware_files_t* fi
 void firmware_cleanup(firmware_files_t* firmware);
 thingino_error_t firmware_load_t20(firmware_files_t* firmware);
 thingino_error_t firmware_load_t31x(firmware_files_t* firmware);
+thingino_error_t firmware_load_a1(firmware_files_t* firmware);
 thingino_error_t load_file(const char* filename, uint8_t** data, size_t* size);
 thingino_error_t firmware_load_from_files(processor_variant_t variant, const char* config_file, const char* spl_file, const char* uboot_file, firmware_files_t* firmware);
 thingino_error_t firmware_validate(const firmware_files_t* firmware);
@@ -360,6 +362,7 @@ thingino_error_t bootstrap_ensure_bootstrapped(usb_device_t* device, const boots
 // Utility functions
 uint32_t calculate_crc32(const uint8_t* data, size_t length);
 const char* processor_variant_to_string(processor_variant_t variant);
+processor_variant_t string_to_processor_variant(const char* str);
 const char* device_stage_to_string(device_stage_t stage);
 const char* thingino_error_to_string(thingino_error_t error);
 

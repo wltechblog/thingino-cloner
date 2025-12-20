@@ -1,4 +1,6 @@
 #include "thingino.h"
+#include <ctype.h>
+#include <string.h>
 
 // ============================================================================
 // UTILITY FUNCTIONS
@@ -33,6 +35,7 @@ const char* processor_variant_to_string(processor_variant_t variant) {
         case VARIANT_T31:   return "t31";
         case VARIANT_T31X:  return "t31x";
         case VARIANT_T31ZX: return "t31zx";
+        case VARIANT_A1:    return "a1";
         case VARIANT_T40:   return "t40";
         case VARIANT_T41:   return "t41";
         case VARIANT_X1000: return "x1000";
@@ -43,6 +46,36 @@ const char* processor_variant_to_string(processor_variant_t variant) {
         case VARIANT_X2600: return "x2600";
         default:           return "unknown";
     }
+}
+
+processor_variant_t string_to_processor_variant(const char* str) {
+    if (!str) return VARIANT_T31X;
+
+    // Convert to lowercase for case-insensitive comparison
+    char lower[32] = {0};
+    for (int i = 0; str[i] && i < 31; i++) {
+        lower[i] = tolower(str[i]);
+    }
+
+    if (strcmp(lower, "a1") == 0) return VARIANT_A1;
+    if (strcmp(lower, "t20") == 0) return VARIANT_T20;
+    if (strcmp(lower, "t21") == 0) return VARIANT_T21;
+    if (strcmp(lower, "t23") == 0) return VARIANT_T23;
+    if (strcmp(lower, "t30") == 0) return VARIANT_T30;
+    if (strcmp(lower, "t31") == 0) return VARIANT_T31;
+    if (strcmp(lower, "t31x") == 0) return VARIANT_T31X;
+    if (strcmp(lower, "t31zx") == 0) return VARIANT_T31ZX;
+    if (strcmp(lower, "t40") == 0) return VARIANT_T40;
+    if (strcmp(lower, "t41") == 0) return VARIANT_T41;
+    if (strcmp(lower, "x1000") == 0) return VARIANT_X1000;
+    if (strcmp(lower, "x1600") == 0) return VARIANT_X1600;
+    if (strcmp(lower, "x1700") == 0) return VARIANT_X1700;
+    if (strcmp(lower, "x2000") == 0) return VARIANT_X2000;
+    if (strcmp(lower, "x2100") == 0) return VARIANT_X2100;
+    if (strcmp(lower, "x2600") == 0) return VARIANT_X2600;
+
+    // Default to T31X if unknown
+    return VARIANT_T31X;
 }
 
 const char* device_stage_to_string(device_stage_t stage) {
@@ -91,6 +124,12 @@ processor_variant_t detect_variant_from_magic(const char* magic) {
     if (strstr(magic, "x2000") || strstr(magic, "X2000")) return VARIANT_X2000;
     if (strstr(magic, "x2100") || strstr(magic, "X2100")) return VARIANT_X2100;
     if (strstr(magic, "x2600") || strstr(magic, "X2600")) return VARIANT_X2600;
+
+    // Check for A1 (special case - reports "A1" in firmware stage)
+    if (strcmp(magic, "A1") == 0 || strcmp(magic, "a1") == 0) {
+        DEBUG_PRINT("detect_variant_from_magic: matched A1 -> A1\n");
+        return VARIANT_A1;
+    }
 
     // Check for T31 sub-variants
     if (strstr(magic, "t31zx") || strstr(magic, "T31ZX") || strstr(magic, "zx")) return VARIANT_T31ZX;
