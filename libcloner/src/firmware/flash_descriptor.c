@@ -671,6 +671,9 @@ thingino_error_t flash_partition_marker_send_raw(usb_device_t *device) {
 
     DEBUG_PRINT("Sending raw bulk partition marker (%zu bytes)...\n", marker_size);
 
+    /* Ensure interface is claimed — required on Windows (WinUSB) for bulk transfers */
+    libusb_claim_interface(device->handle, 0);
+
     /* Raw bulk OUT without control transfer */
     int transferred = 0;
     int result = libusb_bulk_transfer(device->handle, 0x01, descriptor + marker_offset, (int)marker_size, &transferred, 5000);

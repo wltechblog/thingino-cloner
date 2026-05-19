@@ -590,7 +590,7 @@ thingino_error_t cloner_op_write_firmware(usb_manager_t *manager, int device_ind
             if (!flash_chip) {
                 LOG_INFO("  Flash chip not specified, attempting auto-detect...\n");
                 /* Send partition marker to initialize SFC */
-                prep_result = flash_partition_marker_send(device);
+                prep_result = flash_partition_marker_send_raw(device);
                 if (prep_result != THINGINO_SUCCESS) {
                     LOG_INFO("[ERROR] Partition marker failed: %s\n", thingino_error_to_string(prep_result));
                     break;
