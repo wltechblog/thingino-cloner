@@ -41,6 +41,9 @@ int flash_descriptor_create_a1_writer_full(uint8_t *buffer);
 /** Send partition marker (ILOP, 172 bytes) to device */
 thingino_error_t flash_partition_marker_send(usb_device_t *device);
 
+/** Send raw bulk partition marker for T10/T20/T21/T30 */
+thingino_error_t flash_partition_marker_send_raw(usb_device_t *device);
+
 /** Send flash descriptor to device (any size) */
 thingino_error_t flash_descriptor_send_sized(usb_device_t *device, const uint8_t *descriptor, uint32_t size);
 

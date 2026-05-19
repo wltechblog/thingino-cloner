@@ -651,6 +651,40 @@ thingino_error_t flash_partition_marker_send(usb_device_t *device) {
 }
 
 /**
+ * Send raw bulk partition marker for T10/T20/T21/T30.
+ *
+ * These platforms use DESC_RAW_BULK_THEN_SEND mode where the marker
+ * is sent as a raw bulk OUT transfer without the VR_FW_WRITE2 control prefix.
+ */
+thingino_error_t flash_partition_marker_send_raw(usb_device_t *device) {
+    if (!device)
+        return THINGINO_ERROR_INVALID_PARAMETER;
+
+    uint8_t descriptor[FLASH_DESCRIPTOR_SIZE];
+    if (flash_descriptor_create_t31x_writer_full(descriptor) != 0) {
+        LOG_ERROR("Failed to generate flash descriptor for partition marker\n");
+        return THINGINO_ERROR_FILE_IO;
+    }
+
+    const size_t marker_offset = 0x1C;
+    const size_t marker_size = 0xAC; /* 172 bytes */
+
+    DEBUG_PRINT("Sending raw bulk partition marker (%zu bytes)...\n", marker_size);
+
+    /* Raw bulk OUT without control transfer */
+    int transferred = 0;
+    int result = libusb_bulk_transfer(device->handle, 0x01, descriptor + marker_offset, (int)marker_size, &transferred, 5000);
+    if (result != 0 || transferred != (int)marker_size) {
+        LOG_ERROR("Raw bulk marker transfer failed: %s, %d/%zu bytes\n", libusb_error_name(result), transferred, marker_size);
+        return THINGINO_ERROR_TRANSFER_FAILED;
+    }
+
+    platform_sleep_ms(100);
+    DEBUG_PRINT("Raw bulk partition marker sent successfully\n");
+    return THINGINO_SUCCESS;
+}
+
+/**
  * Send flash descriptor (972 bytes) to device.
  *
  * Vendor flow: FW_WRITE2 control (40 bytes, size=972) + bulk OUT (972 bytes).

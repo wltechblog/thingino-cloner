@@ -583,12 +583,38 @@ thingino_error_t cloner_op_write_firmware(usb_manager_t *manager, int device_ind
 
         switch (fw_profile->descriptor_mode) {
         case DESC_RAW_BULK_THEN_SEND: {
-            /* T20: send descriptor directly. No marker/detect flow. */
+            /* T20: send descriptor directly. No marker/detect flow.
+             * However, we can still auto-detect by sending the partition marker first
+             * (which initializes the SFC), reading the JEDEC ID, then building the
+             * correct descriptor. */
             if (!flash_chip) {
-                LOG_INFO("[ERROR] Flash chip not specified. Use --flash-chip <name>\n");
-                prep_result = THINGINO_ERROR_PROTOCOL;
-                break;
+                LOG_INFO("  Flash chip not specified, attempting auto-detect...\n");
+                /* Send partition marker to initialize SFC */
+                prep_result = flash_partition_marker_send(device);
+                if (prep_result != THINGINO_SUCCESS) {
+                    LOG_INFO("[ERROR] Partition marker failed: %s\n", thingino_error_to_string(prep_result));
+                    break;
+                }
+                /* Now try to read the actual JEDEC ID */
+                uint32_t jedec_id = 0;
+                if (protocol_read_flash_id(device, &jedec_id) == THINGINO_SUCCESS) {
+                    flash_chip = spi_nor_find_by_id(jedec_id);
+                    if (flash_chip) {
+                        LOG_INFO("  Flash chip (detected): %s (JEDEC 0x%06X, %u MB)\n", flash_chip->name,
+                                 flash_chip->jedec_id, flash_chip->size / (1024 * 1024));
+                    } else {
+                        LOG_INFO("  JEDEC 0x%06X not in database\n", jedec_id);
+                        LOG_INFO("[ERROR] Flash chip not detected. Use --flash-chip <name>\n");
+                        prep_result = THINGINO_ERROR_PROTOCOL;
+                        break;
+                    }
+                } else {
+                    LOG_INFO("[ERROR] Flash chip auto-detect failed. Use --flash-chip <name>\n");
+                    prep_result = THINGINO_ERROR_PROTOCOL;
+                    break;
+                }
             }
+            /* Send descriptor with detected or manually-specified chip */
             uint8_t flash_descriptor[FLASH_DESCRIPTOR_SIZE];
             flash_descriptor_create(flash_chip, flash_descriptor);
             prep_result = flash_descriptor_send(device, flash_descriptor);
