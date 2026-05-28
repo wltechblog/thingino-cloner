@@ -8,7 +8,7 @@ JOBS          ?= $(shell nproc)
 
 PREFIX        ?= /usr/local
 BINDIR        ?= $(PREFIX)/bin
-DATADIR       ?= $(PREFIX)/share/thingino-cloner
+LIBDIR        ?= $(PREFIX)/lib/thingino-cloner
 
 .PHONY: all arm64 win64 web install uninstall clean help
 
@@ -26,16 +26,19 @@ web:
 	@./web/build.sh
 
 install: all
+	install -d $(DESTDIR)$(LIBDIR)
+	install -m 755 $(BUILD_DIR)/cli/thingino-cloner $(DESTDIR)$(LIBDIR)/
+	[ -f $(BUILD_DIR)/cloner-remote/cloner-remote ] && install -m 755 $(BUILD_DIR)/cloner-remote/cloner-remote $(DESTDIR)$(LIBDIR)/ || true
+	install -d $(DESTDIR)$(LIBDIR)/firmwares
+	cp -r firmwares/* $(DESTDIR)$(LIBDIR)/firmwares/
 	install -d $(DESTDIR)$(BINDIR)
-	install -m 755 $(BUILD_DIR)/cli/thingino-cloner $(DESTDIR)$(BINDIR)/
-	[ -f $(BUILD_DIR)/cloner-remote/cloner-remote ] && install -m 755 $(BUILD_DIR)/cloner-remote/cloner-remote $(DESTDIR)$(BINDIR)/ || true
-	install -d $(DESTDIR)$(DATADIR)/firmwares
-	cp -r firmwares/* $(DESTDIR)$(DATADIR)/firmwares/
+	ln -sf ../lib/thingino-cloner/thingino-cloner $(DESTDIR)$(BINDIR)/thingino-cloner
+	[ -f $(DESTDIR)$(LIBDIR)/cloner-remote ] && ln -sf ../lib/thingino-cloner/cloner-remote $(DESTDIR)$(BINDIR)/cloner-remote || true
 
 uninstall:
 	rm -f $(DESTDIR)$(BINDIR)/thingino-cloner
 	rm -f $(DESTDIR)$(BINDIR)/cloner-remote
-	rm -rf $(DESTDIR)$(DATADIR)
+	rm -rf $(DESTDIR)$(LIBDIR)
 
 clean:
 	rm -rf $(BUILD_DIR) $(BUILD_ARM64) $(BUILD_WIN64) build-arm64 web/build web/dist web/public/wasm
