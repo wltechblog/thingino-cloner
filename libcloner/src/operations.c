@@ -21,6 +21,40 @@ const char *cloner_get_last_detected_variant(void) {
     return g_last_detected_variant;
 }
 
+/*
+ * Poll for a device at the given index, sleeping between attempts.
+ * Returns THINGINO_SUCCESS once the device is found.
+ */
+static thingino_error_t wait_for_device(usb_manager_t *manager, int index, device_info_t **devices, int *device_count) {
+    bool first = true;
+
+    for (;;) {
+        *devices = NULL;
+        *device_count = 0;
+
+        thingino_error_t result = usb_manager_find_devices(manager, devices, device_count);
+
+        if (result == THINGINO_SUCCESS && *device_count > 0 && index < *device_count) {
+            if (!first) {
+                LOG_INFO("\n");
+            }
+            return THINGINO_SUCCESS;
+        }
+
+        if (first) {
+            LOG_INFO("Waiting for Ingenic device...\n");
+            first = false;
+        }
+
+        if (*devices) {
+            free(*devices);
+            *devices = NULL;
+        }
+
+        platform_sleep_ms(500);
+    }
+}
+
 /* ========================================================================== */
 /* Bootstrap a device by index                                                */
 /* ==========================================================================*/
@@ -28,26 +62,10 @@ const char *cloner_get_last_detected_variant(void) {
 thingino_error_t cloner_op_bootstrap(usb_manager_t *manager, int index, const char *force_cpu, bool verbose,
                                      bool skip_ddr, const char *config_file, const char *spl_file,
                                      const char *uboot_file, const char *firmware_dir) {
-    /* Get devices */
+    /* Get devices (wait if needed) */
     device_info_t *devices;
     int device_count;
-    thingino_error_t result = usb_manager_find_devices(manager, &devices, &device_count);
-    if (result != THINGINO_SUCCESS) {
-        LOG_INFO("Failed to list devices: %s\n", thingino_error_to_string(result));
-        return result;
-    }
-
-    if (device_count == 0) {
-        LOG_INFO("No devices found\n");
-        free(devices);
-        return THINGINO_ERROR_DEVICE_NOT_FOUND;
-    }
-
-    if (index >= device_count) {
-        LOG_INFO("Error: device index %d out of range (found %d devices)\n", index, device_count);
-        free(devices);
-        return THINGINO_ERROR_INVALID_PARAMETER;
-    }
+    thingino_error_t result = wait_for_device(manager, index, &devices, &device_count);
 
     /* Show device info */
     device_info_t *device_info = &devices[index];
@@ -131,15 +149,9 @@ thingino_error_t cloner_op_read_firmware(usb_manager_t *manager, int index, cons
                                          const char *force_cpu, const char *flash_chip_name) {
     device_info_t *devices = NULL;
     int device_count = 0;
-    thingino_error_t result = usb_manager_find_devices(manager, &devices, &device_count);
+    thingino_error_t result = wait_for_device(manager, index, &devices, &device_count);
     if (result != THINGINO_SUCCESS) {
-        LOG_INFO("Failed to list devices: %s\n", thingino_error_to_string(result));
         return result;
-    }
-    if (device_count == 0 || index >= device_count) {
-        LOG_INFO("No device at index %d (found %d)\n", index, device_count);
-        free(devices);
-        return THINGINO_ERROR_DEVICE_NOT_FOUND;
     }
 
     usb_device_t *device = NULL;
@@ -413,19 +425,12 @@ thingino_error_t cloner_op_write_firmware(usb_manager_t *manager, int device_ind
     LOG_INFO("================================================================================\n");
     LOG_INFO("\n");
 
-    /* List devices */
+    /* List devices (wait if needed) */
     device_info_t *devices = NULL;
     int device_count = 0;
-    thingino_error_t result = usb_manager_find_devices(manager, &devices, &device_count);
+    thingino_error_t result = wait_for_device(manager, device_index, &devices, &device_count);
     if (result != THINGINO_SUCCESS) {
-        LOG_ERROR("Error listing devices: %s\n", thingino_error_to_string(result));
         return result;
-    }
-
-    if (device_index >= device_count) {
-        LOG_ERROR("Device index %d out of range (0-%d)\n", device_index, device_count - 1);
-        free(devices);
-        return THINGINO_ERROR_DEVICE_NOT_FOUND;
     }
 
     /* Open device */
