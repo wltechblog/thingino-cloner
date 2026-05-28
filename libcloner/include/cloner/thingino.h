@@ -313,6 +313,7 @@ thingino_error_t firmware_load_from_files(processor_variant_t variant, const cha
                                           const char *uboot_file, firmware_files_t *firmware);
 void firmware_cleanup(firmware_files_t *firmware);
 thingino_error_t load_file(const char *filename, uint8_t **data, size_t *size);
+thingino_error_t firmware_file_check_readable(const char *path);
 thingino_error_t firmware_validate(const firmware_files_t *firmware);
 
 // DDR functions

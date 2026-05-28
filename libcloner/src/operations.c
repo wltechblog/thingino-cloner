@@ -398,6 +398,15 @@ thingino_error_t cloner_op_write_firmware(usb_manager_t *manager, int device_ind
         return THINGINO_ERROR_INVALID_PARAMETER;
     }
 
+    /* Validate firmware file exists and is readable before any device ops */
+    {
+        thingino_error_t file_result = firmware_file_check_readable(firmware_file);
+        if (file_result != THINGINO_SUCCESS) {
+            LOG_ERROR("Cannot open firmware file: %s\n", firmware_file);
+            return file_result;
+        }
+    }
+
     LOG_INFO("\n");
     LOG_INFO("================================================================================\n");
     LOG_INFO("FIRMWARE WRITE\n");

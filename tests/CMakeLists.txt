@@ -28,3 +28,6 @@ add_cloner_test(test_flash_db)
 
 # Network protocol test
 add_cloner_test(test_protocol)
+
+# File operations test
+add_cloner_test(test_file_ops)

@@ -305,3 +305,15 @@ thingino_error_t firmware_validate(const firmware_files_t *firmware) {
 
     return THINGINO_SUCCESS;
 }
+
+thingino_error_t firmware_file_check_readable(const char *path) {
+    if (!path)
+        return THINGINO_ERROR_INVALID_PARAMETER;
+
+    FILE *f = fopen(path, "rb");
+    if (!f)
+        return THINGINO_ERROR_FILE_IO;
+
+    fclose(f);
+    return THINGINO_SUCCESS;
+}
