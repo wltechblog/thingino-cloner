@@ -10,7 +10,7 @@ PREFIX        ?= /usr/local
 BINDIR        ?= $(PREFIX)/bin
 LIBDIR        ?= $(PREFIX)/lib/thingino-cloner
 
-.PHONY: all arm64 win64 web install uninstall clean help
+.PHONY: all arm64 win64 bundle-win64 web install uninstall clean help
 
 all:
 	@mkdir -p $(BUILD_DIR) && cd $(BUILD_DIR) && cmake .. -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) && make -j$(JOBS)
@@ -21,6 +21,16 @@ arm64:
 win64:
 	@./scripts/fetch-libusb-win.sh
 	@mkdir -p $(BUILD_WIN64) && cd $(BUILD_WIN64) && cmake .. -DCMAKE_TOOLCHAIN_FILE=../$(TOOLCHAIN_WIN) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) && make -j$(JOBS)
+
+bundle-win64: win64
+	@mkdir -p dist/thingino-cloner-windows-x64
+	cp $(BUILD_WIN64)/cli/thingino-cloner.exe dist/thingino-cloner-windows-x64/
+	cp $(BUILD_WIN64)/cloner-remote/cloner-remote.exe dist/thingino-cloner-windows-x64/
+	cp $(BUILD_WIN64)/cli/libusb-1.0.dll dist/thingino-cloner-windows-x64/
+	cp -r firmwares dist/thingino-cloner-windows-x64/
+	cd dist && zip -r thingino-cloner-windows-x64.zip thingino-cloner-windows-x64
+	rm -rf dist/thingino-cloner-windows-x64
+	@echo "Created dist/thingino-cloner-windows-x64.zip"
 
 web:
 	@./web/build.sh
@@ -47,6 +57,7 @@ help:
 	@echo "make          - build native (Linux/macOS)"
 	@echo "make arm64    - cross-compile for aarch64 Linux"
 	@echo "make win64    - cross-compile for Windows x64 (requires mingw-w64)"
+	@echo "make bundle-win64 - build and package Windows x64 binaries into a zip"
 	@echo "make web      - build WebAssembly (requires emsdk)"
 	@echo "make install  - install to PREFIX (default: /usr/local)"
 	@echo "make uninstall - remove installed files"
